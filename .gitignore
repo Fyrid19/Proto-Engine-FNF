@@ -1,4 +1,7 @@
+## Ignore the export file, it just bloats the repo with really unnecessary shit and ruins compiling
 export/
 .vscode/
+
+## FNF Specific
 APIStuff.hx
 .DS_STORE
