@@ -13,8 +13,10 @@ jobs:
         with:
           haxe-version: 4.2.5
       - name: Compile
-        run: |
-          haxelib run lime build windows
+        uses: actions/lime-build-action@v1
+        with:
+          dir: 'export/release/windows/bin'
+          platform: 'windows'
       - name: Uploading artifact 
         uses: actions/upload-artifact@v2
         with:
