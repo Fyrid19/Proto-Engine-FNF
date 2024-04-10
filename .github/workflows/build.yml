@@ -37,5 +37,5 @@ jobs:
     - name: Uploading artifact
       uses: actions/upload-artifact@v2
       with:
-        name: Windows Build
+        name: FunkinOutWindows
         path: export/release/windows/bin
