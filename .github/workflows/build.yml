@@ -11,6 +11,7 @@ jobs:
         haxe-version: 4.2.5
     - name: Set up Haxelib dependencies # gotta find out how to make it launch batch file
       run: |
+        cd "\.github\"
         call actionBuild.dat
     - name: Build project
       run: |
