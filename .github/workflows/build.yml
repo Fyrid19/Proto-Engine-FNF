@@ -27,6 +27,7 @@ jobs:
         haxelib install haxeui-flixel 1.6.0 --quiet
         haxelib install newgrounds --quiet
         haxelib install hxCodec 3.0.2 --quiet
+        haxelib git polymod https://github.com/larsiusprime/polymod --quiet
         haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc --quiet
         haxelib git linc_luajit https://github.com/superpowers04/linc_luajit --quiet
         haxelib git flxanimate https://github.com/ShadowMario/flxanimate --quiet
