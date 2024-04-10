@@ -1,24 +1,18 @@
 name: Build
-on: 
-  push:
+on: [push]
 jobs:
-  buildWindows: # some stuff pulled from codename and psych because i fucking suck at this
+  buildWindows: # e
     runs-on: windows-latest
 
     steps:
-      - name: Pulling the new commit
-        uses: actions/checkout@v2
-      - name: Setting up Haxe
-        uses: krdlab/setup-haxe@v1
-        with:
-          haxe-version: 4.2.5
-      - name: Compile
-        uses: bitDecayGames/lime-build-action@v0.0.38
-        with:
-          dir: 'export/release/windows/bin'
-          platform: 'windows'
-      - name: Uploading artifact 
-        uses: actions/upload-artifact@v2
-        with:
-          name: windowsBuild
-          path: export/release/windows/bin
+    - uses: actions/checkout@v4
+    - uses: krdlab/setup-haxe@v1
+      with:
+        haxe-version: 4.2.5
+    - name: Set up Haxelib dependencies
+      run: |
+        haxelib install lime --quiet
+        haxelib install hxcpp --quiet
+    - name: Build project
+      run: |
+        haxelib run lime build windows
