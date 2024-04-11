@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Friday Night Funkin' - Funkin Out!" file="FunkinOut" packageName="com.fyridev.funkinout" package="com.fyridev.funkinout" main="Main" version="0.2.8" company="fyridev" />
+	<app title="Funkin' Out Engine" file="FunkinOut" packageName="com.fyridev.funkinout" package="com.fyridev.funkinout" main="Main" version="0.1.0" company="fyridev" />
 
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />

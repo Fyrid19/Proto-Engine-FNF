@@ -1,6 +1,6 @@
 package;
 
-import Conductor.BPMChangeEvent;
+import utils.Conductor.BPMChangeEvent;
 import flixel.FlxG;
 import flixel.FlxSubState;
 

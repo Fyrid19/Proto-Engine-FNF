@@ -5,6 +5,8 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.math.FlxPoint;
 
+import utils.CoolUtil;
+
 class SwagCamera extends FlxCamera
 {
 	/**
