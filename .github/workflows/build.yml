@@ -31,7 +31,6 @@ jobs:
         haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc --quiet
         haxelib git linc_luajit https://github.com/superpowers04/linc_luajit --quiet
         haxelib git flxanimate https://github.com/ShadowMario/flxanimate --quiet
-        haxelib git crashdumper https://github.com/larsiusprime/crashdumper --quiet
     - name: Build project
       run: |
         haxelib run lime build windows
