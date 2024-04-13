@@ -1,11 +1,7 @@
-package;
+package general;
 
 import flixel.FlxCamera;
-import flixel.FlxG;
-import flixel.FlxSprite;
 import flixel.math.FlxPoint;
-
-import utils.CoolUtil;
 
 class SwagCamera extends FlxCamera
 {
