@@ -1,18 +1,18 @@
 package funkin.objects;
 
-import flixel.FlxG;
-import flixel.FlxSprite;
-
-using StringTools;
-
 class MenuItem extends FlxSprite {
+    public var acceptMenu:Void->Void = null;
     public var targetY:Float = 0;
-    var imageName:String;
+    public var imageName:String;
+    public var realName:String;
 
     public function new(x:Float, y:Float, name:String) {
         super(x, y);
+        realName = name;
         imageName = StringTools.replace(name, ' ', '-');
-        loadGraphic(Paths.image('mainmenu/' + imageName));
+        frames = Paths.getSparrowAtlas('mainmenu/' + imageName + '_menu');
+
+        antialiasing = true;
 
         animation.addByPrefix('idle', imageName + " idle", 24);
         animation.addByPrefix('selected', imageName + " selected", 24);
@@ -21,6 +21,6 @@ class MenuItem extends FlxSprite {
 
     override function update(elapsed:Float) {
         super.update(elapsed);
-        y = CoolUtil.coolLerp(y, (targetY * 120), 0.17);
+        y = FlxMath.lerp((targetY * 160) + 240, y, Math.exp(-elapsed * 10.2));
     }
 }
