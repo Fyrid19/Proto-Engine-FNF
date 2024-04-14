@@ -1,22 +1,12 @@
 package funkin.states;
 
-import flixel.FlxG;
-import flixel.FlxGame;
-import flixel.FlxSprite;
 import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileDiamond;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.addons.transition.TransitionData;
 import flixel.graphics.FlxGraphic;
-import flixel.group.FlxGroup;
 import flixel.input.gamepad.FlxGamepad;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
-import flixel.tweens.FlxEase;
-import flixel.tweens.FlxTween;
-import flixel.util.FlxColor;
-import flixel.util.FlxTimer;
-import lime.app.Application;
-import lime.ui.Window;
 import openfl.Assets;
 import openfl.display.Sprite;
 import openfl.events.AsyncErrorEvent;
@@ -24,22 +14,8 @@ import openfl.events.MouseEvent;
 import openfl.events.NetStatusEvent;
 import openfl.media.Video;
 import openfl.net.NetStream;
-import shaders.BuildingShaders;
-import shaders.ColorSwap;
-import funkin.ui.PreferencesMenu;
 import polymod.Polymod;
 
-import utils.Conductor;
-import utils.PlayerSettings;
-import utils.Highscore;
-
-import funkin.objects.*;
-
-using StringTools;
-
-#if discord_rpc
-import Discord.DiscordClient;
-#end
 #if desktop
 import sys.FileSystem;
 import sys.io.File;
@@ -292,7 +268,7 @@ class TitleState extends MusicBeatState
 		credGroup.add(blackScreen);
 
 		// var atlasBullShit:FlxSprite = new FlxSprite();
-		// atlasBullShit.frames = CoolUtil.fromAnimate(Paths.image('money'), Paths.file('images/money.json'));
+		// atlasBullShit.frames = FunkinUtil.fromAnimate(Paths.image('money'), Paths.file('images/money.json'));
 		// credGroup.add(atlasBullShit);
 
 		credTextShit = new Alphabet(0, 0, "ninjamuffin99\nPhantomArcade\nkawaisprite\nevilsk8er", true);

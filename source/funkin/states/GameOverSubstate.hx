@@ -1,13 +1,7 @@
 package funkin.states;
 
-import flixel.FlxG;
-import flixel.FlxObject;
-import flixel.FlxSubState;
 import flixel.math.FlxPoint;
-import flixel.util.FlxColor;
-import flixel.util.FlxTimer;
 import haxe.display.Display.Package;
-import funkin.ui.PreferencesMenu;
 
 class GameOverSubstate extends MusicBeatSubstate
 {
@@ -71,7 +65,7 @@ class GameOverSubstate extends MusicBeatSubstate
 	override function update(elapsed:Float)
 	{
 		// makes the lerp non-dependant on the framerate
-		// FlxG.camera.followLerp = CoolUtil.camLerpShit(0.01);
+		// FlxG.camera.followLerp = FunkinUtil.camLerpShit(0.01);
 
 		super.update(elapsed);
 

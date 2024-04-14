@@ -2,12 +2,6 @@ package utils;
 
 import Sys.sleep;
 
-using StringTools;
-
-#if discord_rpc
-import discord_rpc.DiscordRpc;
-#end
-
 class DiscordClient
 {
 	#if discord_rpc

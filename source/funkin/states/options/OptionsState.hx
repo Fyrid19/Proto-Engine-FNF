@@ -1,16 +1,10 @@
 package funkin.states.options;
 
-import flixel.FlxG;
-import flixel.FlxSprite;
-import flixel.FlxSubState;
 import flixel.addons.transition.FlxTransitionableState;
-import flixel.group.FlxGroup;
 import flixel.util.FlxSignal;
 
 import funkin.objects.Prompt;
 import funkin.ui.*;
-
-import utils.Controls;
 
 // typedef OptionsState = OptionsMenu_old;
 // class OptionsState_new extends MusicBeatState

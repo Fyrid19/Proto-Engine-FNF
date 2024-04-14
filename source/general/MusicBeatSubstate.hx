@@ -1,7 +1,5 @@
 package general;
 
-import flixel.FlxSubState;
-
 class MusicBeatSubstate extends FlxSubState
 {
 	public function new()

@@ -1,10 +1,6 @@
 package funkin.objects;
 
-import flixel.FlxG;
-import flixel.FlxSprite;
 import haxe.display.Display.Package;
-
-import utils.Conductor;
 
 class TankmenBG extends FlxSprite
 {

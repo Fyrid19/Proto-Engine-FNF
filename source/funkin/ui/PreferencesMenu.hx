@@ -2,17 +2,12 @@ package funkin.ui;
 
 import funkin.states.options.OptionsState.Page;
 import flixel.FlxCamera;
-import flixel.FlxG;
-import flixel.FlxObject;
-import flixel.FlxSprite;
-import flixel.group.FlxGroup;
-import flixel.util.FlxColor;
 import funkin.ui.AtlasText.AtlasFont;
 import funkin.ui.TextMenuList.TextMenuItem;
 
 import funkin.states.options.OptionsState;
 
-class PreferencesMenu extends OptionsState.Page
+class PreferencesMenu extends Page
 {
 	public static var preferences:Map<String, Dynamic> = new Map();
 

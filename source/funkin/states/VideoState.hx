@@ -1,6 +1,5 @@
 package funkin.states;
 
-import flixel.FlxG;
 import openfl.display.Sprite;
 import openfl.events.AsyncErrorEvent;
 import openfl.events.MouseEvent;

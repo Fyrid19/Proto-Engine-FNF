@@ -1,21 +1,10 @@
 package funkin.ui;
 
-import utils.Controls;
 import flixel.FlxCamera;
-import flixel.FlxG;
-import flixel.FlxObject;
-import flixel.FlxSprite;
-import flixel.group.FlxGroup;
-import flixel.input.actions.FlxActionInput;
 import flixel.input.gamepad.FlxGamepadInputID;
 import flixel.input.keyboard.FlxKey;
 
 import funkin.states.options.OptionsState;
-
-import funkin.objects.*;
-
-import utils.PlayerSettings;
-import utils.InputFormatter;
 
 import funkin.ui.TextMenuList.TextMenuItem;
 import funkin.ui.MenuList.MenuTypedList;

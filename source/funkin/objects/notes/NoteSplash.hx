@@ -1,7 +1,5 @@
 package funkin.objects.notes;
 
-import flixel.FlxG;
-import flixel.FlxSprite;
 import haxe.io.Path;
 
 class NoteSplash extends FlxSprite

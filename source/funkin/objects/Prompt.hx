@@ -1,12 +1,6 @@
 package funkin.objects;
 
 import funkin.ui.*;
-
-import flixel.FlxG;
-import flixel.FlxSprite;
-import flixel.graphics.frames.FlxAtlasFrames;
-import flixel.text.FlxText;
-import flixel.util.FlxColor;
 import funkin.ui.AtlasText.BoldText;
 
 class Prompt extends flixel.FlxSubState

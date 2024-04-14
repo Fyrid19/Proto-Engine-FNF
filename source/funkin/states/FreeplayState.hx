@@ -1,27 +1,8 @@
 package funkin.states;
 
-#if discord_rpc
-import Discord.DiscordClient;
-#end
 import flash.text.TextField;
-import flixel.FlxG;
-import flixel.FlxSprite;
 import flixel.addons.display.FlxGridOverlay;
-import flixel.group.FlxGroup.FlxTypedGroup;
-import flixel.math.FlxMath;
-import flixel.text.FlxText;
-import flixel.tweens.FlxTween;
-import flixel.util.FlxColor;
 import lime.utils.Assets;
-
-import funkin.states.PlayState;
-import funkin.objects.Alphabet;
-import funkin.objects.HealthIcon;
-import funkin.objects.*;
-import utils.Highscore;
-import utils.CoolUtil;
-
-using StringTools;
 
 class FreeplayState extends MusicBeatState
 {
@@ -68,7 +49,7 @@ class FreeplayState extends MusicBeatState
 		addSong('Test', 1, 'bf-pixel');
 		#end
 
-		var initSonglist = CoolUtil.coolTextFile(Paths.txt('freeplaySonglist'));
+		var initSonglist = FunkinUtil.coolTextFile(Paths.txt('freeplaySonglist'));
 
 		for (i in 0...initSonglist.length)
 		{
@@ -211,8 +192,8 @@ class FreeplayState extends MusicBeatState
 			}
 		}
 
-		lerpScore = CoolUtil.coolLerp(lerpScore, intendedScore, 0.4);
-		bg.color = FlxColor.interpolate(bg.color, coolColors[songs[curSelected].week % coolColors.length], CoolUtil.camLerpShit(0.045));
+		lerpScore = FlxMath.lerp(lerpScore, intendedScore, 0.4);
+		bg.color = FlxColor.interpolate(bg.color, coolColors[songs[curSelected].week % coolColors.length], FunkinUtil.camLerpShit(0.045));
 
 		scoreText.text = "PERSONAL BEST:" + Math.round(lerpScore);
 
@@ -267,7 +248,7 @@ class FreeplayState extends MusicBeatState
 
 		PlayState.storyDifficulty = curDifficulty;
 
-		diffText.text = "< " + CoolUtil.difficultyString() + " >";
+		diffText.text = "< " + FunkinUtil.difficultyString() + " >";
 		positionHighscore();
 	}
 

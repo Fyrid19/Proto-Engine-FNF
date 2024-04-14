@@ -1,14 +1,5 @@
 package funkin.objects;
 
-import flixel.FlxG;
-import flixel.FlxSprite;
-import flixel.graphics.frames.FlxAtlasFrames;
-import flixel.group.FlxSpriteGroup;
-import flixel.math.FlxMath;
-import flixel.util.FlxColor;
-
-import utils.CoolUtil;
-
 class WeekItem extends FlxSpriteGroup
 {
 	public var targetY:Float = 0;
@@ -38,7 +29,7 @@ class WeekItem extends FlxSpriteGroup
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
-		y = CoolUtil.coolLerp(y, (targetY * 120) + 480, 0.17);
+		y = FlxMath.lerp(y, (targetY * 120) + 480, 0.17);
 
 		if (isFlashing)
 			flashingInt += 1;

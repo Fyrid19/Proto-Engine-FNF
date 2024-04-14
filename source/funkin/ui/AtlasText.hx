@@ -1,8 +1,5 @@
 package funkin.ui;
 
-import flixel.FlxSprite;
-import flixel.group.FlxSpriteGroup;
-import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.util.FlxStringUtil;
 
 @:forward

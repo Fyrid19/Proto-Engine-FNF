@@ -1,10 +1,5 @@
 package funkin.objects;
 
-import flixel.FlxSprite;
-import funkin.states.PlayState;
-
-using StringTools;
-
 class HealthIcon extends FlxSprite
 {
 	/**

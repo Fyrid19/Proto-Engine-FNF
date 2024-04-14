@@ -1,9 +1,7 @@
 package utils;
 
-import flixel.FlxG;
 import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxAtlasFrames;
-import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
 import flixel.system.FlxAssets.FlxGraphicAsset;
@@ -11,13 +9,9 @@ import haxe.Json;
 import lime.math.Rectangle;
 import lime.utils.Assets;
 
-import funkin.states.PlayState;
-
-using StringTools;
-
-class CoolUtil
+class FunkinUtil
 {
-	public static var difficultyArray:Array<String> = ['EASY', "NORMAL", "HARD"];
+	public static var difficultyArray:Array<String> = ['EASY', 'NORMAL', 'HARD'];
 
 	public static function difficultyString():String
 	{
@@ -58,11 +52,15 @@ class CoolUtil
 		return lerp * (FlxG.elapsed / (1 / 60));
 	}
 
-	/*
-	* just lerp that does camLerpShit for u so u dont have to do it every time
-	*/
-	public static function coolLerp(a:Float, b:Float, ratio:Float):Float
-	{
-		return FlxMath.lerp(a, b, camLerpShit(ratio));
+	public function switchState(next:FlxState = null) {
+		if (next == null) {
+			refreshState();
+			return;
+		}
+		FlxG.switchState(next);
+	}
+
+	public function refreshState() {
+		FlxG.resetState();
 	}
 }

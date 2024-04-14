@@ -1,9 +1,6 @@
 package utils;
 
-import utils.Controls;
-
 import flixel.FlxCamera;
-import flixel.FlxG;
 import flixel.input.actions.FlxActionInput;
 import flixel.input.gamepad.FlxGamepad;
 import flixel.util.FlxSignal;

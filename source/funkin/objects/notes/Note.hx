@@ -1,19 +1,5 @@
 package funkin.objects.notes;
 
-import flixel.FlxG;
-import flixel.FlxSprite;
-import flixel.graphics.frames.FlxAtlasFrames;
-import flixel.math.FlxMath;
-import flixel.util.FlxColor;
-import flixel.util.FlxTimer;
-import shaders.ColorSwap;
-import funkin.ui.PreferencesMenu;
-
-import funkin.states.PlayState;
-import utils.Conductor;
-
-using StringTools;
-
 #if polymod
 import polymod.format.ParseRules.TargetSignatureElement;
 #end

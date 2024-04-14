@@ -3,10 +3,7 @@ package funkin.objects;
 import funkin.objects.Section.SwagSection;
 
 import haxe.Json;
-import haxe.format.JsonParser;
 import lime.utils.Assets;
-
-using StringTools;
 
 typedef SwagSong =
 {

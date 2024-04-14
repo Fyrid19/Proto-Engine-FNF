@@ -1,8 +1,5 @@
 package;
 
-import flixel.FlxG;
-import flixel.FlxSprite;
-import flixel.FlxState;
 import openfl.Assets;
 import sys.io.File;
 

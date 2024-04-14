@@ -1,15 +1,6 @@
 package funkin.objects;
 
-import flixel.FlxG;
-import flixel.FlxSprite;
-import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxSpriteGroup;
-import flixel.math.FlxMath;
-import flixel.util.FlxTimer;
-
-import utils.CoolUtil;
-
-using StringTools;
 
 /**
  * Loosley based on FlxTypeText lolol
@@ -226,8 +217,8 @@ class Alphabet extends FlxSpriteGroup
 		{
 			var scaledY = FlxMath.remapToRange(targetY, 0, 1, 0, 1.3);
 
-			y = CoolUtil.coolLerp(y, (scaledY * 120) + (FlxG.height * 0.48), 0.16);
-			x = CoolUtil.coolLerp(x, (targetY * 20) + 90, 0.16);
+			y = FlxMath.lerp(y, (scaledY * 120) + (FlxG.height * 0.48), 0.16);
+			x = FlxMath.lerp(x, (targetY * 20) + 90, 0.16);
 		}
 
 		super.update(elapsed);

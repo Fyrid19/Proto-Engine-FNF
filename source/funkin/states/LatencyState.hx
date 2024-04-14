@@ -1,10 +1,6 @@
 package funkin.states;
 
-import flixel.FlxG;
-import flixel.FlxSprite;
-import flixel.FlxState;
-import flixel.group.FlxGroup.FlxTypedGroup;
-import flixel.text.FlxText;
+import funkin.objects.notes.Note;
 
 class LatencyState extends FlxState
 {

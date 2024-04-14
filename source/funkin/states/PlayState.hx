@@ -2,65 +2,21 @@ package funkin.states;
 
 import funkin.objects.Section.SwagSection;
 import funkin.objects.Song.SwagSong;
-import shaders.WiggleEffect;
-import flixel.FlxBasic;
 import flixel.FlxCamera;
-import flixel.FlxG;
-import flixel.FlxGame;
-import flixel.FlxObject;
-import flixel.FlxSprite;
-import flixel.FlxState;
-import flixel.FlxSubState;
-import flixel.addons.display.FlxGridOverlay;
 import flixel.addons.effects.FlxTrail;
-import flixel.addons.effects.FlxTrailArea;
-import flixel.addons.effects.chainable.FlxEffectSprite;
 import flixel.addons.effects.chainable.FlxWaveEffect;
 import flixel.addons.transition.FlxTransitionableState;
-import flixel.graphics.atlas.FlxAtlas;
-import flixel.graphics.frames.FlxAtlasFrames;
-import flixel.group.FlxGroup.FlxTypedGroup;
-import flixel.group.FlxGroup;
 import flixel.math.FlxAngle;
-import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
 import flixel.sound.FlxSound;
-import flixel.text.FlxText;
-import flixel.tweens.FlxEase;
-import flixel.tweens.FlxTween;
 import flixel.ui.FlxBar;
-import flixel.util.FlxCollision;
-import flixel.util.FlxColor;
 import flixel.util.FlxSort;
-import flixel.util.FlxStringUtil;
-import flixel.util.FlxTimer;
-import haxe.Json;
-import lime.utils.Assets;
-import openfl.Lib;
-import openfl.display.BitmapData;
-import openfl.display.BlendMode;
-import openfl.display.StageQuality;
-import openfl.filters.ShaderFilter;
-import shaders.BuildingShaders.BuildingShader;
-import shaders.BuildingShaders;
-import shaders.ColorSwap;
-import funkin.ui.PreferencesMenu;
-
-import utils.Conductor;
-import utils.CoolUtil;
-import utils.Highscore;
 
 import funkin.charting.ChartingState;
 
 import funkin.objects.notes.Note;
 import funkin.objects.notes.NoteSplash;
-
-using StringTools;
-
-#if discord_rpc
-import Discord.DiscordClient;
-#end
 
 class PlayState extends MusicBeatState
 {
@@ -216,11 +172,11 @@ class PlayState extends MusicBeatState
 					"Only then I will even CONSIDER letting you\ndate my daughter!"
 				];
 			case 'senpai':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('senpai/senpaiDialogue'));
+				dialogue = FunkinUtil.coolTextFile(Paths.txt('senpai/senpaiDialogue'));
 			case 'roses':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('roses/rosesDialogue'));
+				dialogue = FunkinUtil.coolTextFile(Paths.txt('roses/rosesDialogue'));
 			case 'thorns':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('thorns/thornsDialogue'));
+				dialogue = FunkinUtil.coolTextFile(Paths.txt('thorns/thornsDialogue'));
 		}
 
 		#if discord_rpc
@@ -1869,7 +1825,7 @@ class PlayState extends MusicBeatState
 	override public function update(elapsed:Float)
 	{
 		// makes the lerp non-dependant on the framerate
-		// FlxG.camera.followLerp = CoolUtil.camLerpShit(0.04);
+		// FlxG.camera.followLerp = FunkinUtil.camLerpShit(0.04);
 
 		#if !debug
 		perfectMode = false;

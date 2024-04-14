@@ -4,8 +4,6 @@ import flixel.addons.transition.FlxTransitionableState;
 import flixel.graphics.frames.FlxAtlasFrames;
 import lime.net.curl.CURLCode;
 
-using StringTools;
-
 class StoryMenuState extends MusicBeatState
 {
 	var scoreText:FlxText;
@@ -216,7 +214,7 @@ class StoryMenuState extends MusicBeatState
 	override function update(elapsed:Float)
 	{
 		// scoreText.setFormat('VCR OSD Mono', 32);
-		lerpScore = CoolUtil.coolLerp(lerpScore, intendedScore, 0.5);
+		lerpScore = FlxMath.lerp(lerpScore, intendedScore, 0.5);
 
 		scoreText.text = "WEEK SCORE:" + Math.round(lerpScore);
 

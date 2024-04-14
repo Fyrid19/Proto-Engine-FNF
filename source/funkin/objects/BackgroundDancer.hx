@@ -1,8 +1,5 @@
 package funkin.objects;
 
-import flixel.FlxSprite;
-import flixel.graphics.frames.FlxAtlasFrames;
-
 class BackgroundDancer extends FlxSprite
 {
 	public function new(x:Float, y:Float)

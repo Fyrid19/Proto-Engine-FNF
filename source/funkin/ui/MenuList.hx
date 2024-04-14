@@ -1,13 +1,8 @@
 package funkin.ui;
 
 import flixel.math.FlxPoint;
-import flixel.FlxG;
-import flixel.FlxSprite;
 import flixel.effects.FlxFlicker;
-import flixel.group.FlxGroup;
 import flixel.util.FlxSignal;
-
-import utils.PlayerSettings;
 
 class MenuTypedList<T:MenuItem> extends FlxTypedGroup<T>
 {

@@ -1,7 +1,5 @@
 package funkin.objects;
 
-import flixel.FlxSprite;
-
 class BGSprite extends FlxSprite
 {
 	/**

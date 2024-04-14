@@ -1,18 +1,6 @@
 package funkin.objects;
 
-import funkin.objects.Section.SwagSection;
-import flixel.FlxG;
-import flixel.FlxSprite;
-import flixel.animation.FlxBaseAnimation;
-import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.util.FlxSort;
-import haxe.io.Path;
-
-import funkin.states.PlayState;
-import utils.Conductor;
-import utils.CoolUtil;
-
-using StringTools;
 
 class Character extends FlxSprite
 {
@@ -551,7 +539,7 @@ class Character extends FlxSprite
 
 	private function loadOffsetFile(offsetCharacter:String)
 	{
-		var daFile:Array<String> = CoolUtil.coolTextFile(Paths.file("images/characters/" + offsetCharacter + "Offsets.txt"));
+		var daFile:Array<String> = FunkinUtil.coolTextFile(Paths.file("images/characters/" + offsetCharacter + "Offsets.txt"));
 
 		for (i in daFile)
 		{
