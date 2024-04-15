@@ -9,13 +9,13 @@ class MenuItem extends FlxSprite {
     public function new(x:Float, y:Float, name:String) {
         super(x, y);
         realName = name;
-        imageName = StringTools.replace(name, ' ', '-');
+        imageName = StringTools.replace(name, ' ', '_');
         frames = Paths.getSparrowAtlas('mainmenu/' + imageName + '_menu');
 
         antialiasing = true;
 
-        animation.addByPrefix('idle', imageName + " idle", 24);
-        animation.addByPrefix('selected', imageName + " selected", 24);
+        animation.addByPrefix('idle', 'idle', 24);
+        animation.addByPrefix('selected', 'selected', 24);
         animation.play('idle');
     }
 

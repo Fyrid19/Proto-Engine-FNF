@@ -4,9 +4,6 @@ class FunkinData {
     public static var downScroll:Data;
     public static var ghostTapping:Data;
 
-    /* 
-    * Meant to load preferences 
-    */
     public static function loadData() { // this should work
         downScroll = new Data('downScroll', false);
         ghostTapping = new Data('ghostTapping', false);
