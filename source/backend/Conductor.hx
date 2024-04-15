@@ -1,4 +1,4 @@
-package utils;
+package backend;
 
 import funkin.objects.Song.SwagSong;
 

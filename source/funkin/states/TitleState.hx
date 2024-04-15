@@ -47,8 +47,7 @@ class TitleState extends MusicBeatState
 	override public function create():Void
 	{
 		#if polymod
-		Polymod.init({modRoot: "mods", dirs: ['introMod'], framework: OPENFL});
-		// FlxG.bitmap.clearCache();
+		ModUtil.init();
 		#end
 
 		startedIntro = false;

@@ -1,14 +1,13 @@
 // importing utils and more so i dont have to put the shit in every file!!
 import utils.Paths;
-import utils.Conductor;
 import utils.FunkinUtil;
-import utils.Controls;
+import utils.FunkinData;
+import utils.ModUtil;
+import utils.Highscore;
+
 #if discord_rpc
 import utils.Discord;
 #end
-import utils.Highscore;
-import utils.InputFormatter;
-import utils.PlayerSettings;
 
 import funkin.states.PlayState;
 import funkin.states.LoadingState;
@@ -18,11 +17,14 @@ import funkin.ui.PreferencesMenu;
 
 import shaders.*;
 
-import general.MusicBeatState;
-import general.MusicBeatSubstate;
-
-import general.FlxVideo;
-import general.SwagCamera;
+import backend.Controls;
+import backend.Conductor;
+import backend.InputFormatter;
+import backend.PlayerSettings;
+import backend.MusicBeatState;
+import backend.MusicBeatSubstate;
+import backend.FlxVideo;
+import backend.SwagCamera;
 
 import lime.app.Application;
 

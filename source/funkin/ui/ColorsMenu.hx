@@ -3,7 +3,9 @@ package funkin.ui;
 import flixel.addons.effects.chainable.FlxEffectSprite;
 import flixel.addons.effects.chainable.FlxOutlineEffect;
 
-class ColorsMenu extends funkin.ui.OptionsState.Page
+import funkin.objects.notes.Note;
+
+class ColorsMenu extends funkin.states.options.OptionsState.Page
 {
 	var curSelected:Int = 0;
 
