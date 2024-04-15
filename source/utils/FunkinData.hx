@@ -1,8 +1,16 @@
 package utils; // will work on later
 
 class FunkinData {
-    public static var downScroll:Data = new Data('downScroll', false);
-    public static var ghostTapping:Data = new Data('ghostTapping', false);
+    public static var downScroll:Data;
+    public static var ghostTapping:Data;
+
+    /* 
+    * Meant to load preferences 
+    */
+    public static function loadData() { // this should work
+        downScroll = new Data('downScroll', false);
+        ghostTapping = new Data('ghostTapping', false);
+    }
 
     public static function loadKeybinds() {
 
