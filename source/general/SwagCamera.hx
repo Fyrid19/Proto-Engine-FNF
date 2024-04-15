@@ -1,6 +1,5 @@
 package general;
 
-import flixel.FlxCamera;
 import flixel.math.FlxPoint;
 
 class SwagCamera extends FlxCamera
@@ -91,8 +90,8 @@ class SwagCamera extends FlxCamera
 			else
 			{
 				// THIS THE PART THAT ACTUALLY MATTERS LOL
-				scroll.x += (_scrollTarget.x - scroll.x) * CoolUtil.camLerpShit(followLerp);
-				scroll.y += (_scrollTarget.y - scroll.y) * CoolUtil.camLerpShit(followLerp);
+				scroll.x += (_scrollTarget.x - scroll.x) * FunkinUtil.camLerpShit(followLerp);
+				scroll.y += (_scrollTarget.y - scroll.y) * FunkinUtil.camLerpShit(followLerp);
 			}
 		}
 	}
