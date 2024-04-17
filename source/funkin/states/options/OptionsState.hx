@@ -103,7 +103,7 @@ class Page extends FlxGroup
 	var controls(get, never):Controls;
 
 	inline function get_controls()
-		return utils.PlayerSettings.player1.controls;
+		return backend.PlayerSettings.player1.controls;
 
 	var subState:FlxSubState;
 
