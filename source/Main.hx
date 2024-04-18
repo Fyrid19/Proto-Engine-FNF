@@ -80,7 +80,10 @@ class Main extends Sprite
 			gameHeight = Math.ceil(stageHeight / zoom);
 		}
 
-		addChild(new FlxGame(gameWidth, gameHeight, initialState, framerate, framerate, skipSplash, startFullscreen));
+		var game:FlxGame;
+		game = new FlxGame(gameWidth, gameHeight, initialState, framerate, framerate, skipSplash, startFullscreen);
+
+		addChild(game);
 
 		#if !mobile
 		fpsCounter = new FullFPS();

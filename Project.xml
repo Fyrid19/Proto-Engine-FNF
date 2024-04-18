@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Funkin' Out Engine" file="FunkinOut" packageName="com.fyridev.funkinout" package="com.fyridev.funkinout" main="Main" version="0.1.0" company="fyridev" />
+	<app title="Funkin' Out Engine" file="FunkinOut" packageName="com.fyridev.funkinout" package="com.fyridev.funkinout" main="Main" version="0.1.0" company="FyriDev" />
 
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />
@@ -39,39 +39,16 @@
 	<set name="BUILD_DIR" value="export/32bit" if="32bit" />
 
 	<classpath name="source" />
-
-	<!-- <assets path='assets/preload/music' include="*mp4" embed='false' /> -->
-
-	<assets path="assets" exclude="*.ogg" if="web"/>
-	<assets path="assets" exclude="*.mp3" unless="web"/>
 	
-	<!-- <define name="PRELOAD_ALL" /> -->
-	<define name="PRELOAD_ALL" unless="web" />
-	<define name="NO_PRELOAD_ALL" unless="PRELOAD_ALL"/>
-	
-	<section if="PRELOAD_ALL">
-		<library name="songs"    preload="true" />
-		<library name="tutorial" preload="true" />
-		<library name="week1"    preload="true" />
-		<library name="week2"    preload="true" />
-		<library name="week3"    preload="true" />
-		<library name="week4"    preload="true" />
-		<library name="week5"    preload="true" />
-		<library name="week6"    preload="true" />
-		<library name="week7"    preload="true" />
-	</section>
-	
-	<section if="NO_PRELOAD_ALL">
-		<library name="songs"    preload="false" />
-		<library name="tutorial" preload="false" />
-		<library name="week1"    preload="false" />
-		<library name="week2"    preload="false" />
-		<library name="week3"    preload="false" />
-		<library name="week4"    preload="false" />
-		<library name="week5"    preload="false" />
-		<library name="week6"    preload="false" />
-		<library name="week7"    preload="false" />
-	</section>
+	<library name="songs"    preload="true" />
+	<library name="tutorial" preload="true" />
+	<library name="week1"    preload="true" />
+	<library name="week2"    preload="true" />
+	<library name="week3"    preload="true" />
+	<library name="week4"    preload="true" />
+	<library name="week5"    preload="true" />
+	<library name="week6"    preload="true" />
+	<library name="week7"    preload="true" />
 	
 	<assets path="assets/songs"    library="songs"    exclude="*.fla|*.ogg" if="web"/>
 	<assets path="assets/songs"    library="songs"    exclude="*.fla|*.mp3" unless="web"/>
@@ -91,22 +68,18 @@
 	<assets path="assets/week6"    library="week6"    exclude="*.fla|*.mp3" unless="web"/>
 	<assets path="assets/week7"    library="week7"    exclude="*.fla|*.ogg" if="web"/>
 	<assets path="assets/week7"    library="week7"    exclude="*.fla|*.mp3" unless="web"/>
-	
+
+	<assets path="assets/images" />
+	<assets path="assets/data" />
+
+	<assets path="assets/fonts" embed='true'/>
+
 	<assets path='mods' embed='false'/>
 
-	<!-- <template path="example_mods" rename="mods" /> -->
-
 	<assets path='art/readme.txt' rename='do NOT readme.txt' />
-	<!-- <template path='mods' /> -->
 	
 	<assets path="CHANGELOG.md" rename='changelog.txt'/>
 
-	<!-- NOTE FOR FUTURE SELF SINCE FONTS ARE ALWAYS FUCKY 
-		TO FIX ONE OF THEM, I CONVERTED IT TO OTF. DUNNO IF YOU NEED TO
-		THEN UHHH I USED THE NAME OF THE FONT WITH SETFORMAT() ON THE TEXT!!!
-		NOT USING A DIRECT THING TO THE ASSET!!!
-	-->
-	<assets path="assets/fonts" embed='true'/>
 	<!-- _______________________________ Libraries ______________________________ -->
 
 	<haxelib name="flixel" />
