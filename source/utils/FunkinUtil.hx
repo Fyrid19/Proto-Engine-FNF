@@ -56,4 +56,8 @@ class FunkinUtil
 	public function refreshState() {
 		FlxG.resetState();
 	}
+
+	public static function formatMemory(mem:Float) {
+		return flixel.util.FlxStringUtil.formatBytes(mem);
+	}
 }

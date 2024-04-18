@@ -65,9 +65,8 @@ class TitleState extends MusicBeatState
 
 		super.create();
 
-		FlxG.save.bind('funkin', 'ninjamuffin99');
-		PreferencesMenu.initPrefs();
-		PlayerSettings.init();
+		FlxG.save.bind('funkin-out', 'fyridev');
+		FunkinData.init();
 		Highscore.load();
 
 		if (FlxG.save.data.weekUnlocked != null)
