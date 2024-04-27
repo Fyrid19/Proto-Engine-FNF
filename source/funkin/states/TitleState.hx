@@ -1,12 +1,16 @@
 package funkin.states;
 
+import flixel.input.gamepad.FlxGamepad;
+
 import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileDiamond;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.addons.transition.TransitionData;
+
 import flixel.graphics.FlxGraphic;
-import flixel.input.gamepad.FlxGamepad;
+
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
+
 import openfl.Assets;
 import openfl.display.Sprite;
 import openfl.events.AsyncErrorEvent;
@@ -14,6 +18,7 @@ import openfl.events.MouseEvent;
 import openfl.events.NetStatusEvent;
 import openfl.media.Video;
 import openfl.net.NetStream;
+
 import polymod.Polymod;
 
 #if desktop
@@ -132,8 +137,8 @@ class TitleState extends MusicBeatState
 		});
 		#end
 
-		#if discord_rpc
-		DiscordClient.initialize();
+		#if DISCORD
+		DiscordClient.init();
 
 		Application.current.onExit.add(function(exitCode)
 		{
@@ -472,10 +477,10 @@ class TitleState extends MusicBeatState
 					switch (i + 1)
 					{
 						case 1:
-							createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
+							createCoolText(['FyriDev']);
 						// credTextShit.visible = true;
 						case 3:
-							addMoreText('present');
+							addMoreText('presents');
 						// credTextShit.text += '\npresent...';
 						// credTextShit.addText();
 						case 4:
@@ -484,7 +489,7 @@ class TitleState extends MusicBeatState
 						// credTextShit.text = 'In association \nwith';
 						// credTextShit.screenCenter();
 						case 5:
-							createCoolText(['In association', 'with']);
+							createCoolText(['Not in association', 'with']);
 						case 7:
 							addMoreText('newgrounds');
 							ngSpr.visible = true;

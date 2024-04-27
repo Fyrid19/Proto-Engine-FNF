@@ -10,6 +10,7 @@ class FunkinData {
     public static var cameraZoom:Data;
     public static var unfocusPause:Data;
     public static var globalAntialiasing:Data;
+    public static var maxFramerate:Data;
 
     public static var keybinds:Map<String, Array<FlxKey>> = [
         'note_up'		=> [W, UP],
@@ -57,6 +58,7 @@ class FunkinData {
         cameraZoom = new Data('cameraZoom', false);
         unfocusPause = new Data('unfocusPause', true);
         globalAntialiasing = new Data('globalAntialiasing', true);
+        maxFramerate = new Data('maxFramerate', 60);
 
         trace('Preferences have been loaded!');
     }

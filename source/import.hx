@@ -1,11 +1,14 @@
 // importing utils and more so i dont have to put the shit in every file!!
 import utils.Paths;
 import utils.FunkinUtil;
-import utils.ModUtil;
 import utils.Highscore;
 
-#if discord_rpc
+#if DISCORD
 import utils.Discord;
+#end
+
+#if MODS
+import utils.ModUtil;
 #end
 
 import funkin.states.PlayState;
