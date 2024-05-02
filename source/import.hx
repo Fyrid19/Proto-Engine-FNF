@@ -4,7 +4,7 @@ import utils.FunkinUtil;
 import utils.Highscore;
 
 #if DISCORD
-import utils.Discord;
+import utils.Discord.DiscordClient as DiscordRPC;
 #end
 
 #if MODS
