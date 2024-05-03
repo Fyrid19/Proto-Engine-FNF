@@ -4,10 +4,9 @@ import Sys.sleep;
 import hxdiscord_rpc.Discord;
 import hxdiscord_rpc.Types;
 
-class DiscordClient
-{
+class DiscordClient {
 	public static var clientID:String = "1233843000283762739";
-	public static var initalized:Bool;
+	public static var initialized:Bool;
 	private static var presence:DiscordRichPresence = DiscordRichPresence.create();
 
 	public static function init() {
@@ -33,7 +32,7 @@ class DiscordClient
 	}
 
 	public static function initializeClient() {
-		var rpcHandler:DiscordEventrpcHandler = DiscordEventrpcHandler.create();
+		var rpcHandler:DiscordEventHandlers = DiscordEventHandlers.create();
 		rpcHandler.ready = cpp.Function.fromStaticFunction(onReady);
 		rpcHandler.disconnected = cpp.Function.fromStaticFunction(onDisconnected);
 		rpcHandler.errored = cpp.Function.fromStaticFunction(onError);
@@ -52,7 +51,7 @@ class DiscordClient
 			}
 		});
 		
-		initalized = true;
+		initialized = true;
 	}
 
 	public static function changePresence(?state:String = '', ?details:String = '', ?smallImageKey:String = '') {
@@ -86,9 +85,9 @@ class DiscordClient
 	}
 
 	public static function shutdown() {
-		if (initalized) {
+		if (initialized) {
 			Discord.Shutdown();
-			initalized = false;
+			initialized = false;
 		} else {
 			trace('Discord RPC is already down!');
 		}

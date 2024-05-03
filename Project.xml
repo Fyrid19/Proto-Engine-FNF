@@ -78,8 +78,7 @@
 	<assets path="assets/week7"    library="week7"    exclude="*.fla|*.ogg" if="web"/>
 	<assets path="assets/week7"    library="week7"    exclude="*.fla|*.mp3" unless="web"/>
 
-	<assets path="assets/images" />
-	<assets path="assets/data" />
+	<assets path='assets/preload' rename='assets' />
 
 	<assets path="assets/fonts" embed='true'/>
 
