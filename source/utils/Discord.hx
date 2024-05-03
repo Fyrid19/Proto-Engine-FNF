@@ -9,11 +9,6 @@ class DiscordClient {
 	public static var initialized:Bool;
 	private static var presence:DiscordRichPresence = DiscordRichPresence.create();
 
-	public static function init() {
-		Application.current.window.onClose.add(() -> { if (initialized) shutdown(); });
-		initializeClient();
-	}
-
 	private static function onReady(request:cpp.RawConstPointer<DiscordUser>):Void {
 		if (Std.parseInt(cast(request[0].discriminator, String)) != 0)
 			Sys.println('Discord: Connected to user (${cast(request[0].username, String)}#${cast(request[0].discriminator, String)})');
@@ -31,7 +26,7 @@ class DiscordClient {
 		Sys.println('Discord: Error ($errorCode: ${cast(message, String)})');
 	}
 
-	public static function initializeClient() {
+	public static function initialize() {
 		var rpcHandler:DiscordEventHandlers = DiscordEventHandlers.create();
 		rpcHandler.ready = cpp.Function.fromStaticFunction(onReady);
 		rpcHandler.disconnected = cpp.Function.fromStaticFunction(onDisconnected);
@@ -54,12 +49,18 @@ class DiscordClient {
 		initialized = true;
 	}
 
-	public static function changePresence(?state:String = '', ?details:String = '', ?smallImageKey:String = '') {
+	public static function changePresence(?state:String, ?details:String, ?smallImageKey:String, ?hasStartTimestamp:Bool, ?endTimestamp:Float) {
+		var startTimestamp:Float = 0;
+		if (hasStartTimestamp) startTimestamp = Date.now().getTime();
+		if (endTimestamp > 0) endTimestamp = startTimestamp + endTimestamp;
+
 		presence.state = state;
 		presence.details = details;
 		presence.largeImageKey = 'logo';
 		presence.largeImageText = "Funkin' Out Engine v" + Application.current.meta.get('version');
 		presence.smallImageKey = smallImageKey;
+		presence.startTimestamp = Std.int(startTimestamp / 1000);
+		presence.endTimestamp = Std.int(endTimestamp / 1000);
 		updatePresence();
 	}
 
@@ -79,7 +80,7 @@ class DiscordClient {
 
 		if (changedID && initialized) {
 			shutdown();
-			initializeClient();
+			initialize();
 			updatePresence();
 		}
 	}

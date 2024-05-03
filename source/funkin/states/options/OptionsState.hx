@@ -4,6 +4,10 @@ import flixel.addons.display.FlxBackdrop;
 
 class OptionsState extends MusicBeatState {
     override function create() {
+        #if DISCORD
+        DiscordRPC.changePresence('Changing Preferences');
+        #end
+
         var menuBG = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		menuBG.color = 0xff6a8dc2;
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));

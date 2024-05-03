@@ -113,7 +113,7 @@ class PlayState extends MusicBeatState
 
 	var inCutscene:Bool = false;
 
-	#if discord_rpc
+	#if DISCORD
 	// Discord RPC variables
 	var storyDifficultyText:String = "";
 	var iconRPC:String = "";
@@ -179,7 +179,7 @@ class PlayState extends MusicBeatState
 				dialogue = FunkinUtil.coolTextFile(Paths.txt('thorns/thornsDialogue'));
 		}
 
-		#if discord_rpc
+		#if DISCORD
 		initDiscord();
 		#end
 
@@ -1311,7 +1311,7 @@ class PlayState extends MusicBeatState
 
 	function initDiscord():Void
 	{
-		#if discord_rpc
+		#if DISCORD
 		storyDifficultyText = difficultyString();
 		iconRPC = SONG.player2;
 
@@ -1331,7 +1331,7 @@ class PlayState extends MusicBeatState
 		detailsPausedText = "Paused - " + detailsText;
 
 		// Updating Discord Rich Presence.
-		DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconRPC);
+		DiscordRPC.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")");
 		#end
 	}
 
@@ -1522,12 +1522,12 @@ class PlayState extends MusicBeatState
 		FlxG.sound.music.onComplete = endSong;
 		vocals.play();
 
-		#if discord_rpc
+		#if DISCORD
 		// Song duration in a float, useful for the time left feature
 		songLength = FlxG.sound.music.length;
 
 		// Updating Discord Rich Presence (with Time Left)
-		DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconRPC, true, songLength);
+		DiscordRPC.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", '', true, songLength);
 		#end
 	}
 
@@ -1768,26 +1768,26 @@ class PlayState extends MusicBeatState
 				startTimer.active = true;
 			paused = false;
 
-			#if discord_rpc
+			#if DISCORD
 			if (startTimer.finished)
-				DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconRPC, true, songLength - Conductor.songPosition);
+				DiscordRPC.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", '', true, songLength - Conductor.songPosition);
 			else
-				DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconRPC);
+				DiscordRPC.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", '');
 			#end
 		}
 
 		super.closeSubState();
 	}
 
-	#if discord_rpc
+	#if DISCORD
 	override public function onFocus():Void
 	{
 		if (health > 0 && !paused && FlxG.autoPause)
 		{
 			if (Conductor.songPosition > 0.0)
-				DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconRPC, true, songLength - Conductor.songPosition);
+				DiscordRPC.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", '', true, songLength - Conductor.songPosition);
 			else
-				DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconRPC);
+				DiscordRPC.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", '');
 		}
 
 		super.onFocus();
@@ -1796,7 +1796,7 @@ class PlayState extends MusicBeatState
 	override public function onFocusLost():Void
 	{
 		if (health > 0 && !paused && FlxG.autoPause)
-			DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconRPC);
+			DiscordRPC.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", '');
 
 		super.onFocusLost();
 	}
@@ -1909,8 +1909,8 @@ class PlayState extends MusicBeatState
 				boyfriendPos.put();
 			}
 
-			#if discord_rpc
-			DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconRPC);
+			#if DISCORD
+			DiscordRPC.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", '');
 			#end
 		}
 
@@ -1918,8 +1918,8 @@ class PlayState extends MusicBeatState
 		{
 			FlxG.switchState(new ChartingState());
 
-			#if discord_rpc
-			DiscordClient.changePresence("Chart Editor", null, null, true);
+			#if DISCORD
+			DiscordRPC.changePresence("Chart Editor", null, null, true);
 			#end
 		}
 
@@ -2061,9 +2061,9 @@ class PlayState extends MusicBeatState
 
 				// FlxG.switchState(new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 
-				#if discord_rpc
+				#if DISCORD
 				// Game Over doesn't get his own variable because it's only used here
-				DiscordClient.changePresence("Game Over - " + detailsText, SONG.song + " (" + storyDifficultyText + ")", iconRPC);
+				DiscordRPC.changePresence("Game Over - " + detailsText, SONG.song + " (" + storyDifficultyText + ")", '');
 				#end
 			}
 		}

@@ -30,8 +30,8 @@ class MainMenuState extends MusicBeatState { // i hate how main menu is coded so
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));
 		}
         
-        #if discord_rpc
-		DiscordClient.changePresence("In the Menus", null);
+        #if DISCORD
+		DiscordRPC.changePresence('Main Menu');
 		#end
 
         var bgGraphicPath:String = 'menuDesat';

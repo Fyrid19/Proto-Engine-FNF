@@ -19,8 +19,6 @@ import openfl.events.NetStatusEvent;
 import openfl.media.Video;
 import openfl.net.NetStream;
 
-import polymod.Polymod;
-
 #if desktop
 import sys.FileSystem;
 import sys.io.File;
@@ -51,7 +49,7 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
-		#if polymod
+		#if MODS
 		ModUtil.init();
 		#end
 
@@ -138,11 +136,11 @@ class TitleState extends MusicBeatState
 		#end
 
 		#if DISCORD
-		DiscordClient.init();
+		DiscordRPC.initialize();
 
 		Application.current.onExit.add(function(exitCode)
 		{
-			DiscordClient.shutdown();
+			DiscordRPC.shutdown();
 		});
 		#end
 	}
