@@ -57,7 +57,7 @@ class DiscordClient {
 		presence.state = state;
 		presence.details = details;
 		presence.largeImageKey = 'logo';
-		presence.largeImageText = "Funkin' Out Engine v" + Application.current.meta.get('version');
+		presence.largeImageText = "Prototype Engine v" + Application.current.meta.get('version');
 		presence.smallImageKey = smallImageKey;
 		presence.startTimestamp = Std.int(startTimestamp / 1000);
 		presence.endTimestamp = Std.int(endTimestamp / 1000);
