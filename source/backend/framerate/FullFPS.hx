@@ -6,7 +6,7 @@ import backend.framerate.FPSCounter;
 import backend.framerate.MemoryCounter;
 
 class FullFPS extends Sprite {
-    public var fpsFont:String = Assets.getFont('assets/fonts/vcr.ttf').fontName;
+    public static var fpsFont:String;
 
     public var fpsCount:FPSCounter;
     public var memCount:MemoryCounter;
@@ -15,6 +15,8 @@ class FullFPS extends Sprite {
 
     public function new() {
         super();
+
+        fpsFont = Assets.getFont('assets/fonts/vcr.ttf').fontName;
 
         fpsCount = new FPSCounter();
         memCount = new MemoryCounter();
