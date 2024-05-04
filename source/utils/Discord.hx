@@ -33,7 +33,7 @@ class DiscordClient {
 		rpcHandler.errored = cpp.Function.fromStaticFunction(onError);
 		Discord.Initialize(clientID, cpp.RawPointer.addressOf(rpcHandler), 1, null);
 
-		sys.thread.Thread.create(() -> {
+		sys.thread.Thread.create(function() {
 			while (true)
 			{
 				#if DISCORD_DISABLE_IO_THREAD
