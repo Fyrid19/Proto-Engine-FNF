@@ -1312,7 +1312,7 @@ class PlayState extends MusicBeatState
 	function initDiscord():Void
 	{
 		#if DISCORD
-		storyDifficultyText = difficultyString();
+		storyDifficultyText = '';
 		iconRPC = SONG.player2;
 
 		// To avoid having duplicate images in Discord assets
