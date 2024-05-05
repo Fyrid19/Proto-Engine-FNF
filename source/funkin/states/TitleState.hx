@@ -68,8 +68,8 @@ class TitleState extends MusicBeatState
 
 		super.create();
 
-		FlxG.save.bind('funkin-out', 'fyridev');
-		FunkinData.init();
+		FlxG.save.bind('prototype', 'fyridev');
+		FunkinData.loadData();
 		Highscore.load();
 
 		if (FlxG.save.data.weekUnlocked != null)

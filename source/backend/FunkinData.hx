@@ -46,11 +46,6 @@ class FunkinData {
 		'reset'			=> [BACK]
 	];
 
-    public static function init() {
-        loadData();
-        loadKeybinds();
-    }
-
     public static function loadData() {
         downScroll = new Data('downScroll', false);
         ghostTapping = new Data('ghostTapping', false);
@@ -59,6 +54,8 @@ class FunkinData {
         unfocusPause = new Data('unfocusPause', true);
         globalAntialiasing = new Data('globalAntialiasing', true);
         maxFramerate = new Data('maxFramerate', 60);
+
+        loadKeybinds();
 
         trace('Preferences have been loaded!');
     }
