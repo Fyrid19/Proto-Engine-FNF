@@ -4,20 +4,20 @@ import flixel.input.gamepad.FlxGamepadInputID;
 import flixel.input.keyboard.FlxKey;
 
 @:structInit class DataVariables {
-    public static var downScroll:Bool = false;
-    public static var ghostTapping:Bool = false;
-    public static var flashingLights:Bool = true;
-    public static var cameraZoom:Bool = true;
-    public static var unfocusPause:Bool = true;
-    public static var globalAntialiasing:Bool = true;
-    public static var maxFramerate:Int = 60;
+    public var downScroll:Bool = false;
+    public var ghostTapping:Bool = false;
+    public var flashingLights:Bool = true;
+    public var cameraZoom:Bool = true;
+    public var unfocusPause:Bool = true;
+    public var globalAntialiasing:Bool = true;
+    public var maxFramerate:Int = 60;
 }
 
 class FunkinData {
+    public static var data:DataVariables;
+
     public function loadData() {
-        for (key => value in defaultValues) {
-            Reflect.setProperty(FlxG.save.data, key, value);
-        }
+        Reflect;
     }
 
     public function setDataValue(data:String, value:Dynamic) {
