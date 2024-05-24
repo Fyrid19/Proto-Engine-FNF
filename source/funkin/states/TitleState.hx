@@ -49,10 +49,6 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
-		#if MODS
-		ModUtil.init();
-		#end
-
 		startedIntro = false;
 
 		FlxG.game.focusLostFramerate = 60;
@@ -67,10 +63,6 @@ class TitleState extends MusicBeatState
 		// DEBUG BULLSHIT
 
 		super.create();
-
-		FlxG.save.bind('prototype', 'fyridev');
-		FunkinData.loadData();
-		Highscore.load();
 
 		if (FlxG.save.data.weekUnlocked != null)
 		{

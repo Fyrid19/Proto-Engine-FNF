@@ -2,11 +2,27 @@
 package funkin.states;
 
 class InitialState extends MusicBeatState {
+    var nextState:Class<FlxState> = TitleState;
     override function create() {
-        super.create();
-    }
+        #if MODS
+		ModUtil.init();
+		#end
 
-    override function update(elapsed:Float) {
-        super.update(elapsed);
+        FlxG.save.bind('prototype', 'fyridev');
+        FunkinData.loadData();
+		Highscore.load();
+
+        #if DISCORD
+		DiscordRPC.initialize();
+
+		Application.current.onExit.add(function(exitCode)
+		{
+			DiscordRPC.shutdown();
+		});
+		#end
+
+        switchState(nextState);
+
+        super.create();
     }
 }
