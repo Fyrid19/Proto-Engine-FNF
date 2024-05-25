@@ -4,6 +4,7 @@ import flixel.input.gamepad.FlxGamepadInputID;
 import flixel.input.keyboard.FlxKey;
 
 class FunkinData {
+    public static var saveData:FlxSave;
     public static var dataVars:Map<String, Dynamic> = [
         'downScroll' => false,
         'ghostTapping' => false,
@@ -13,6 +14,15 @@ class FunkinData {
         'globalAntialiasing' => true,
         'maxFramerate' => 60
     ];
+
+    public static var dataVarsCopy:Map;
+
+    public function initialize() {
+        saveData = new FlxSave();
+        saveData.save.bind('prototype', 'fyridev');
+
+        dataVarsCopy = dataVars;
+    }
 
     public function loadData() {
         var nullData:Bool = false;

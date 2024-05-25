@@ -8,8 +8,7 @@ class InitialState extends MusicBeatState {
 		ModUtil.init();
 		#end
 
-        FlxG.save.bind('prototype', 'fyridev');
-        FunkinData.loadData();
+        FunkinData.initialize();
 		Highscore.load();
 
         #if DISCORD
