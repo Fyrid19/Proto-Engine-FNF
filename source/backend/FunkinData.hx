@@ -4,7 +4,7 @@ import flixel.input.gamepad.FlxGamepadInputID;
 import flixel.input.keyboard.FlxKey;
 
 class FunkinData {
-    public static var saveData:FlxSave;
+    public static var save:FlxSave;
     public static var dataVars:Map<String, Dynamic> = [
         'downScroll' => false,
         'ghostTapping' => false,
@@ -18,8 +18,8 @@ class FunkinData {
     public static var dataVarsCopy:Map;
 
     public function initialize() {
-        saveData = new FlxSave();
-        saveData.save.bind('prototype', 'fyridev');
+        save = new FlxSave();
+        save.save.bind('prototype', 'fyridev');
 
         dataVarsCopy = dataVars;
     }
@@ -27,21 +27,29 @@ class FunkinData {
     public function loadData() {
         var nullData:Bool = false;
         for (key => value in dataVars) {
-            if (Reflect.getProperty(FlxG.save.data, key) == null && !nullData) {
+            if (Reflect.getProperty(save.data, key) == null && !nullData) {
                 nullData = true;
             }
 
             if (nullData) {
-                Reflect.setProperty(FlxG.save.data, key, value);
+                Reflect.setProperty(save.data, key, value);
             } else {
-                dataVars[key] = Reflect.getProperty(FlxG.save.data, key);
+                dataVars[key] = Reflect.getProperty(save.data, key);
             }
         }
     }
 
     public function saveData() {
         for (key => value in dataVars) {
-            Reflect.setProperty(FlxG.save.data, key, value);
+            Reflect.setProperty(save.data, key, value);
         }
+    }
+
+    public function setToDefault() {
+        for (key => value in dataVarsCopy) {
+            Reflect.setProperty(save.data, key, value);
+        }
+
+        dataVars = dataVarsCopy;
     }
 }
