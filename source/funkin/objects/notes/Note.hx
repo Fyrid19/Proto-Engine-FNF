@@ -138,7 +138,7 @@ class Note extends FlxSprite
 			noteScore * 0.2;
 			alpha = 0.6;
 
-			if (FunkinData.getDataValue('downScroll'))
+			if (FunkinData.data['downScroll'])
 				angle = 180;
 
 			x += width / 2;

@@ -51,6 +51,8 @@ class TitleState extends MusicBeatState
 	{
 		startedIntro = false;
 
+		trace('Game started');
+
 		FlxG.game.focusLostFramerate = 60;
 
 		swagShader = new ColorSwap();

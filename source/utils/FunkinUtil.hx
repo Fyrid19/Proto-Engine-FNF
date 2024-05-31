@@ -45,7 +45,7 @@ class FunkinUtil
 		return lerp * (FlxG.elapsed / (1 / 60));
 	}
 
-	public function switchState(next:FlxState = null) {
+	public static function switchState(next:Dynamic = null) {
 		if (next == null) {
 			refreshState();
 			return;
@@ -53,7 +53,7 @@ class FunkinUtil
 		FlxG.switchState(next);
 	}
 
-	public function refreshState() {
+	public static function refreshState() {
 		FlxG.resetState();
 	}
 

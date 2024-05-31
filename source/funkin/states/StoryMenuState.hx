@@ -62,9 +62,6 @@ class StoryMenuState extends MusicBeatState
 
 	override function create()
 	{
-		transIn = FlxTransitionableState.defaultTransIn;
-		transOut = FlxTransitionableState.defaultTransOut;
-
 		if (FlxG.sound.music != null)
 		{
 			if (!FlxG.sound.music.playing)

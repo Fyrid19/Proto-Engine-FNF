@@ -738,7 +738,7 @@ class PlayState extends MusicBeatState
 
 		strumLine = new FlxSprite(0, 50).makeGraphic(FlxG.width, 10);
 
-		if (FunkinData.getDataValue('downScroll'))
+		if (FunkinData.data['downScroll'])
 			strumLine.y = FlxG.height - 150; // 150 just random ass number lol
 
 		strumLine.scrollFactor.set();
@@ -788,7 +788,7 @@ class PlayState extends MusicBeatState
 		healthBarBG.scrollFactor.set();
 		add(healthBarBG);
 
-		if (FunkinData.getDataValue('downScroll'))
+		if (FunkinData.data['downScroll'])
 			healthBarBG.y = FlxG.height * 0.1;
 
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
@@ -1804,9 +1804,6 @@ class PlayState extends MusicBeatState
 
 	function resyncVocals():Void
 	{
-		if (_exiting)
-			return;
-
 		vocals.pause();
 		FlxG.sound.music.play();
 		Conductor.songPosition = FlxG.sound.music.time + Conductor.offset;
@@ -2025,7 +2022,7 @@ class PlayState extends MusicBeatState
 		}
 		// better streaming of shit
 
-		if (!inCutscene && !_exiting)
+		if (!inCutscene)
 		{
 			// RESET = Quick Game Over Screen
 			if (controls.RESET)
@@ -2081,8 +2078,8 @@ class PlayState extends MusicBeatState
 		{
 			notes.forEachAlive(function(daNote:Note)
 			{
-				if ((FunkinData.getDataValue('downScroll') && daNote.y < -daNote.height)
-					|| (!FunkinData.getDataValue('downScroll') && daNote.y > FlxG.height))
+				if ((FunkinData.data['downScroll'] && daNote.y < -daNote.height)
+					|| (!FunkinData.data['downScroll'] && daNote.y > FlxG.height))
 				{
 					daNote.active = false;
 					daNote.visible = false;
@@ -2095,7 +2092,7 @@ class PlayState extends MusicBeatState
 
 				var strumLineMid = strumLine.y + Note.swagWidth / 2;
 
-				if (FunkinData.getDataValue('downScroll'))
+				if (FunkinData.data['downScroll'])
 				{
 					daNote.y = (strumLine.y + (Conductor.songPosition - daNote.strumTime) * (0.45 * FlxMath.roundDecimal(SONG.speed, 2)));
 
@@ -2183,8 +2180,8 @@ class PlayState extends MusicBeatState
 
 				if (daNote.isSustainNote && daNote.wasGoodHit)
 				{
-					if ((!FunkinData.getDataValue('downScroll') && daNote.y < -daNote.height)
-						|| (FunkinData.getDataValue('downScroll') && daNote.y > FlxG.height))
+					if ((!FunkinData.data['downScroll'] && daNote.y < -daNote.height)
+						|| (FunkinData.data['downScroll'] && daNote.y > FlxG.height))
 					{
 						daNote.active = false;
 						daNote.visible = false;
@@ -2270,9 +2267,6 @@ class PlayState extends MusicBeatState
 			if (storyPlaylist.length <= 0)
 			{
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
-
-				transIn = FlxTransitionableState.defaultTransIn;
-				transOut = FlxTransitionableState.defaultTransOut;
 
 				switch (PlayState.storyWeek)
 				{
@@ -2955,7 +2949,7 @@ class PlayState extends MusicBeatState
 
 		// HARDCODING FOR MILF ZOOMS!
 
-		if (FunkinData.getDataValue('cameraZoom'))
+		if (FunkinData.data['cameraZoom'])
 		{
 			if (curSong.toLowerCase() == 'milf' && curBeat >= 168 && curBeat < 200 && camZooming && FlxG.camera.zoom < 1.35)
 			{

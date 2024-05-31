@@ -1,11 +1,12 @@
 // first state you should be loading into, anyone can change this
 package funkin.states;
 
+import flixel.FlxState;
+
 class InitialState extends MusicBeatState {
-    var nextState:Class<FlxState> = TitleState;
     override function create() {
         #if MODS
-		ModUtil.init();
+		// ModUtil.init();
 		#end
 
         FunkinData.initialize();
@@ -20,7 +21,7 @@ class InitialState extends MusicBeatState {
 		});
 		#end
 
-        switchState(nextState);
+        FunkinUtil.switchState(TitleState);
 
         super.create();
     }

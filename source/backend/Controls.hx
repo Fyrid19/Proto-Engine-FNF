@@ -148,7 +148,7 @@ class Controls {
     public static var instance:Controls;
     public function new()
     {
-        keyboardBinds = FunkinData.keybinds;
-        gamepadBinds = FunkinData.gamepadbinds;
+        keyboardBinds = FunkinData.keyBinds;
+        gamepadBinds = FunkinData.gamepadBinds;
     }
 }
