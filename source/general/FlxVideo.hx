@@ -1,4 +1,4 @@
-package backend;
+package general;
 
 import flixel.FlxBasic;
 import openfl.events.NetStatusEvent;

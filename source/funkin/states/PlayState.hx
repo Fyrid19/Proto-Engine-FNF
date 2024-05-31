@@ -113,7 +113,7 @@ class PlayState extends MusicBeatState
 
 	var inCutscene:Bool = false;
 
-	#if DISCORD
+	#if discord_rpc
 	// Discord RPC variables
 	var storyDifficultyText:String = "";
 	var iconRPC:String = "";
@@ -179,7 +179,7 @@ class PlayState extends MusicBeatState
 				dialogue = FunkinUtil.coolTextFile(Paths.txt('thorns/thornsDialogue'));
 		}
 
-		#if DISCORD
+		#if discord_rpc
 		initDiscord();
 		#end
 
@@ -738,7 +738,7 @@ class PlayState extends MusicBeatState
 
 		strumLine = new FlxSprite(0, 50).makeGraphic(FlxG.width, 10);
 
-		if (FunkinData.data['downScroll'])
+		if (PreferencesMenu.getPref('downscroll'))
 			strumLine.y = FlxG.height - 150; // 150 just random ass number lol
 
 		strumLine.scrollFactor.set();
@@ -788,7 +788,7 @@ class PlayState extends MusicBeatState
 		healthBarBG.scrollFactor.set();
 		add(healthBarBG);
 
-		if (FunkinData.data['downScroll'])
+		if (PreferencesMenu.getPref('downscroll'))
 			healthBarBG.y = FlxG.height * 0.1;
 
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
@@ -1311,8 +1311,8 @@ class PlayState extends MusicBeatState
 
 	function initDiscord():Void
 	{
-		#if DISCORD
-		storyDifficultyText = '';
+		#if discord_rpc
+		storyDifficultyText = difficultyString();
 		iconRPC = SONG.player2;
 
 		// To avoid having duplicate images in Discord assets
@@ -1331,7 +1331,7 @@ class PlayState extends MusicBeatState
 		detailsPausedText = "Paused - " + detailsText;
 
 		// Updating Discord Rich Presence.
-		DiscordRPC.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")");
+		DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconRPC);
 		#end
 	}
 
@@ -1522,12 +1522,12 @@ class PlayState extends MusicBeatState
 		FlxG.sound.music.onComplete = endSong;
 		vocals.play();
 
-		#if DISCORD
+		#if discord_rpc
 		// Song duration in a float, useful for the time left feature
 		songLength = FlxG.sound.music.length;
 
 		// Updating Discord Rich Presence (with Time Left)
-		DiscordRPC.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", '', true, songLength);
+		DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconRPC, true, songLength);
 		#end
 	}
 
@@ -1768,26 +1768,26 @@ class PlayState extends MusicBeatState
 				startTimer.active = true;
 			paused = false;
 
-			#if DISCORD
+			#if discord_rpc
 			if (startTimer.finished)
-				DiscordRPC.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", '', true, songLength - Conductor.songPosition);
+				DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconRPC, true, songLength - Conductor.songPosition);
 			else
-				DiscordRPC.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", '');
+				DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconRPC);
 			#end
 		}
 
 		super.closeSubState();
 	}
 
-	#if DISCORD
+	#if discord_rpc
 	override public function onFocus():Void
 	{
 		if (health > 0 && !paused && FlxG.autoPause)
 		{
 			if (Conductor.songPosition > 0.0)
-				DiscordRPC.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", '', true, songLength - Conductor.songPosition);
+				DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconRPC, true, songLength - Conductor.songPosition);
 			else
-				DiscordRPC.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", '');
+				DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconRPC);
 		}
 
 		super.onFocus();
@@ -1796,7 +1796,7 @@ class PlayState extends MusicBeatState
 	override public function onFocusLost():Void
 	{
 		if (health > 0 && !paused && FlxG.autoPause)
-			DiscordRPC.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", '');
+			DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconRPC);
 
 		super.onFocusLost();
 	}
@@ -1804,6 +1804,9 @@ class PlayState extends MusicBeatState
 
 	function resyncVocals():Void
 	{
+		if (_exiting)
+			return;
+
 		vocals.pause();
 		FlxG.sound.music.play();
 		Conductor.songPosition = FlxG.sound.music.time + Conductor.offset;
@@ -1906,8 +1909,8 @@ class PlayState extends MusicBeatState
 				boyfriendPos.put();
 			}
 
-			#if DISCORD
-			DiscordRPC.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", '');
+			#if discord_rpc
+			DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconRPC);
 			#end
 		}
 
@@ -1915,8 +1918,8 @@ class PlayState extends MusicBeatState
 		{
 			FlxG.switchState(new ChartingState());
 
-			#if DISCORD
-			DiscordRPC.changePresence("Chart Editor", null, null, true);
+			#if discord_rpc
+			DiscordClient.changePresence("Chart Editor", null, null, true);
 			#end
 		}
 
@@ -2022,7 +2025,7 @@ class PlayState extends MusicBeatState
 		}
 		// better streaming of shit
 
-		if (!inCutscene)
+		if (!inCutscene && !_exiting)
 		{
 			// RESET = Quick Game Over Screen
 			if (controls.RESET)
@@ -2058,9 +2061,9 @@ class PlayState extends MusicBeatState
 
 				// FlxG.switchState(new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 
-				#if DISCORD
+				#if discord_rpc
 				// Game Over doesn't get his own variable because it's only used here
-				DiscordRPC.changePresence("Game Over - " + detailsText, SONG.song + " (" + storyDifficultyText + ")", '');
+				DiscordClient.changePresence("Game Over - " + detailsText, SONG.song + " (" + storyDifficultyText + ")", iconRPC);
 				#end
 			}
 		}
@@ -2078,8 +2081,8 @@ class PlayState extends MusicBeatState
 		{
 			notes.forEachAlive(function(daNote:Note)
 			{
-				if ((FunkinData.data['downScroll'] && daNote.y < -daNote.height)
-					|| (!FunkinData.data['downScroll'] && daNote.y > FlxG.height))
+				if ((PreferencesMenu.getPref('downscroll') && daNote.y < -daNote.height)
+					|| (!PreferencesMenu.getPref('downscroll') && daNote.y > FlxG.height))
 				{
 					daNote.active = false;
 					daNote.visible = false;
@@ -2092,7 +2095,7 @@ class PlayState extends MusicBeatState
 
 				var strumLineMid = strumLine.y + Note.swagWidth / 2;
 
-				if (FunkinData.data['downScroll'])
+				if (PreferencesMenu.getPref('downscroll'))
 				{
 					daNote.y = (strumLine.y + (Conductor.songPosition - daNote.strumTime) * (0.45 * FlxMath.roundDecimal(SONG.speed, 2)));
 
@@ -2180,8 +2183,8 @@ class PlayState extends MusicBeatState
 
 				if (daNote.isSustainNote && daNote.wasGoodHit)
 				{
-					if ((!FunkinData.data['downScroll'] && daNote.y < -daNote.height)
-						|| (FunkinData.data['downScroll'] && daNote.y > FlxG.height))
+					if ((!PreferencesMenu.getPref('downscroll') && daNote.y < -daNote.height)
+						|| (PreferencesMenu.getPref('downscroll') && daNote.y > FlxG.height))
 					{
 						daNote.active = false;
 						daNote.visible = false;
@@ -2267,6 +2270,9 @@ class PlayState extends MusicBeatState
 			if (storyPlaylist.length <= 0)
 			{
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
+
+				transIn = FlxTransitionableState.defaultTransIn;
+				transOut = FlxTransitionableState.defaultTransOut;
 
 				switch (PlayState.storyWeek)
 				{
@@ -2949,7 +2955,7 @@ class PlayState extends MusicBeatState
 
 		// HARDCODING FOR MILF ZOOMS!
 
-		if (FunkinData.data['cameraZoom'])
+		if (PreferencesMenu.getPref('camera-zoom'))
 		{
 			if (curSong.toLowerCase() == 'milf' && curBeat >= 168 && curBeat < 200 && camZooming && FlxG.camera.zoom < 1.35)
 			{

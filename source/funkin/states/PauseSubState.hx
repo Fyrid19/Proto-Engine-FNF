@@ -1,5 +1,7 @@
 package funkin.states;
 
+import utils.Controls.Control;
+import flixel.input.keyboard.FlxKey;
 import flixel.sound.FlxSound;
 
 class PauseSubState extends MusicBeatSubstate

@@ -9,21 +9,26 @@ jobs:
     - uses: krdlab/setup-haxe@v1
       with:
         haxe-version: 4.2.5
-    - name: Set up Haxelib dependencies # need more effiecient way
+    - name: Set up Haxelib dependencies # gotta find out how to make it launch batch file
       run: |
-        haxelib install flixel --quiet
+        haxelib install flixel-addons --quiet
+        haxelib install flixel-demos --quiet
+        haxelib install flixel-templates --quiet
         haxelib install flixel-tools --quiet
+        haxelib install flixel-ui --quiet
+        haxelib install flixel --quiet
+        haxelib install hxcpp --quiet
+        haxelib install flxanimate --quiet
+        haxelib install hscript --quiet
+        haxelib install lime-samples --quiet
         haxelib install lime --quiet
         haxelib install openfl --quiet
-        haxelib install hscript --quiet
+        haxelib install haxeui-core --quiet
         haxelib install haxeui-flixel --quiet
         haxelib install newgrounds --quiet
         haxelib install hxCodec --quiet
-        haxelib run lime setup flixel --quiet
-        haxelib run lime setup --quiet
-        haxelib run flixel-tools setup --quiet
-        haxelib git hxdiscord_rpc https://github.com/MAJigsaw77/hxdiscord_rpc.git --quiet
         haxelib git polymod https://github.com/larsiusprime/polymod --quiet
+        haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc --quiet
         haxelib git linc_luajit https://github.com/superpowers04/linc_luajit --quiet
         haxelib git flxanimate https://github.com/ShadowMario/flxanimate --quiet
     - name: Build project
@@ -32,5 +37,5 @@ jobs:
     - name: Uploading artifact
       uses: actions/upload-artifact@v2
       with:
-        name: ProtoEngineWindows
+        name: FunkinOutWindows
         path: export/release/windows/bin

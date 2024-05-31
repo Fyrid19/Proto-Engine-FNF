@@ -1,4 +1,4 @@
-package backend;
+package general;
 
 import flixel.math.FlxPoint;
 

@@ -1,41 +1,32 @@
-package backend;
+package general;
 
-import flixel.FlxGame;
-import flixel.addons.transition.FlxTransitionableState;
-import flixel.math.FlxRect;
-import flixel.FlxState;
-
-class MusicBeatState extends FlxState
+class MusicBeatSubstate extends FlxSubState
 {
+	public function new()
+	{
+		super();
+	}
+
 	private var curStep:Int = 0;
 	private var curBeat:Int = 0;
 	private var controls(get, never):Controls;
 
 	inline function get_controls():Controls
-		return Controls.instance;
-
-	override function create()
-	{
-		super.create();
-	}
+		return PlayerSettings.player1.controls;
 
 	override function update(elapsed:Float)
 	{
-		// everyStep();
+		//everyStep();
 		var oldStep:Int = curStep;
 
 		updateCurStep();
-		updateBeat();
+		curBeat = Math.floor(curStep / 4);
 
 		if (oldStep != curStep && curStep >= 0)
 			stepHit();
 
-		super.update(elapsed);
-	}
 
-	private function updateBeat():Void
-	{
-		curBeat = Math.floor(curStep / 4);
+		super.update(elapsed);
 	}
 
 	private function updateCurStep():Void
@@ -47,7 +38,7 @@ class MusicBeatState extends FlxState
 		}
 		for (i in 0...Conductor.bpmChangeMap.length)
 		{
-			if (Conductor.songPosition >= Conductor.bpmChangeMap[i].songTime)
+			if (Conductor.songPosition > Conductor.bpmChangeMap[i].songTime)
 				lastChange = Conductor.bpmChangeMap[i];
 		}
 
@@ -62,6 +53,6 @@ class MusicBeatState extends FlxState
 
 	public function beatHit():Void
 	{
-		// do literally nothing dumbass
+		//do literally nothing dumbass
 	}
 }

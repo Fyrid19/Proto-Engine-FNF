@@ -22,13 +22,16 @@ class MainMenuState extends MusicBeatState { // i hate how main menu is coded so
     var magentaBG:FlxSprite;
 
     override function create() {
+        transIn = FlxTransitionableState.defaultTransIn;
+		transOut = FlxTransitionableState.defaultTransOut;
+
 		if (!FlxG.sound.music.playing)
 		{
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));
 		}
         
-        #if DISCORD
-		DiscordRPC.changePresence('Main Menu');
+        #if discord_rpc
+		DiscordClient.changePresence("In the Menus", null);
 		#end
 
         var bgGraphicPath:String = 'menuDesat';

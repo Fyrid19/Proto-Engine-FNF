@@ -1,16 +1,12 @@
 package funkin.states;
 
-import flixel.input.gamepad.FlxGamepad;
-
 import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileDiamond;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.addons.transition.TransitionData;
-
 import flixel.graphics.FlxGraphic;
-
+import flixel.input.gamepad.FlxGamepad;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
-
 import openfl.Assets;
 import openfl.display.Sprite;
 import openfl.events.AsyncErrorEvent;
@@ -18,6 +14,7 @@ import openfl.events.MouseEvent;
 import openfl.events.NetStatusEvent;
 import openfl.media.Video;
 import openfl.net.NetStream;
+import polymod.Polymod;
 
 #if desktop
 import sys.FileSystem;
@@ -49,9 +46,12 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
-		startedIntro = false;
+		#if polymod
+		Polymod.init({modRoot: "mods", dirs: ['introMod'], framework: OPENFL});
+		// FlxG.bitmap.clearCache();
+		#end
 
-		trace('Game started');
+		startedIntro = false;
 
 		FlxG.game.focusLostFramerate = 60;
 
@@ -65,6 +65,11 @@ class TitleState extends MusicBeatState
 		// DEBUG BULLSHIT
 
 		super.create();
+
+		FlxG.save.bind('funkin', 'ninjamuffin99');
+		PreferencesMenu.initPrefs();
+		PlayerSettings.init();
+		Highscore.load();
 
 		if (FlxG.save.data.weekUnlocked != null)
 		{
@@ -91,10 +96,50 @@ class TitleState extends MusicBeatState
 		FlxG.switchState(new CutsceneAnimTestState());
 		#elseif CHARTING
 		FlxG.switchState(new ChartingState());
+		/* 
+			#elseif web
+
+
+			if (!initialized)
+			{
+
+				video = new Video();
+				FlxG.stage.addChild(video);
+
+				var netConnection = new NetConnection();
+				netConnection.connect(null);
+
+				netStream = new NetStream(netConnection);
+				netStream.client = {onMetaData: client_onMetaData};
+				netStream.addEventListener(AsyncErrorEvent.ASYNC_ERROR, netStream_onAsyncError);
+				netConnection.addEventListener(NetStatusEvent.NET_STATUS, netConnection_onNetStatus);
+				// netStream.addEventListener(NetStatusEvent.NET_STATUS) // netStream.play(Paths.file('music/kickstarterTrailer.mp4'));
+
+				overlay = new Sprite();
+				overlay.graphics.beginFill(0, 0.5);
+				overlay.graphics.drawRect(0, 0, 1280, 720);
+				overlay.addEventListener(MouseEvent.MOUSE_DOWN, overlay_onMouseDown);
+
+				overlay.buttonMode = true;
+				// FlxG.stage.addChild(overlay);
+
+			}
+		 */
+
+		// netConnection.addEventListener(MouseEvent.MOUSE_DOWN, overlay_onMouseDown);
 		#else
 		new FlxTimer().start(1, function(tmr:FlxTimer)
 		{
 			startIntro();
+		});
+		#end
+
+		#if discord_rpc
+		DiscordClient.initialize();
+
+		Application.current.onExit.add(function(exitCode)
+		{
+			DiscordClient.shutdown();
 		});
 		#end
 	}
@@ -429,10 +474,10 @@ class TitleState extends MusicBeatState
 					switch (i + 1)
 					{
 						case 1:
-							createCoolText(['FyriDev']);
+							createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
 						// credTextShit.visible = true;
 						case 3:
-							addMoreText('presents');
+							addMoreText('present');
 						// credTextShit.text += '\npresent...';
 						// credTextShit.addText();
 						case 4:
@@ -441,7 +486,7 @@ class TitleState extends MusicBeatState
 						// credTextShit.text = 'In association \nwith';
 						// credTextShit.screenCenter();
 						case 5:
-							createCoolText(['Not in association', 'with']);
+							createCoolText(['In association', 'with']);
 						case 7:
 							addMoreText('newgrounds');
 							ngSpr.visible = true;

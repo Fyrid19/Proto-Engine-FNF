@@ -62,6 +62,9 @@ class StoryMenuState extends MusicBeatState
 
 	override function create()
 	{
+		transIn = FlxTransitionableState.defaultTransIn;
+		transOut = FlxTransitionableState.defaultTransOut;
+
 		if (FlxG.sound.music != null)
 		{
 			if (!FlxG.sound.music.playing)
@@ -99,8 +102,9 @@ class StoryMenuState extends MusicBeatState
 
 		trace("Line 70");
 
-		#if DISCORD
-		DiscordRPC.changePresence('Story Menu');
+		#if discord_rpc
+		// Updating Discord Rich Presence
+		DiscordClient.changePresence("In the Menus", null);
 		#end
 
 		for (i in 0...weekData.length)
