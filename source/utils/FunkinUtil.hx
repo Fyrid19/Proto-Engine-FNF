@@ -1,12 +1,5 @@
 package utils;
 
-import flixel.graphics.FlxGraphic;
-import flixel.graphics.frames.FlxAtlasFrames;
-import flixel.math.FlxPoint;
-import flixel.math.FlxRect;
-import flixel.system.FlxAssets.FlxGraphicAsset;
-import haxe.Json;
-import lime.math.Rectangle;
 import lime.utils.Assets;
 
 class FunkinUtil
@@ -52,7 +45,7 @@ class FunkinUtil
 		return lerp * (FlxG.elapsed / (1 / 60));
 	}
 
-	public function switchState(next:FlxState = null) {
+	public static function switchState(next:Dynamic = null) {
 		if (next == null) {
 			refreshState();
 			return;
@@ -60,7 +53,11 @@ class FunkinUtil
 		FlxG.switchState(next);
 	}
 
-	public function refreshState() {
+	public static function refreshState() {
 		FlxG.resetState();
+	}
+
+	public static function formatMemory(mem:Float) {
+		return flixel.util.FlxStringUtil.formatBytes(mem);
 	}
 }
