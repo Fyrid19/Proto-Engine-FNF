@@ -1,6 +1,6 @@
 package utils;
 
-import utils.Controls;
+import backend.Controls;
 
 import flixel.FlxG;
 import flixel.input.gamepad.FlxGamepad;

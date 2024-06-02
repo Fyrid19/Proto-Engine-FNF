@@ -1,4 +1,4 @@
-package utils;
+package backend;
 
 import flixel.input.FlxInput;
 import flixel.input.actions.FlxAction;

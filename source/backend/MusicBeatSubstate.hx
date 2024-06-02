@@ -1,4 +1,4 @@
-package general;
+package backend;
 
 class MusicBeatSubstate extends FlxSubState
 {

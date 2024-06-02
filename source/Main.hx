@@ -13,6 +13,7 @@ import openfl.events.NetStatusEvent;
 import openfl.media.Video;
 import openfl.net.NetConnection;
 import openfl.net.NetStream;
+import backend.framerate.FullFPS;
 
 class Main extends Sprite
 {
@@ -60,9 +61,10 @@ class Main extends Sprite
 
 	var video:Video;
 	var netStream:NetStream;
+	var game:FlxGame;
 	private var overlay:Sprite;
 
-	public static var fpsCounter:FPS;
+	public static var fpsCounter:FullFPS;
 
 	private function setupGame():Void
 	{
@@ -78,10 +80,11 @@ class Main extends Sprite
 			gameHeight = Math.ceil(stageHeight / zoom);
 		}
 
-		addChild(new FlxGame(gameWidth, gameHeight, initialState, framerate, framerate, skipSplash, startFullscreen));
+		game = new FlxGame(gameWidth, gameHeight, initialState, framerate, framerate, skipSplash, startFullscreen);
+		addChild(game);
 
 		#if !mobile
-		fpsCounter = new FPS(10, 3, 0xFFFFFF);
+		fpsCounter = new FullFPS();
 		addChild(fpsCounter);
 		#end
 	}

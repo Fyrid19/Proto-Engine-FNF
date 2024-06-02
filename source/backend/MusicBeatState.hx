@@ -1,4 +1,4 @@
-package general;
+package backend;
 
 import flixel.FlxGame;
 import flixel.addons.transition.FlxTransitionableState;
