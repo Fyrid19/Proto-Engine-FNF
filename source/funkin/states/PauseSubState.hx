@@ -1,6 +1,6 @@
 package funkin.states;
 
-import utils.Controls.Control;
+import backend.Controls.Control;
 import flixel.input.keyboard.FlxKey;
 import flixel.sound.FlxSound;
 

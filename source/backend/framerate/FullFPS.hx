@@ -11,7 +11,7 @@ class FullFPS extends Sprite {
     public var fpsCount:FPSCounter;
     public var memCount:MemoryCounter;
 
-    var offset:Array<Float> = [10, 10];
+    var offset:Array<Float> = [2, 2];
 
     public function new() {
         super();
@@ -21,7 +21,7 @@ class FullFPS extends Sprite {
         fpsCount = new FPSCounter();
         memCount = new MemoryCounter();
 
-        fpsCount.y = memCount.y + memCount.height + 5;
+        memCount.y = fpsCount.y + fpsCount.height + 2;
 
         addChild(fpsCount);
         addChild(memCount);

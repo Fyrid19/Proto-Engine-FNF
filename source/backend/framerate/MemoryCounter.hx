@@ -34,9 +34,9 @@ class MemoryCounter extends Sprite {
 		if (mem > memPeak) memPeak = mem;
 
         memCountTxt.text = 'Memory: ' + FunkinUtil.formatMemory(mem);
-        memPeakTxt.text = ' | Peak: ' + FunkinUtil.formatMemory(memPeak);
+        memPeakTxt.text = 'Peak: ' + FunkinUtil.formatMemory(memPeak);
 
-        memPeakTxt.y = memCountTxt.y;
-        memPeakTxt.x = memCountTxt.width + memCountTxt.x;
+        memPeakTxt.y = memCountTxt.y + memPeakTxt.height;
+        memPeakTxt.x = memCountTxt.x;
     }
 }

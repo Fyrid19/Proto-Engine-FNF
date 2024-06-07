@@ -48,5 +48,6 @@ class FPSCounter extends Sprite {
 
 		fpsCountTxt.text = Std.string(curFPS);
 		fpsLabelTxt.x = fpsCountTxt.x + fpsCountTxt.width;
+		fpsLabelTxt.y = fpsCountTxt.y + fpsCountTxt.height - fpsLabelTxt.height;
 	}
 }
