@@ -34,6 +34,11 @@ jobs:
     - name: Build project
       run: |
         haxelib run lime build windows
+    - name: Clear artifacts
+      uses: kolpav/purge-artifacts-action@v1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        expire-in: 1hr
     - name: Uploading artifact
       uses: actions/upload-artifact@v2
       with:
