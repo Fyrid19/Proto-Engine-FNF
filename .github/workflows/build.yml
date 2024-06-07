@@ -9,6 +9,11 @@ jobs:
     - uses: krdlab/setup-haxe@v1
       with:
         haxe-version: 4.2.5
+    - name: Clear artifacts
+      uses: kolpav/purge-artifacts-action@v1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        expire-in: 1hr
     - name: Set up Haxelib dependencies # gotta find out how to make it launch batch file
       run: |
         haxelib install flixel-addons --quiet
@@ -34,11 +39,6 @@ jobs:
     - name: Build project
       run: |
         haxelib run lime build windows
-    - name: Clear artifacts
-      uses: kolpav/purge-artifacts-action@v1
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        expire-in: 1hr
     - name: Uploading artifact
       uses: actions/upload-artifact@v2
       with:
