@@ -75,7 +75,7 @@ class MainMenuState extends MusicBeatState { // i hate how main menu is coded so
                         FlxG.switchState(new OptionsState());
                     }
                 default:
-                    trace('"acceptMenu" pointer function isnt set!')
+                    trace('"acceptMenu" pointer function isnt set!');
                     item.acceptMenu = () -> {
                         FlxG.switchState(new MainMenuState());
                     }
