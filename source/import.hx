@@ -21,7 +21,6 @@ import backend.Conductor;
 import backend.MusicBeatState;
 import backend.MusicBeatSubstate;
 
-import backend.FlxVideo;
 import backend.SwagCamera;
 
 import lime.app.Application;

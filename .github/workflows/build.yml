@@ -9,11 +9,6 @@ jobs:
     - uses: krdlab/setup-haxe@v1
       with:
         haxe-version: 4.2.5
-    - name: Clear artifacts
-      uses: kolpav/purge-artifacts-action@v1
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        expire-in: 1hr
     - name: Set up Haxelib dependencies # gotta find out how to make it launch batch file
       run: |
         haxelib install flixel-addons --quiet
@@ -31,7 +26,7 @@ jobs:
         haxelib install haxeui-core --quiet
         haxelib install haxeui-flixel --quiet
         haxelib install newgrounds --quiet
-        haxelib install hxCodec --quiet
+        haxelib git hxCodec https://github.com/polybiusproxy/hxCodec --quiet
         haxelib git polymod https://github.com/larsiusprime/polymod --quiet
         haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc --quiet
         haxelib git linc_luajit https://github.com/superpowers04/linc_luajit --quiet

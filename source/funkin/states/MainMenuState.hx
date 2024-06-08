@@ -62,7 +62,7 @@ class MainMenuState extends MusicBeatState { // i hate how main menu is coded so
 
         for (item in loadedMenuItems) {
             switch item.realName {
-                case 'story menu':
+                case 'story mode':
                     item.acceptMenu = () -> {
                         FlxG.switchState(new StoryMenuState());
                     }
@@ -75,7 +75,10 @@ class MainMenuState extends MusicBeatState { // i hate how main menu is coded so
                         FlxG.switchState(new OptionsState());
                     }
                 default:
-                    trace('null');
+                    trace('"acceptMenu" pointer function isnt set!')
+                    item.acceptMenu = () -> {
+                        FlxG.switchState(new MainMenuState());
+                    }
             }
         }
 

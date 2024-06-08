@@ -13,6 +13,8 @@ import flixel.sound.FlxSound;
 import flixel.ui.FlxBar;
 import flixel.util.FlxSort;
 
+import hxcodec.flixel.FlxVideo;
+
 import funkin.charting.ChartingState;
 
 import funkin.objects.notes.Note;
@@ -903,14 +905,13 @@ class PlayState extends MusicBeatState
 		blackShit.scrollFactor.set();
 		add(blackShit);
 
-		var vid:FlxVideo = new FlxVideo('music/ughCutscene.mp4');
-		vid.finishCallback = function()
+		playVideo('music/ughCutscene.mp4', function() 
 		{
 			remove(blackShit);
 			FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom}, (Conductor.crochet / 1000) * 5, {ease: FlxEase.quadInOut});
 			startCountdown();
 			cameraMovement();
-		};
+		});
 
 		FlxG.camera.zoom = defaultCamZoom * 1.2;
 
@@ -989,15 +990,13 @@ class PlayState extends MusicBeatState
 		blackShit.scrollFactor.set();
 		add(blackShit);
 
-		var vid:FlxVideo = new FlxVideo('music/gunsCutscene.mp4');
-		vid.finishCallback = function()
+		playVideo('music/gunsCutscene.mp4', function() 
 		{
 			remove(blackShit);
-
 			FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom}, (Conductor.crochet / 1000) * 5, {ease: FlxEase.quadInOut});
 			startCountdown();
 			cameraMovement();
-		};
+		});
 
 		/* camFollow.setPosition(camPos.x, camPos.y);
 
@@ -1063,15 +1062,13 @@ class PlayState extends MusicBeatState
 		blackShit.scrollFactor.set();
 		add(blackShit);
 
-		var vid:FlxVideo = new FlxVideo('music/stressCutscene.mp4');
-		vid.finishCallback = function()
+		playVideo('music/stressCutscene.mp4', function() 
 		{
 			remove(blackShit);
-
 			FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom}, (Conductor.crochet / 1000) * 5, {ease: FlxEase.quadInOut});
 			startCountdown();
 			cameraMovement();
-		};
+		});
 
 		/* camHUD.visible = false;
 
@@ -1307,6 +1304,15 @@ class PlayState extends MusicBeatState
 					gfCutsceneLayer.remove(cutsceneShit);
 				});
 		});*/
+	}
+
+	function playVideo(videoPath:String, ?onComplete:Void->Void) {
+		var video:FlxVideo = new FlxVideo();
+		video.onEndReached.add(function() {
+			onComplete();
+			video.dispose();
+		});
+		video.play('assets/' + videoPath);
 	}
 
 	function initDiscord():Void
@@ -2274,13 +2280,7 @@ class PlayState extends MusicBeatState
 				transIn = FlxTransitionableState.defaultTransIn;
 				transOut = FlxTransitionableState.defaultTransOut;
 
-				switch (PlayState.storyWeek)
-				{
-					case 7:
-						FlxG.switchState(new VideoState());
-					default:
-						FlxG.switchState(new StoryMenuState());
-				}
+				FlxG.switchState(new StoryMenuState());
 
 				// if ()
 				StoryMenuState.weekUnlocked[Std.int(Math.min(storyWeek + 1, StoryMenuState.weekUnlocked.length - 1))] = true;
