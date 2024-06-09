@@ -21,6 +21,8 @@ class MainMenuState extends MusicBeatState { // i hate how main menu is coded so
     var background:FlxSprite;
     var magentaBG:FlxSprite;
 
+    var itemSize:Float = 1;
+
     override function create() {
         transIn = FlxTransitionableState.defaultTransIn;
 		transOut = FlxTransitionableState.defaultTransOut;
@@ -41,7 +43,7 @@ class MainMenuState extends MusicBeatState { // i hate how main menu is coded so
 		background.updateHitbox();
 		background.screenCenter();
 		background.antialiasing = true;
-        background.color = 0xF2D45E;
+        background.color = 0xF5CF3B;
 		add(background);
 
         magentaBG = new FlxSprite(Paths.image(bgGraphicPath));
@@ -60,7 +62,9 @@ class MainMenuState extends MusicBeatState { // i hate how main menu is coded so
             addMenuItem(menuItems[i]);
         }
 
+        var itemSpacing:Float = 20;
         for (item in loadedMenuItems) {
+            item.y = 50 + itemSpacing*item.ID;
             switch item.realName {
                 case 'story mode':
                     item.acceptMenu = () -> {
@@ -110,13 +114,11 @@ class MainMenuState extends MusicBeatState { // i hate how main menu is coded so
     }
 
     var id:Int = 0;
-    var itemSize:Float = 1;
     function addMenuItem(name:String) {
         var item:MenuItem;
         item = new MenuItem(0, 0, name.toLowerCase());
         item.setGraphicSize(Std.int(item.width*itemSize));
-        item.screenCenter();
-        item.targetY = id;
+        item.screenCenter(X);
         item.ID = id;
 
         loadedMenuItems.add(item);
