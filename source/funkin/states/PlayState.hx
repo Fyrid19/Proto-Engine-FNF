@@ -1810,9 +1810,6 @@ class PlayState extends MusicBeatState
 
 	function resyncVocals():Void
 	{
-		if (_exiting)
-			return;
-
 		vocals.pause();
 		FlxG.sound.music.play();
 		Conductor.songPosition = FlxG.sound.music.time + Conductor.offset;
@@ -2031,7 +2028,7 @@ class PlayState extends MusicBeatState
 		}
 		// better streaming of shit
 
-		if (!inCutscene && !_exiting)
+		if (!inCutscene)
 		{
 			// RESET = Quick Game Over Screen
 			if (controls.RESET)
@@ -2277,9 +2274,6 @@ class PlayState extends MusicBeatState
 			{
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 
-				transIn = FlxTransitionableState.defaultTransIn;
-				transOut = FlxTransitionableState.defaultTransOut;
-
 				FlxG.switchState(new StoryMenuState());
 
 				// if ()
@@ -2305,9 +2299,6 @@ class PlayState extends MusicBeatState
 
 				trace('LOADING NEXT SONG');
 				trace(storyPlaylist[0].toLowerCase() + difficulty);
-
-				FlxTransitionableState.skipNextTransIn = true;
-				FlxTransitionableState.skipNextTransOut = true;
 
 				FlxG.sound.music.stop();
 				vocals.stop();

@@ -71,10 +71,8 @@ class OptionsState extends MusicBeatState
 			currentPage.exists = true;
 	}
 
-	override function finishTransIn()
+	function finishTransIn()
 	{
-		super.finishTransIn();
-
 		currentPage.enabled = true;
 	}
 

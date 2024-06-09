@@ -5,7 +5,7 @@ import flixel.addons.transition.FlxTransitionableState;
 import flixel.addons.ui.FlxUIState;
 import flixel.math.FlxRect;
 
-class MusicBeatState extends FlxUIState
+class MusicBeatState extends FlxState
 {
 	private var curStep:Int = 0;
 	private var curBeat:Int = 0;
@@ -13,17 +13,6 @@ class MusicBeatState extends FlxUIState
 
 	inline function get_controls():Controls
 		return PlayerSettings.player1.controls;
-
-	override function create()
-	{
-		if (transIn != null)
-			trace('reg ' + transIn.region);
-
-		transIn = FlxTransitionableState.defaultTransIn;
-		transOut = FlxTransitionableState.defaultTransOut;
-
-		super.create();
-	}
 
 	override function update(elapsed:Float)
 	{

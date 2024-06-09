@@ -52,8 +52,6 @@ class TitleState extends MusicBeatState
 	{
 		startedIntro = false;
 
-		FlxG.game.focusLostFramerate = 60;
-
 		swagShader = new ColorSwap();
 		alphaShader = new BuildingShaders();
 
@@ -81,7 +79,8 @@ class TitleState extends MusicBeatState
 
 		new FlxTimer().start(1, function(tmr:FlxTimer)
 		{
-			startIntro();
+			// startIntro();
+			trace('intro started');
 		});
 	}
 
@@ -412,19 +411,20 @@ class TitleState extends MusicBeatState
 					switch (i + 1)
 					{
 						case 1:
-							createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
-						// credTextShit.visible = true;
+							createCoolText(['FyriDev']);
+						//	createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
+						//  credTextShit.visible = true;
 						case 3:
-							addMoreText('present');
-						// credTextShit.text += '\npresent...';
-						// credTextShit.addText();
+							addMoreText('presents');
+						//  credTextShit.text += '\npresent...';
+						//  credTextShit.addText();
 						case 4:
 							deleteCoolText();
-						// credTextShit.visible = false;
-						// credTextShit.text = 'In association \nwith';
-						// credTextShit.screenCenter();
+						//  credTextShit.visible = false;
+						//  credTextShit.text = 'In association \nwith';
+						//  credTextShit.screenCenter();
 						case 5:
-							createCoolText(['In association', 'with']);
+							createCoolText(['Not in association', 'with']);
 						case 7:
 							addMoreText('newgrounds');
 							ngSpr.visible = true;

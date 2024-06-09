@@ -1,7 +1,5 @@
 package backend;
 
-import flixel.input.gamepad.FlxGamepadInputID;
-import flixel.input.keyboard.FlxKey;
 import flixel.util.FlxSave;
 
 class FunkinData {
@@ -25,19 +23,26 @@ class FunkinData {
     }
 
     public static function loadData() {
+        var newData:Bool = false;
         for (key => value in data) {
             if (Reflect.getProperty(save.data, key) == null) {
                 Reflect.setProperty(save.data, key, value);
+                newData = true;
             } else {
                 data[key] = Reflect.getProperty(save.data, key);
             }
         }
+        if (!newData)
+            trace('Loaded data successfully!');
+        else
+            trace('No data was found, your data has been reset');
     }
 
     public static function saveData() {
         for (key => value in data) {
             Reflect.setProperty(save.data, key, value);
         }
+        trace('Data saved!');
     }
 
     public static function setToDefault() {
@@ -45,5 +50,6 @@ class FunkinData {
             Reflect.setProperty(save.data, key, value);
         }
         data = dataDefault;
+        trace('Data reset');
     }
 }
