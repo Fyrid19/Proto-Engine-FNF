@@ -7,7 +7,6 @@ import flixel.graphics.FlxGraphic;
 import flixel.input.gamepad.FlxGamepad;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
-
 import openfl.Assets;
 import openfl.display.Sprite;
 import openfl.events.AsyncErrorEvent;
@@ -15,10 +14,7 @@ import openfl.events.MouseEvent;
 import openfl.events.NetStatusEvent;
 import openfl.media.Video;
 import openfl.net.NetStream;
-
 import polymod.Polymod;
-
-import funkin.objects.ui.Alphabet;
 
 #if desktop
 import sys.FileSystem;
@@ -50,6 +46,11 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
+		#if polymod
+		Polymod.init({modRoot: "mods", dirs: ['introMod'], framework: OPENFL});
+		// FlxG.bitmap.clearCache();
+		#end
+
 		startedIntro = false;
 
 		swagShader = new ColorSwap();
@@ -63,7 +64,12 @@ class TitleState extends MusicBeatState
 
 		super.create();
 
-		if (FunkinData.save.data.weekUnlocked != null)
+		FlxG.save.bind('funkin', 'ninjamuffin99');
+		PreferencesMenu.initPrefs();
+		PlayerSettings.init();
+		Highscore.load();
+
+		if (FlxG.save.data.weekUnlocked != null)
 		{
 			// FIX LATER!!!
 			// WEEK UNLOCK PROGRESSION!!
@@ -77,11 +83,59 @@ class TitleState extends MusicBeatState
 				StoryMenuState.weekUnlocked[0] = true;
 		}
 
+		#if FREEPLAY
+		FlxG.switchState(new FreeplayState());
+		#elseif ANIMATE
+		FlxG.switchState(new CutsceneAnimTestState());
+		#elseif CHARTING
+		FlxG.switchState(new ChartingState());
+		/* 
+			#elseif web
+
+
+			if (!initialized)
+			{
+
+				video = new Video();
+				FlxG.stage.addChild(video);
+
+				var netConnection = new NetConnection();
+				netConnection.connect(null);
+
+				netStream = new NetStream(netConnection);
+				netStream.client = {onMetaData: client_onMetaData};
+				netStream.addEventListener(AsyncErrorEvent.ASYNC_ERROR, netStream_onAsyncError);
+				netConnection.addEventListener(NetStatusEvent.NET_STATUS, netConnection_onNetStatus);
+				// netStream.addEventListener(NetStatusEvent.NET_STATUS) // netStream.play(Paths.file('music/kickstarterTrailer.mp4'));
+
+				overlay = new Sprite();
+				overlay.graphics.beginFill(0, 0.5);
+				overlay.graphics.drawRect(0, 0, 1280, 720);
+				overlay.addEventListener(MouseEvent.MOUSE_DOWN, overlay_onMouseDown);
+
+				overlay.buttonMode = true;
+				// FlxG.stage.addChild(overlay);
+
+			}
+		 */
+
+		// netConnection.addEventListener(MouseEvent.MOUSE_DOWN, overlay_onMouseDown);
+		#else
 		new FlxTimer().start(1, function(tmr:FlxTimer)
 		{
 			// startIntro();
 			trace('intro started');
 		});
+		#end
+
+		#if discord_rpc
+		DiscordClient.initialize();
+
+		Application.current.onExit.add(function(exitCode)
+		{
+			DiscordClient.shutdown();
+		});
+		#end
 	}
 
 	private function client_onMetaData(metaData:Dynamic)

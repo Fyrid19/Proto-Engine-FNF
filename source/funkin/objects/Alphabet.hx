@@ -1,4 +1,4 @@
-package funkin.objects.ui;
+package funkin.objects;
 
 import flixel.group.FlxSpriteGroup;
 
