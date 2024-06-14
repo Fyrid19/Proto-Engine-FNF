@@ -123,7 +123,7 @@ class TitleState extends MusicBeatState
 		#else
 		new FlxTimer().start(1, function(tmr:FlxTimer)
 		{
-			// startIntro();
+			startIntro();
 			trace('intro started');
 		});
 		#end
