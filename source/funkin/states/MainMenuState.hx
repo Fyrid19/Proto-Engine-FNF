@@ -7,19 +7,24 @@ import flixel.ui.FlxButton;
 import lime.app.Application;
 
 class MainMenuState extends MusicBeatState { // i hate how main menu is coded so why not do it myself
+    var engineVer = 'v' + Application.current.meta.get('version');
+    var funkinVer = 'v0.2.8';
+
+    var loadedMenuItems:FlxTypedGroup<MenuItem>;
     var menuItems:Array<String> = [
         'Story Mode',
         'Freeplay',
+        'Credits',
         'Options'
         // 'Mods'
     ];
 
-    var loadedMenuItems:FlxTypedGroup<MenuItem>;
-
     var curSelected:Int;
 
-    var background:FlxSprite;
     var magentaBG:FlxSprite;
+
+    var itemSize:Float = 1;
+    var yFactor:Float;
 
     override function create() {
 		if (!FlxG.sound.music.playing)
@@ -31,24 +36,42 @@ class MainMenuState extends MusicBeatState { // i hate how main menu is coded so
 		DiscordClient.changePresence("In the Menus", null);
 		#end
 
-        var bgGraphicPath:String = 'menuDesat';
+        var bgGraphicPath:String = 'menuBG';
+        var magentaBgGraphicPath:String = 'menuDesat';
 
-        background = new FlxSprite(Paths.image(bgGraphicPath));
-		background.setGraphicSize(Std.int(background.width * 1.2));
-		background.updateHitbox();
-		background.screenCenter();
-		background.antialiasing = true;
-        background.color = 0xF2D45E;
-		add(background);
+        var menuBG = new FlxSprite(Paths.image(bgGraphicPath));
+		menuBG.setGraphicSize(Std.int(menuBG.width * 1.2));
+        menuBG.scrollFactor.set(0, yFactor);
+		menuBG.updateHitbox();
+		menuBG.screenCenter();
+		menuBG.antialiasing = true;
+        // menuBG.color = 0xF5CF3B;
+		add(menuBG);
 
-        magentaBG = new FlxSprite(Paths.image(bgGraphicPath));
-		magentaBG.setGraphicSize(Std.int(background.width));
+        magentaBG = new FlxSprite(Paths.image(magentaBgGraphicPath));
+		magentaBG.setGraphicSize(Std.int(menuBG.width));
+        magentaBG.scrollFactor.set(0, yFactor);
 		magentaBG.updateHitbox();
 		magentaBG.screenCenter();
 		magentaBG.antialiasing = true;
         magentaBG.color = 0xfd719b;
         magentaBG.visible = false;
 	    add(magentaBG);
+
+        var offset:Array<Float> = [2, 2];
+
+        var funkinVerText:FlxText = new FlxText(16, 0, 0, "Friday Night Funkin' " + funkinVer, 16);
+		funkinVerText.setFormat(Paths.font('vcr.ttf'), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+        funkinVerText.scrollFactor.set();
+        funkinVerText.x = offset[0];
+        funkinVerText.y = FlxG.height - funkinVerText.height - offset[1];
+        add(funkinVerText);
+        var engineVerText:FlxText = new FlxText(16, 0, 0, "Prototype Engine " + engineVer, 16);
+		engineVerText.setFormat(Paths.font('vcr.ttf'), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+        engineVerText.scrollFactor.set();
+        engineVerText.x = offset[0];
+        engineVerText.y = funkinVerText.y - engineVerText.height - offset[1];
+        add(engineVerText);
 
         loadedMenuItems = new FlxTypedGroup<MenuItem>();
         add(loadedMenuItems);
@@ -57,7 +80,12 @@ class MainMenuState extends MusicBeatState { // i hate how main menu is coded so
             addMenuItem(menuItems[i]);
         }
 
+        yFactor = (loadedMenuItems.length - 4) * 0.15;
+        if (loadedMenuItems.length < 4) yFactor = 0;
+
+        var itemSpacing:Float = 170;
         for (item in loadedMenuItems) {
+            item.y = 50 + itemSpacing*item.ID;
             switch item.realName {
                 case 'story mode':
                     item.acceptMenu = () -> {
@@ -70,6 +98,10 @@ class MainMenuState extends MusicBeatState { // i hate how main menu is coded so
                 case 'options':
                     item.acceptMenu = () -> {
                         FlxG.switchState(new OptionsState());
+                    }
+                case 'credits':
+                    item.acceptMenu = () -> {
+                        FlxG.switchState(new FreeplayState());
                     }
                 default:
                     trace('"acceptMenu" pointer function isnt set!');
@@ -107,13 +139,12 @@ class MainMenuState extends MusicBeatState { // i hate how main menu is coded so
     }
 
     var id:Int = 0;
-    var itemSize:Float = 1;
     function addMenuItem(name:String) {
         var item:MenuItem;
         item = new MenuItem(0, 0, name.toLowerCase());
         item.setGraphicSize(Std.int(item.width*itemSize));
-        item.screenCenter();
-        item.targetY = id;
+        item.scrollFactor.set(0, yFactor);
+        item.screenCenter(X);
         item.ID = id;
 
         loadedMenuItems.add(item);
@@ -130,16 +161,17 @@ class MainMenuState extends MusicBeatState { // i hate how main menu is coded so
         if (curSelected > menuItems.length - 1)
             curSelected = 0;
 
-        var bullShit:Int = 0;
-
 		for (item in loadedMenuItems.members)
 		{
-			item.targetY = bullShit - curSelected;
-			if (item.ID == curSelected)
+			if (item.ID == curSelected) {
                 item.animation.play('selected');
-            else
+                item.centerOffsets();
+                item.screenCenter(X);
+            } else {
                 item.animation.play('idle');
-			bullShit++;
-		}
+                item.centerOffsets();
+                item.screenCenter(X);
+            }
+        }
     }
 }

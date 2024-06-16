@@ -1,8 +1,8 @@
-package funkin.objects;
+package funkin.objects.ui;
 
 class MenuItem extends FlxSprite {
     public var acceptMenu:Void->Void = null;
-    public var targetY:Float = 0;
+    // public var targetY:Float = 0;
     public var imageName:String;
     public var realName:String;
 
@@ -21,7 +21,7 @@ class MenuItem extends FlxSprite {
 
     override function update(elapsed:Float) {
         super.update(elapsed);
-        y = FlxMath.lerp((targetY * 160) + 240, y, Math.exp(-elapsed * 10.2));
-        screenCenter(X);
+        // y = FlxMath.lerp((targetY * 160) + 240, y, Math.exp(-elapsed * 10.2));
+        // screenCenter(X);
     }
 }

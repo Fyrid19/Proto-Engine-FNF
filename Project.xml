@@ -9,7 +9,6 @@
 		package="com.fyridev.prototype" 
 		main="Main" 
 		version="0.1.0" 
-		funkinVer="0.2.8" 
 		company="FyriDev" 
 	/>
 

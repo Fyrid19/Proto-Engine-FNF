@@ -3,7 +3,7 @@ package funkin.states.options;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.util.FlxSignal;
 
-import funkin.objects.Prompt;
+import funkin.objects.ui.Prompt;
 import funkin.ui.*;
 
 // typedef OptionsState = OptionsMenu_old;

@@ -1,9 +1,10 @@
 // importing utils and more so i dont have to put the shit in every file!!
-import utils.Paths;
-import utils.FunkinUtil;
 #if discord_rpc
 import utils.Discord;
 #end
+
+import utils.Paths;
+import utils.FunkinUtil;
 import utils.Highscore;
 import utils.InputFormatter;
 import utils.PlayerSettings;
@@ -12,6 +13,7 @@ import funkin.states.PlayState;
 import funkin.states.LoadingState;
 import funkin.states.*;
 import funkin.objects.*;
+import funkin.objects.ui.*;
 import funkin.ui.PreferencesMenu;
 
 import shaders.*;

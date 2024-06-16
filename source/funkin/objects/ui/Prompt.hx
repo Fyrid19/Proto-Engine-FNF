@@ -1,4 +1,4 @@
-package funkin.objects;
+package funkin.objects.ui;
 
 import funkin.ui.*;
 import funkin.ui.AtlasText.BoldText;

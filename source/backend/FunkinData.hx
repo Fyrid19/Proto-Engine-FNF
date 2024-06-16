@@ -3,8 +3,10 @@ package backend;
 import flixel.util.FlxSave;
 
 class FunkinData {
+    public static var initialized:Bool = false;
+
     public static var save:FlxSave; // probably not the best way of going about this but eh
-    public static var data:Map<String, Dynamic>;
+    public static var data:Map<String, Dynamic> = null;
     public static var dataDefault:Map<String, Dynamic> = [
         'downScroll' => false,
         'ghostTapping' => false,
@@ -20,6 +22,9 @@ class FunkinData {
         save.bind('prototype', 'fyridev');
         data = dataDefault;
         loadData();
+
+        if (data != null)
+            initialized = true;
     }
 
     public static function loadData() {

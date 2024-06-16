@@ -35,7 +35,8 @@ class InitialState extends MusicBeatState {
 		});
 		#end
 
-        FlxG.switchState(new funkin.states.TitleState());
+		if (FunkinData.initialized)
+        	FlxG.switchState(new funkin.states.TitleState());
 
         super.create();
     }
