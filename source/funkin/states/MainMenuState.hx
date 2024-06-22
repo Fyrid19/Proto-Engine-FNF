@@ -97,7 +97,7 @@ class MainMenuState extends MusicBeatState { // i hate how main menu is coded so
                     }
                 case 'options':
                     item.acceptMenu = () -> {
-                        FlxG.switchState(new OptionsState());
+                        FlxG.switchState(new funkin.states.options.OptionsStateNew());
                     }
                 case 'credits':
                     item.acceptMenu = () -> {

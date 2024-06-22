@@ -36,6 +36,9 @@ class FunkinData {
             } else {
                 data[key] = Reflect.getProperty(save.data, key);
             }
+
+            // trace('Map: ' + key + ', ' + value);
+            // trace('Data: ' + key + ', ' + Reflect.getProperty(save.data, key));
         }
         if (!newData)
             trace('Loaded data successfully!');

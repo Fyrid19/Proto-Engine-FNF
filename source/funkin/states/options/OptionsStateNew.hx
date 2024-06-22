@@ -18,8 +18,11 @@ class OptionsStateNew extends MusicBeatState
 		add(menuBG);
 
         var bfGrid = new FlxBackdrop(Paths.image('options/bgGrid'));
-        bfGrid.velocity.set(0.2, 0.2);
+        bfGrid.velocity.set(100, 100);
         bfGrid.color = menuBG.color;
+		bfGrid.updateHitbox();
+		bfGrid.screenCenter(X);
+		bfGrid.scrollFactor.set(0, 0);
         bfGrid.alpha = 0.6;
         add(bfGrid);
 
@@ -27,6 +30,10 @@ class OptionsStateNew extends MusicBeatState
     }
 
     override function update(elapsed:Float) {
+        if (controls.BACK) {
+            FlxG.switchState(new MainMenuState());
+        }
+
         super.update(elapsed);
     }
 }

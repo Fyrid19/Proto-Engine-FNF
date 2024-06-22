@@ -16,6 +16,8 @@ class InitialState extends MusicBeatState {
 
         FlxG.game.focusLostFramerate = 60;
 
+		FlxG.sound.muteKeys = [ZERO];
+
         FlxG.drawFramerate = FunkinData.save.data.maxFramerate;
 		FlxG.updateFramerate = FunkinData.save.data.maxFramerate;
 
@@ -24,7 +26,7 @@ class InitialState extends MusicBeatState {
 		if (FunkinData.save.data.mute != null)
 			FlxG.sound.muted = FunkinData.save.data.mute;
 
-        FlxG.autoPause = FunkinData.save.data.unfocusPause;
+        // FlxG.autoPause = FunkinData.save.data.unfocusPause;
 
         #if discord_rpc
 		Discord.initialize();

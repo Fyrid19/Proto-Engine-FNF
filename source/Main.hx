@@ -1,6 +1,6 @@
 package;
 
-import flixel.FlxGame;
+import funkin.FNFGame;
 import flixel.FlxState;
 import openfl.Assets;
 import openfl.Lib;
@@ -61,7 +61,7 @@ class Main extends Sprite
 
 	var video:Video;
 	var netStream:NetStream;
-	var game:FlxGame;
+	var game:FNFGame;
 	private var overlay:Sprite;
 
 	public static var fpsCounter:FullFPS;
@@ -80,7 +80,7 @@ class Main extends Sprite
 			gameHeight = Math.ceil(stageHeight / zoom);
 		}
 
-		game = new FlxGame(gameWidth, gameHeight, initialState, framerate, framerate, skipSplash, startFullscreen);
+		game = new FNFGame(gameWidth, gameHeight, initialState, framerate, framerate, skipSplash, startFullscreen);
 		addChild(game);
 
 		#if !mobile

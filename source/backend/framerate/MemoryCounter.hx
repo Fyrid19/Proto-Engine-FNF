@@ -7,36 +7,25 @@ import openfl.text.TextFormat;
 import openfl.system.System;
 
 class MemoryCounter extends Sprite {
-	public var memCountTxt:TextField;
-	public var memPeakTxt:TextField;
-
-    private var memPeak:Float = 0;
-
+	public var memText:TextField;
     public function new() {
         super();
 
-		memCountTxt = new TextField();
-        memPeakTxt = new TextField();
-
-        for(text in [memCountTxt, memPeakTxt]) {
-			text.x = 0;
-			text.y = 0;
-			text.text = "";
-			text.autoSize = LEFT;
-			text.multiline = false;
-            text.defaultTextFormat = new TextFormat(FullFPS.fpsFont, 14, 0xFFFFFF);
-			addChild(text);
-		}
+		memText = new TextField();
+        memText.x = 0;
+        memText.y = 0;
+        memText.text = "";
+        memText.autoSize = LEFT;
+        memText.multiline = false;
+        memText.defaultTextFormat = new TextFormat(FullFPS.fpsFont, 14, 0xFFFFFF);
+        addChild(memText);
     }
 
+    private var memPeak:Float = 0;
 	public override function __enterFrame(delta:Int) {
-        var mem:Float = Math.round(System.totalMemory / 1024 / 1024 * 100)/100;
+        var mem:Float = Math.round(System.totalMemory);
 		if (mem > memPeak) memPeak = mem;
 
-        memCountTxt.text = 'Memory: ' + FunkinUtil.formatMemory(mem);
-        memPeakTxt.text = 'Peak: ' + FunkinUtil.formatMemory(memPeak);
-
-        memPeakTxt.y = memCountTxt.y + memPeakTxt.height;
-        memPeakTxt.x = memCountTxt.x;
+        memText.text = 'Memory: ' + FunkinUtil.formatMemory(mem) + ' / ' + FunkinUtil.formatMemory(memPeak);
     }
 }

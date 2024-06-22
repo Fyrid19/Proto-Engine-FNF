@@ -25,11 +25,6 @@ class MusicBeatState extends FlxUIState
 		if (oldStep != curStep && curStep >= 0)
 			stepHit();
 
-		if (FlxG.keys.pressed.SHIFT && FlxG.keys.pressed.CONTROL && FlxG.keys.justPressed.R) {
-			FlxG.resetGame();
-			trace('reset');
-		}
-
 		super.update(elapsed);
 	}
 
