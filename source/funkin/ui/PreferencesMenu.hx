@@ -33,7 +33,6 @@ class PreferencesMenu extends Page
 		createPrefItem('flashing menu', 'flashing-menu', true);
 		createPrefItem('Camera Zooming on Beat', 'camera-zoom', true);
 		createPrefItem('FPS Counter', 'fps-counter', true);
-		createPrefItem('Auto Pause', 'auto-pause', false);
 
 		camFollow = new FlxObject(FlxG.width / 2, 0, 140, 70);
 		if (items != null)
@@ -68,7 +67,6 @@ class PreferencesMenu extends Page
 		preferenceCheck('flashing-menu', true);
 		preferenceCheck('camera-zoom', true);
 		preferenceCheck('fps-counter', true);
-		preferenceCheck('auto-pause', false);
 		preferenceCheck('master-volume', 1);
 
 		#if muted
@@ -78,8 +76,6 @@ class PreferencesMenu extends Page
 
 		if (!getPref('fps-counter'))
 			FlxG.stage.removeChild(Main.fpsCounter);
-
-		FlxG.autoPause = getPref('auto-pause');
 	}
 
 	private function createPrefItem(prefName:String, prefString:String, prefValue:Dynamic):Void
@@ -135,8 +131,6 @@ class PreferencesMenu extends Page
 					FlxG.stage.addChild(Main.fpsCounter);
 				else
 					FlxG.stage.removeChild(Main.fpsCounter);
-			case 'auto-pause':
-				FlxG.autoPause = getPref('auto-pause');
 		}
 
 		if (prefName == 'fps-counter') {}

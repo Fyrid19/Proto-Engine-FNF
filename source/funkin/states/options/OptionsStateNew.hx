@@ -18,12 +18,13 @@ class OptionsStateNew extends MusicBeatState
 		add(menuBG);
 
         var bfGrid = new FlxBackdrop(Paths.image('options/bgGrid'));
-        bfGrid.velocity.set(100, 100);
+		bfGrid.setGraphicSize(Std.int(bfGrid.width * 0.5));
+        bfGrid.velocity.set(50, 50);
         bfGrid.color = menuBG.color;
 		bfGrid.updateHitbox();
 		bfGrid.screenCenter(X);
 		bfGrid.scrollFactor.set(0, 0);
-        bfGrid.alpha = 0.6;
+        bfGrid.alpha = 0.4;
         add(bfGrid);
 
         super.create();
