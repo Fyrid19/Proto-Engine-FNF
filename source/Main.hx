@@ -2,16 +2,10 @@ package;
 
 import funkin.FNFGame;
 import flixel.FlxState;
-import openfl.Assets;
 import openfl.Lib;
-import openfl.display.FPS;
 import openfl.display.Sprite;
-import openfl.events.AsyncErrorEvent;
 import openfl.events.Event;
-import openfl.events.MouseEvent;
-import openfl.events.NetStatusEvent;
 import openfl.media.Video;
-import openfl.net.NetConnection;
 import openfl.net.NetStream;
 import backend.framerate.FullFPS;
 
