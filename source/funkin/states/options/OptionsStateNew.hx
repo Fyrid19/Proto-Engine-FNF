@@ -1,9 +1,18 @@
 package funkin.states.options;
 
 import flixel.addons.display.FlxBackdrop;
+import funkin.objects.ui.OptionItem;
 
-class OptionsStateNew extends MusicBeatState
-{
+class OptionsStateNew extends MusicBeatState {
+    var curSelected:Int = 0;
+
+    var menuItems:FlxTypedGroup<Alphabet>;
+    var optionsList:Array<String> = [
+        'Gameplay',
+        'Controls',
+        'Graphics'
+    ];
+
     override function create() {
         #if discord_rpc
         Discord.changePresence('Changing Preferences');
@@ -27,6 +36,19 @@ class OptionsStateNew extends MusicBeatState
         bfGrid.alpha = 0.4;
         add(bfGrid);
 
+        menuItems = new FlxTypedGroup<Alphabet>();
+        add(menuItems);
+
+        var spacing:Float = 100;
+        for (i in 0...optionsList.length) {
+            var menuItem:Alphabet = new Alphabet(0, 100+(i*spacing), optionsList[i], true);
+            menuItem.screenCenter(X);
+            menuItem.ID = i;
+            menuItems.add(menuItem);
+        }
+
+        changeSelection(0, false);
+
         super.create();
     }
 
@@ -35,6 +57,35 @@ class OptionsStateNew extends MusicBeatState
             FlxG.switchState(new MainMenuState());
         }
 
+        if (controls.UI_UP_P) {
+            changeSelection(-1);
+        }
+
+        if (controls.UI_DOWN_P) {
+            changeSelection(1);
+        }
+
+        for (item in menuItems) {
+            if (curSelected == item.ID) {
+                item.text = '>' + optionsList[item.ID] + '<';
+            } else {
+                item.text = optionsList[item.ID];
+            }
+            
+            item.screenCenter(X);
+        }
+
         super.update(elapsed);
+    }
+
+    function changeSelection(change:Int = 0, playSound:Bool = true) {
+        if (playSound) FlxG.sound.play(Paths.sound('scrollMenu'));
+
+        curSelected += change;
+
+        if (curSelected < 0)
+            curSelected = menuItems.length - 1;
+        if (curSelected > menuItems.length - 1)
+            curSelected = 0;
     }
 }
