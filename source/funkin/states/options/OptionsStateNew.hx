@@ -84,8 +84,8 @@ class OptionsStateNew extends MusicBeatState {
         curSelected += change;
 
         if (curSelected < 0)
-            curSelected = menuItems.length - 1;
-        if (curSelected > menuItems.length - 1)
+            curSelected = optionsList.length - 1;
+        if (curSelected > optionsList.length - 1)
             curSelected = 0;
     }
 }
