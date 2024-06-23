@@ -25,7 +25,7 @@ class FullFPS extends Sprite {
         watermark = new EngineWatermark();
 
         memCount.y = fpsCount.y + fpsCount.height + 2;
-        watermark.y = memCount.y + memCount.height + 2;
+        watermark.y = fpsCount.y + fpsCount.height + memCount.height + watermark.height;
 
         addChild(fpsCount);
         addChild(memCount);

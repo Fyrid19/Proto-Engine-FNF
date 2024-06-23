@@ -12,8 +12,6 @@ class MemoryCounter extends Sprite {
         super();
 
 		memText = new TextField();
-        memText.x = 0;
-        memText.y = 0;
         memText.text = "";
         memText.autoSize = LEFT;
         memText.multiline = false;

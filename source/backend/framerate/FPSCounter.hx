@@ -21,8 +21,6 @@ class FPSCounter extends Sprite {
 		fpsLabelTxt = new TextField();
 
 		for(text in [fpsCountTxt, fpsLabelTxt]) {
-			text.x = 0;
-			text.y = 0;
 			text.text = "";
 			text.autoSize = LEFT;
 			text.multiline = false;
