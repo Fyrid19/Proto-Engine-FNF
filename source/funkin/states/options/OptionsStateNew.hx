@@ -6,6 +6,9 @@ import funkin.objects.ui.OptionItem;
 class OptionsStateNew extends MusicBeatState {
     var curSelected:Int = 0;
 
+    var selectorLeft:Alphabet;
+    var selectorRight:Alphabet;
+
     var menuItems:FlxTypedGroup<Alphabet>;
     var optionsList:Array<String> = [
         'Gameplay',
@@ -36,6 +39,11 @@ class OptionsStateNew extends MusicBeatState {
         bfGrid.alpha = 0.4;
         add(bfGrid);
 
+        // selectorLeft = new Alphabet(0, 0, '>');
+        // add(selectorLeft);
+        // selectorRight = new Alphabet(0, 0, '<');
+        // add(selectorRight);
+
         menuItems = new FlxTypedGroup<Alphabet>();
         add(menuItems);
 
@@ -65,16 +73,6 @@ class OptionsStateNew extends MusicBeatState {
             changeSelection(1);
         }
 
-        for (item in menuItems) {
-            if (curSelected == item.ID) {
-                item.text = '>' + optionsList[item.ID] + '<';
-            } else {
-                item.text = optionsList[item.ID];
-            }
-            
-            item.screenCenter(X);
-        }
-
         super.update(elapsed);
     }
 
@@ -87,5 +85,18 @@ class OptionsStateNew extends MusicBeatState {
             curSelected = optionsList.length - 1;
         if (curSelected > optionsList.length - 1)
             curSelected = 0;
+
+        for (item in menuItems) {
+            if (item.ID == curSelected)
+                item.alpha = 1;
+            else
+                item.alpha = 0.6;
+        }
+
+        // will do later
+        // FlxTween.cancelTweensOf(selectorLeft);
+        // FlxTween.cancelTweensOf(selectorRight);
+        // FlxTween.tween(selectorLeft, {x: item.x - selectorLeft.width - 10, y: item.y}, 0.6, {ease: FlxEase.circOut});
+        // FlxTween.tween(selectorRight, {x: item.x + item.width + selectorRight.width + 10, y: item.y}, 0.6, {ease: FlxEase.circOut});
     }
 }
