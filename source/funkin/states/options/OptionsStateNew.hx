@@ -57,7 +57,7 @@ class OptionsStateNew extends MusicBeatState {
             case 'Gameplay':
                 trace('gameplay');
             default:
-                openSubState(new funkin.states.options.OptionSubState());
+                openSubState(new OptionSubState());
         }
     }
 
