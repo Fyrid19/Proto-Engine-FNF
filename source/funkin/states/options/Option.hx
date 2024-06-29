@@ -12,4 +12,8 @@ class Option {
         this.variable = variable;
         this.type = type;
     }
+
+    public function setVar(value:Dynamic) {
+        FunkinData.data.set(variable, value);
+    }
 }

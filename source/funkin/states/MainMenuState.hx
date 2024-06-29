@@ -60,13 +60,13 @@ class MainMenuState extends MusicBeatState { // i hate how main menu is coded so
 
         var offset:Array<Float> = [2, 2];
 
-        var funkinVerText:FlxText = new FlxText(16, 0, 0, "Friday Night Funkin' " + funkinVer, 16);
+        var funkinVerText:FlxText = new FlxText(0, 0, 0, "Friday Night Funkin' " + funkinVer, 16);
 		funkinVerText.setFormat(Paths.font('vcr.ttf'), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         funkinVerText.scrollFactor.set();
         funkinVerText.x = offset[0];
         funkinVerText.y = FlxG.height - funkinVerText.height - offset[1];
         add(funkinVerText);
-        var engineVerText:FlxText = new FlxText(16, 0, 0, "Prototype Engine " + engineVer, 16);
+        var engineVerText:FlxText = new FlxText(0, 0, 0, "Prototype Engine " + engineVer, 16);
 		engineVerText.setFormat(Paths.font('vcr.ttf'), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         engineVerText.scrollFactor.set();
         engineVerText.x = offset[0];
@@ -99,14 +99,9 @@ class MainMenuState extends MusicBeatState { // i hate how main menu is coded so
                     item.acceptMenu = () -> {
                         FlxG.switchState(new funkin.states.options.OptionsStateNew());
                     }
-                case 'credits':
-                    item.acceptMenu = () -> {
-                        FlxG.switchState(new FreeplayState());
-                    }
                 default:
-                    trace('"acceptMenu" pointer function isnt set!');
                     item.acceptMenu = () -> {
-                        FlxG.switchState(new MainMenuState());
+                        trace('"acceptMenu" pointer function isnt set!');
                     }
             }
         }

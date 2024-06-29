@@ -4,6 +4,8 @@ import flixel.addons.display.FlxBackdrop;
 import funkin.objects.ui.OptionItem;
 
 class OptionsStateNew extends MusicBeatState {
+    public static var menuColor:FlxColor = 0xffc371fd;
+
     var curSelected:Int = 0;
 
     var selectorLeft:Alphabet;
@@ -22,22 +24,12 @@ class OptionsStateNew extends MusicBeatState {
         #end
 
         var menuBG = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		menuBG.color = 0xffc371fd;
+		menuBG.color = menuColor;
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
 		menuBG.updateHitbox();
 		menuBG.screenCenter();
-		menuBG.scrollFactor.set(0, 0);
+		menuBG.scrollFactor.set();
 		add(menuBG);
-
-        var bfGrid = new FlxBackdrop(Paths.image('options/bgGrid'));
-		bfGrid.setGraphicSize(Std.int(bfGrid.width * 0.5));
-        bfGrid.velocity.set(50, 50);
-        bfGrid.color = menuBG.color;
-		bfGrid.updateHitbox();
-		bfGrid.screenCenter(X);
-		bfGrid.scrollFactor.set(0, 0);
-        bfGrid.alpha = 0.4;
-        add(bfGrid);
 
         // selectorLeft = new Alphabet(0, 0, '>');
         // add(selectorLeft);
@@ -60,7 +52,20 @@ class OptionsStateNew extends MusicBeatState {
         super.create();
     }
 
+    function openOptionState() {
+        switch optionsList[curSelected] {
+            case 'Gameplay':
+                trace('gameplay');
+            default:
+                openSubState(new funkin.states.options.OptionSubState());
+        }
+    }
+
     override function update(elapsed:Float) {
+        if (controls.ACCEPT) {
+            openOptionState();
+        }
+
         if (controls.BACK) {
             FlxG.switchState(new MainMenuState());
         }

@@ -27,7 +27,7 @@ class FunkinData {
             initialized = true;
     }
 
-    public static function loadData() {
+    public static function loadData(?log:Bool) {
         var newData:Bool = false;
         for (key => value in data) {
             if (Reflect.getProperty(save.data, key) == null) {
@@ -40,24 +40,27 @@ class FunkinData {
             // trace('Map: ' + key + ', ' + value);
             // trace('Data: ' + key + ', ' + Reflect.getProperty(save.data, key));
         }
-        if (!newData)
-            trace('Loaded data successfully!');
-        else
-            trace('No data was found, your data has been reset');
+        
+        if (log) {
+            if (!newData)
+                trace('Loaded data successfully!');
+            else
+                trace('No data was found, your data has been reset');
+        }
     }
 
-    public static function saveData() {
+    public static function saveData(?log:Bool) {
         for (key => value in data) {
             Reflect.setProperty(save.data, key, value);
         }
-        trace('Data saved!');
+        if (log) trace('Data saved!');
     }
 
-    public static function setToDefault() {
+    public static function setToDefault(?log:Bool) {
         for (key => value in dataDefault) {
             Reflect.setProperty(save.data, key, value);
         }
         data = dataDefault;
-        trace('Data reset');
+        if (log) trace('Data reset');
     }
 }
