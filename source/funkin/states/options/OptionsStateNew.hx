@@ -1,7 +1,6 @@
 package funkin.states.options;
 
 import flixel.addons.display.FlxBackdrop;
-import funkin.objects.ui.OptionItem;
 
 class OptionsStateNew extends MusicBeatState {
     public static var menuColor:FlxColor = 0xffc371fd;
@@ -55,7 +54,7 @@ class OptionsStateNew extends MusicBeatState {
     function openOptionState() {
         switch optionsList[curSelected] {
             case 'Gameplay':
-                trace('gameplay');
+                openSubState(new funkin.states.options.sections.GameplayOptions());
             default:
                 openSubState(new OptionSubState());
         }

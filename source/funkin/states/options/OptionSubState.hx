@@ -1,14 +1,11 @@
 package funkin.states.options;
 
 import flixel.addons.display.FlxBackdrop;
-import funkin.objects.ui.OptionItem;
+import funkin.states.options.OptionItem.Option;
 
 class OptionSubState extends MusicBeatSubstate {
-    var curOption:Int;
-
     var gridColor:FlxColor = OptionsStateNew.menuColor;
     var optionGroup:FlxTypedGroup<OptionItem>;
-    var optionsList:Array<Option>;
 
     var bfGrid:FlxBackdrop;
     var optionBG:FlxSprite;
@@ -17,8 +14,12 @@ class OptionSubState extends MusicBeatSubstate {
     var optionNameText:FlxText;
     var optionDescText:FlxText;
 
-    public function new() {
+    var menuState:Bool = true;
+
+    public function new(?menuState:Bool = true) {
         super();
+
+        this.menuState = menuState;
 
         bfGrid = new FlxBackdrop(Paths.image('options/bgGrid'));
 		bfGrid.setGraphicSize(Std.int(bfGrid.width * 0.5));
@@ -30,49 +31,65 @@ class OptionSubState extends MusicBeatSubstate {
         bfGrid.alpha = 0;
         add(bfGrid);
 
-        optionBG = new FlxSprite().loadGraphic(Paths.image('options/optionBG2'));
-		optionBG.updateHitbox();
-        optionBG.y = FlxG.height;
-		optionBG.scrollFactor.set();
-		add(optionBG);
-
-        textBG = new FlxSprite().makeGraphic(FlxG.width, 36, FlxColor.BLACK);
-		textBG.updateHitbox();
-        textBG.y = -textBG.height;
-		textBG.scrollFactor.set();
-		add(textBG);
-
-        optionNameText = new FlxText(0, 0, FlxG.width, "", 36);
-		optionNameText.setFormat(Paths.font('vcr.ttf'), 36, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-        optionNameText.y = -optionNameText.height;
-        optionNameText.scrollFactor.set();
-        add(optionNameText);
-
-        optionDescText = new FlxText(0, 0, FlxG.width, "", 12);
-		optionDescText.setFormat(Paths.font('vcr.ttf'), 12, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-        optionDescText.y = FlxG.height;
-        optionDescText.scrollFactor.set();
-        add(optionDescText);
-
         FlxTween.tween(bfGrid, { alpha: 0.6 }, 1);
-        FlxTween.tween(optionBG, { y: FlxG.height - optionBG.height }, 1, { ease: FlxEase.expoOut });
-        FlxTween.tween(textBG, { y: 0 }, 1, { ease: FlxEase.expoOut });
-        FlxTween.tween(optionNameText, { y: 0 }, 1, { ease: FlxEase.expoOut });
-        FlxTween.tween(optionDescText, { y: FlxG.height - optionDescText.height - 2 }, 1, { ease: FlxEase.expoOut });
+
+        if (menuState) {
+            optionBG = new FlxSprite().loadGraphic(Paths.image('options/optionBG2'));
+            optionBG.updateHitbox();
+            optionBG.y = FlxG.height;
+            optionBG.scrollFactor.set();
+            add(optionBG);
+
+            textBG = new FlxSprite().makeGraphic(FlxG.width, 48, FlxColor.BLACK);
+            textBG.updateHitbox();
+            textBG.y = -textBG.height;
+            textBG.scrollFactor.set();
+            add(textBG);
+
+            optionNameText = new FlxText(0, 0, FlxG.width, "", 48);
+            optionNameText.setFormat(Paths.font('vcr.ttf'), 48, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+            optionNameText.y = -optionNameText.height;
+            optionNameText.scrollFactor.set();
+            add(optionNameText);
+
+            optionDescText = new FlxText(0, 0, FlxG.width, "", 24);
+            optionDescText.setFormat(Paths.font('vcr.ttf'), 24, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+            optionDescText.y = FlxG.height;
+            optionDescText.scrollFactor.set();
+            add(optionDescText);
+
+            optionGroup = new FlxTypedGroup<OptionItem>();
+            add(optionGroup);
+
+            FlxTween.tween(optionBG, { y: FlxG.height - optionBG.height }, 1, { ease: FlxEase.expoOut });
+            FlxTween.tween(textBG, { y: 0 }, 1, { ease: FlxEase.expoOut });
+            FlxTween.tween(optionNameText, { y: 0 }, 1, { ease: FlxEase.expoOut });
+            FlxTween.tween(optionDescText, { y: FlxG.height - optionDescText.height - 2 }, 1, { ease: FlxEase.expoOut });
+        }
     }
 
     override function closeSubState() {
         FunkinData.saveData();
 
-        for (obj in [bfGrid, optionBG, textBG, optionNameText, optionDescText]) {
-            FlxTween.cancelTweensOf(obj);
-        }
-
+        FlxTween.cancelTweensOf(bfGrid);
         FlxTween.tween(bfGrid, { alpha: 0 }, 0.5);
-        FlxTween.tween(optionBG, { y: FlxG.height }, 0.5, { ease: FlxEase.expoIn });
-        FlxTween.tween(textBG, { y: -textBG.height }, 0.5, { ease: FlxEase.expoIn });
-        FlxTween.tween(optionNameText, { y: -optionNameText.height }, 0.5, { ease: FlxEase.expoOut });
-        FlxTween.tween(optionDescText, { y: FlxG.height }, 0.5, { ease: FlxEase.expoIn });
+
+        if (menuState) {
+            for (obj in [optionBG, textBG, optionNameText, optionDescText]) {
+                FlxTween.cancelTweensOf(obj);
+            }
+
+            FlxTween.tween(optionBG, { y: FlxG.height }, 0.5, { ease: FlxEase.expoIn });
+            FlxTween.tween(textBG, { y: -textBG.height }, 0.5, { ease: FlxEase.expoIn });
+            FlxTween.tween(optionNameText, { y: -optionNameText.height }, 0.5, { ease: FlxEase.expoIn });
+            FlxTween.tween(optionDescText, { y: FlxG.height }, 0.5, { ease: FlxEase.expoIn });
+
+            if (optionGroup.length > 0) {
+                for (item in optionGroup) {
+                    FlxTween.tween(item, { y: item.y + FlxG.height }, 0.5, { ease: FlxEase.expoIn });
+                }
+            }
+        }
         
         new FlxTimer().start(0.5, function(t:FlxTimer) {
             close();
@@ -85,24 +102,15 @@ class OptionSubState extends MusicBeatSubstate {
         if (controls.BACK) {
             closeSubState();
         }
-
-        if (controls.UI_UP_P) {
-            changeSelection(-1);
-        }
-
-        if (controls.UI_DOWN_P) {
-            changeSelection(1);
-        }
     }
 
-    function changeSelection(change:Int = 0, playSound:Bool = true) {
-        if (playSound) FlxG.sound.play(Paths.sound('scrollMenu'));
-
-        curOption += change;
-
-        if (curOption < 0)
-            curOption = optionsList.length - 1;
-        if (curOption > optionsList.length - 1)
-            curOption = 0;
+    var id:Int = 0;
+    function addOption(name:String, desc:String, variable:String, type:String) {
+        var item:OptionItem = new OptionItem(0, 0, name);
+        item.option = new Option(name, desc, variable, type);
+        item.isMenuItem = true;
+        item.targetY = id;
+        optionGroup.add(item);
+        id++;
     }
 }
