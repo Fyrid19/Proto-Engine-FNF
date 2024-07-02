@@ -1,10 +1,6 @@
 package funkin.states;
 
-import funkin.states.options.OptionsState;
-import flixel.addons.transition.FlxTransitionableState;
 import flixel.effects.FlxFlicker;
-import flixel.ui.FlxButton;
-import lime.app.Application;
 
 class MainMenuState extends MusicBeatState { // i hate how main menu is coded so why not do it myself
     var engineVer = 'v' + Application.current.meta.get('version');
@@ -97,7 +93,7 @@ class MainMenuState extends MusicBeatState { // i hate how main menu is coded so
                     }
                 case 'options':
                     item.acceptMenu = () -> {
-                        FlxG.switchState(new funkin.states.options.OptionsStateNew());
+                        FlxG.switchState(new funkin.options.OptionsStateNew());
                     }
                 default:
                     item.acceptMenu = () -> {

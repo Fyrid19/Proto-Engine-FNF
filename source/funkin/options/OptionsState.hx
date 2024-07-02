@@ -1,4 +1,4 @@
-package funkin.states.options;
+package funkin.options;
 
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.util.FlxSignal;

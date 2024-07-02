@@ -1,16 +1,14 @@
-package funkin.states.options;
+package funkin.options;
 
 import flixel.addons.display.FlxBackdrop;
+import funkin.options.objects.SectionName;
 
 class OptionsStateNew extends MusicBeatState {
     public static var menuColor:FlxColor = 0xffc371fd;
 
     var curSelected:Int = 0;
 
-    var selectorLeft:Alphabet;
-    var selectorRight:Alphabet;
-
-    var menuItems:FlxTypedGroup<Alphabet>;
+    var menuItems:FlxTypedGroup<SectionName>;
     var optionsList:Array<String> = [
         'Gameplay',
         'Controls',
@@ -30,54 +28,44 @@ class OptionsStateNew extends MusicBeatState {
 		menuBG.scrollFactor.set();
 		add(menuBG);
 
-        // selectorLeft = new Alphabet(0, 0, '>');
-        // add(selectorLeft);
-        // selectorRight = new Alphabet(0, 0, '<');
-        // add(selectorRight);
-
-        menuItems = new FlxTypedGroup<Alphabet>();
-        add(menuItems);
-
-        var spacing:Float = 100;
         for (i in 0...optionsList.length) {
-            var menuItem:Alphabet = new Alphabet(0, 100+(i*spacing), optionsList[i], true);
-            menuItem.screenCenter(X);
-            menuItem.ID = i;
-            menuItems.add(menuItem);
+            // var newSection = Reflect.getProperty(funkin.options.sections, optionsList[i] + 'Section');
         }
+
+        var section = new SectionName(0, 0, 'Gameplay');
+        add(section);
+
+        menuItems = new FlxTypedGroup<SectionName>();
+        add(menuItems);
 
         changeSelection(0, false);
 
         super.create();
     }
 
-    function openOptionState() {
-        switch optionsList[curSelected] {
-            case 'Gameplay':
-                openSubState(new funkin.states.options.sections.GameplayOptions());
-            default:
-                openSubState(new OptionSubState());
-        }
-    }
-
     override function update(elapsed:Float) {
         if (controls.ACCEPT) {
-            openOptionState();
+            trace('accept');
         }
 
         if (controls.BACK) {
             FlxG.switchState(new MainMenuState());
         }
 
-        if (controls.UI_UP_P) {
+        if (controls.UI_LEFT_P) {
             changeSelection(-1);
         }
 
-        if (controls.UI_DOWN_P) {
+        if (controls.UI_RIGHT_P) {
             changeSelection(1);
         }
 
         super.update(elapsed);
+    }
+
+    function addSection(section:funkin.options.sections.OptionSection) {
+        var section = new SectionName(0, 0, section.sectionName);
+        add(section);
     }
 
     function changeSelection(change:Int = 0, playSound:Bool = true) {
@@ -96,11 +84,5 @@ class OptionsStateNew extends MusicBeatState {
             else
                 item.alpha = 0.6;
         }
-
-        // will do later
-        // FlxTween.cancelTweensOf(selectorLeft);
-        // FlxTween.cancelTweensOf(selectorRight);
-        // FlxTween.tween(selectorLeft, {x: item.x - selectorLeft.width - 10, y: item.y}, 0.6, {ease: FlxEase.circOut});
-        // FlxTween.tween(selectorRight, {x: item.x + item.width + selectorRight.width + 10, y: item.y}, 0.6, {ease: FlxEase.circOut});
     }
 }

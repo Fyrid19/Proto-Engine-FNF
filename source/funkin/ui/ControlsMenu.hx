@@ -4,7 +4,7 @@ import flixel.FlxCamera;
 import flixel.input.gamepad.FlxGamepadInputID;
 import flixel.input.keyboard.FlxKey;
 
-import funkin.states.options.OptionsState;
+import funkin.options.OptionsState;
 
 import funkin.ui.TextMenuList.TextMenuItem;
 import funkin.ui.MenuList.MenuTypedList;
