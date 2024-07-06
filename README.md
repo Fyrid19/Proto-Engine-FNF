@@ -1,4 +1,4 @@
-# Friday Night Funkin' : Funkin' Out!
+# Friday Night Funkin' : Prototype Engine
 engien for funky game ill write more on this later
 
 ## !! YOU SHOULD NOT USE THIS ENGINE (YET) !!
