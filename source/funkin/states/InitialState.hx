@@ -50,6 +50,16 @@ class InitialState extends MusicBeatState {
 		if (FunkinData.initialized)
         	FlxG.switchState(new funkin.states.TitleState());
 
+		FlxG.signals.focusLost.add(function() {
+			Main.lostFocus.visible = true;
+			// trace('focus lost');
+		});
+
+		FlxG.signals.focusGained.add(function() {
+			Main.lostFocus.visible = false;
+			// trace('focus gained');
+		});
+
         super.create();
     }
 

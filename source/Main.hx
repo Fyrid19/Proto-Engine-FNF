@@ -2,12 +2,12 @@ package;
 
 import funkin.FNFGame;
 import flixel.FlxState;
-import openfl.Lib;
 import openfl.display.Sprite;
 import openfl.events.Event;
 import openfl.media.Video;
 import openfl.net.NetStream;
 import backend.framerate.FullFPS;
+import backend.focus.FocusLost;
 
 class Main extends Sprite
 {
@@ -61,6 +61,7 @@ class Main extends Sprite
 	private var overlay:Sprite;
 
 	public static var fpsCounter:FullFPS;
+	public static var lostFocus:FocusLost;
 
 	private function setupGame():Void
 	{
@@ -79,9 +80,11 @@ class Main extends Sprite
 		game = new FNFGame(gameWidth, gameHeight, initialState, framerate, framerate, skipSplash, startFullscreen);
 		addChild(game);
 
-		#if !mobile
+		lostFocus = new FocusLost();
+		lostFocus.visible = false;
+		addChild(lostFocus);
+
 		fpsCounter = new FullFPS();
 		addChild(fpsCounter);
-		#end
 	}
 }

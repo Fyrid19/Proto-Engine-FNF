@@ -7,6 +7,10 @@ import flixel.FlxGame;
 class FNFGame extends FlxGame {
     override function update() {
 		super.update();
+
+        // temporary solution
+        FunkinData.save.data.volume = FlxG.sound.volume;
+
         debugKeys();
     }
 

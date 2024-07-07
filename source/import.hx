@@ -26,6 +26,8 @@ import backend.FunkinData;
 
 import backend.SwagCamera;
 
+import openfl.Lib;
+
 import lime.app.Application;
 
 import flixel.FlxG;
