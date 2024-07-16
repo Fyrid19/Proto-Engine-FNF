@@ -1,6 +1,5 @@
 package funkin;
 
-import flixel.util.FlxArrayUtil;
 import flixel.FlxGame;
 
 // mainly used for debug keybinds

@@ -36,7 +36,7 @@ class InitialState extends MusicBeatState {
 		if (FunkinData.save.data.mute != null)
 			FlxG.sound.muted = FunkinData.save.data.mute;
 
-        // FlxG.autoPause = FunkinData.save.data.unfocusPause;
+        FlxG.autoPause = FunkinData.save.data.unfocusPause;
 
         #if discord_rpc
 		Discord.initialize();
@@ -59,6 +59,9 @@ class InitialState extends MusicBeatState {
 			Main.lostFocus.visible = false;
 			// trace('focus gained');
 		});
+
+		trace(EngineMain.repository);
+		trace(EngineMain.getRepoCommits());
 
         super.create();
     }

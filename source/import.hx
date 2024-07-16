@@ -23,6 +23,7 @@ import backend.Conductor;
 import backend.MusicBeatState;
 import backend.MusicBeatSubstate;
 import backend.FunkinData;
+import backend.EngineMain;
 
 import backend.SwagCamera;
 
