@@ -60,7 +60,8 @@ class InitialState extends MusicBeatState {
 			// trace('focus gained');
 		});
 
-		trace(EngineMain.repository);
+		trace(EngineMain.repository.name);
+		trace(EngineMain.repository.description);
 		trace(EngineMain.getRepoCommits());
 
         super.create();

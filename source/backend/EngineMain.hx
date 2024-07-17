@@ -1,5 +1,6 @@
 package backend;
 
+import haxegithub.GithubAPI;
 import haxegithub.utils.*;
 
 class EngineMain {
@@ -7,9 +8,18 @@ class EngineMain {
     public static final repoName:String = 'Proto-Engine-FNF';
     public static final repository = Repository.get(repoOwner, repoName);
 
+    // REPLACE THIS WITH YOUR INITIAL GITHUB COMMIT HASH IF YOU WANNA USE GITHUB COMMIT SHIT
+    private static var firstCommit:String = 'cc34b41d331660c28b532924aaa931f460441d63';
+
     inline public static function getRepoCommits():Int {
-        var api = new haxegithub.GithubAPI();
+        var api = new GithubAPI();
+        api.request('repos/$repoOwner/$repoName/compare/$firstCommit...main');
+        return api.json.total_commits + 1;
+    }
+
+    inline public static function getCurCommit() {
+        var api = new GithubAPI();
         api.request('repos/$repoOwner/$repoName/commits');
-        return api.json.length;
+        return api.json[0];
     }
 }
