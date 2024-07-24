@@ -18,5 +18,10 @@ class FNFGame extends FlxGame {
             FlxG.resetGame();
             trace('reset');
         }
+
+        if (FlxG.keys.pressed.CONTROL && FlxG.keys.justPressed.F) {
+			FlxG.fullscreen = !FlxG.fullscreen;
+            trace('fullscreen ' + FlxG.fullscreen);
+        }
     }
 }

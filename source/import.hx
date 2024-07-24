@@ -6,19 +6,15 @@ import utils.Discord;
 import utils.Paths;
 import utils.FunkinUtil;
 import utils.Highscore;
-import utils.InputFormatter;
-import utils.PlayerSettings;
 
 import funkin.states.PlayState;
 import funkin.states.LoadingState;
 import funkin.states.*;
 import funkin.objects.*;
 import funkin.objects.ui.*;
-import funkin.ui.PreferencesMenu;
 
 import shaders.*;
 
-import backend.Controls;
 import backend.Conductor;
 import backend.MusicBeatState;
 import backend.MusicBeatSubstate;

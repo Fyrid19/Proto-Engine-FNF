@@ -14,17 +14,38 @@ class FunkinData {
         'cameraZoom' => true,
         'unfocusPause' => true,
         'globalAntialiasing' => true,
-        'maxFramerate' => 60
+        'maxFramerate' => 60,
+        'childFriendly' => false
     ];
 
     public static function initialize() {
         save = new FlxSave();
-        save.bind('prototype', 'fyridev');
+        save.bind('prototype', EngineMain.savePath);
         data = dataDefault;
+        loadKeybinds();
         loadData();
 
         if (data != null)
             initialized = true;
+    }
+
+    public static function loadKeybinds() {
+        var csave = new FlxSave();
+        csave.bind('controls', EngineMain.savePath);
+        
+        if (csave.data.keybinds == null) {
+            csave.data.keybinds = Controls.keyBinds;
+            trace('No keybinds found, setting to default');
+        } else {
+            Controls.keyBinds = csave.data.keybinds;
+        }
+
+        if (csave.data.padbinds == null) {
+            csave.data.padbinds = Controls.controllerBinds;
+            trace('No controller binds found, setting to default');
+        } else {
+            Controls.controllerBinds = csave.data.padbinds;
+        }
     }
 
     public static function loadData(?log:Bool) {

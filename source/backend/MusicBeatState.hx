@@ -5,14 +5,16 @@ import flixel.addons.transition.FlxTransitionableState;
 import flixel.addons.ui.FlxUIState;
 import flixel.math.FlxRect;
 
+import backend.Controls.ControlMap;
+
 class MusicBeatState extends FlxUIState
 {
 	private var curStep:Int = 0;
 	private var curBeat:Int = 0;
-	private var controls(get, never):Controls;
+	private var controls(get, never):ControlMap;
 
-	inline function get_controls():Controls
-		return PlayerSettings.player1.controls;
+	inline function get_controls():ControlMap
+		return Controls.controlMap;
 
 	override function update(elapsed:Float)
 	{

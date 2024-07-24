@@ -13,14 +13,16 @@ import haxe.io.Path;
 **/
 class InitialState extends MusicBeatState {
     override function create() {
-        #if MODS
-		ModUtil.init();
+        #if MOD_SUPPORT
+		trace('the mod be supporting');
 		#end
 
+		FlxG.save.bind('prototype', EngineMain.savePath); // just a precaution
         FunkinData.initialize();
 		Highscore.load();
 
 		#if CRASH_HANDLER
+		trace('the crashes be handlin');
 		crashInit();
 		#end
 
@@ -60,9 +62,13 @@ class InitialState extends MusicBeatState {
 			// trace('focus gained');
 		});
 
-		trace(EngineMain.repository.name);
-		trace(EngineMain.repository.description);
-		trace(EngineMain.getRepoCommits());
+		#if VIDEO_PLAYBACK
+		trace('videos allowed');
+		#end
+
+		// trace(EngineMain.repository.name);
+		// trace(EngineMain.repository.description);
+		// trace(EngineMain.getRepoCommits());
 
         super.create();
     }
