@@ -23,5 +23,8 @@ class FNFGame extends FlxGame {
 			FlxG.fullscreen = !FlxG.fullscreen;
             trace('fullscreen ' + FlxG.fullscreen);
         }
+
+        // if (FlxG.keys.justPressed.E)
+        //     FunkinUtil.forceCrash('testing');
     }
 }

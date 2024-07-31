@@ -8,16 +8,16 @@ import polymod.util.zip.ZipParser;
 import flixel.util.FlxSave;
 
 class Mod {
-    var name:String;
-    var desc:String;
-    var path:String;
-    var data:FlxSave = null;
+    public var name:String;
+    public var desc:String;
+    public var path:String;
+    public var data:FlxSave = null;
     
-    var meta:Array<Dynamic> = [];
+    public var meta:Array<Dynamic> = [];
 
-    var links:Array<String> = [];
+    public var links:Array<String> = [];
 
-    var saveLocation:String;
+    public var saveLocation:String;
 
     public function new(name:String, desc:String, ?hasCustomSave:Bool, ?saveLocation:String) {
         this.name = name;

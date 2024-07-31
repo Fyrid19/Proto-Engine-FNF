@@ -2,6 +2,9 @@ package backend;
 
 import flixel.util.FlxSave;
 
+import funkin.modding.util.ModUtil;
+import funkin.modding.Mod;
+
 class FunkinData {
     public static var initialized:Bool = false;
 
@@ -18,15 +21,27 @@ class FunkinData {
         'childFriendly' => false
     ];
 
+    public static var loadedMods:Array<Mod> = [];
+
     public static function initialize() {
         save = new FlxSave();
         save.bind('prototype', EngineMain.savePath);
         data = dataDefault;
+
+        loadActiveMods();
+
         loadKeybinds();
         loadData();
 
         if (data != null)
             initialized = true;
+    }
+
+    public static function loadActiveMods() {
+        if (save.data.loadedMods == null)
+            save.data.loadedMods = [];
+        loadedMods = save.data.loadedMods;
+        ModUtil.loadMods();
     }
 
     public static function loadKeybinds() {

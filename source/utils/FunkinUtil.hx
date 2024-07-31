@@ -1,6 +1,9 @@
 package utils;
 
 import lime.utils.Assets;
+import lime.system.System;
+
+import haxe.Exception;
 
 class FunkinUtil
 {
@@ -59,5 +62,9 @@ class FunkinUtil
 
 	public static function formatMemory(mem:Float) {
 		return flixel.util.FlxStringUtil.formatBytes(mem);
+	}
+
+	public static function forceCrash(?msg:String = 'No message provided (forced crash)') {
+		throw msg; // yeah, thats it, crazy i know
 	}
 }

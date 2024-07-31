@@ -1,6 +1,7 @@
 package funkin.states;
 
 import openfl.Lib;
+import lime.system.System;
 
 #if CRASH_HANDLER
 import openfl.events.UncaughtErrorEvent;
@@ -100,8 +101,9 @@ class InitialState extends MusicBeatState {
 
 		msg += '\nPlease report this error to the GitHub page! \nhttps://github.com/Fyrid19/Proto-Engine-FNF';
 
+		trace(msg);
 		Application.current.window.alert(msg, "Game Crash");
-		Sys.exit(1);
+		System.exit(1);
 	}
 	#end
 }
