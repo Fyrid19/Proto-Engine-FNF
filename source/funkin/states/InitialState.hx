@@ -97,13 +97,13 @@ class InitialState extends MusicBeatState {
 				case CFunction:
 					errData += 'C Function\n';
 				case Method(name, method):
-					errData += 'Class method: ' + name '.' + method + '\n';
+					errData += 'Class method: ' + name + '.' + method + '\n';
 				case LocalFunction(v):
 					errData += 'Local function #' + v + '\n';
 			}
 		}
 
-		new Process("./crash/ProtoCrash.exe", errMsg, errData, dateNow);
+		new Process("./crash/ProtoCrash.exe", [errMsg, errData, dateNow]);
 		Sys.exit(1);
 	}
 	#end
