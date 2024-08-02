@@ -61,10 +61,12 @@
 	
 	<assets path="assets/videos" library="videos" if="VIDEO_PLAYBACK"/>
 
-	<assets path="assets/" rename="assets" exclude="*.ogg" if="web"/>
-	<assets path="assets/" rename="assets" exclude="*.mp3" unless="web"/>
+	<assets path="assets" exclude="*.ogg" if="web"/>
+	<assets path="assets" exclude="*.mp3" unless="web"/>
 	
 	<assets path='mods' embed='false'/>
+
+	<assets path='crash/export/release/windows/bin' rename='crash' embed='false' if='CRASH_HANDLER' />
 
 	<!-- <template path="example_mods" rename="mods" /> -->
 

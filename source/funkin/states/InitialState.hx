@@ -7,6 +7,7 @@ import lime.system.System;
 import openfl.events.UncaughtErrorEvent;
 import haxe.CallStack;
 import haxe.io.Path;
+import sys.io.Process;
 #end
 
 /**
@@ -24,7 +25,7 @@ class InitialState extends MusicBeatState {
 
 		#if CRASH_HANDLER
 		trace('the crashes be handlin');
-		crashInit();
+		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
 		#end
 
         FlxG.game.focusLostFramerate = 60;
@@ -74,36 +75,31 @@ class InitialState extends MusicBeatState {
         super.create();
     }
 
-	function crashInit() {
-		#if CRASH_HANDLER
-		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
-		#end
-	}
-
 	// referenced from psych engine, which in turn is from "Izzy Engine" and made by sqirra-rng
 	#if CRASH_HANDLER
 	function onCrash(e:UncaughtErrorEvent):Void {
-		var msg:String = "";
+		var errorData:Array<String> = [''];
 		var callStack:Array<StackItem> = CallStack.exceptionStack(true);
+		var dateNow:String = Date.now().toString();
+		var dateFormat:String = dateNow.replace(" ", "_").replace(":", "'");
 
-		msg += 'Game crash!\n' + e.error + '\n';
+		errorData[0] = e.error;
+		errorData[1] = '';
+		errorData[2] = dateNow;
 
 		for (stackItem in callStack)
 		{
 			switch (stackItem)
 			{
 				case FilePos(s, file, line, column):
-					msg += file + " at line " + line + "\n";
+					errorData[1] += file + " (line " + line + ")\n";
 				default:
 					Sys.println(stackItem);
 			}
 		}
 
-		msg += '\nPlease report this error to the GitHub page! \nhttps://github.com/Fyrid19/Proto-Engine-FNF';
-
-		trace(msg);
-		Application.current.window.alert(msg, "Game Crash");
-		System.exit(1);
+		new Process("./crash/ProtoCrash.exe", errorData[0], errorData[1], errorData[2]);
+		Sys.exit(1);
 	}
 	#end
 }

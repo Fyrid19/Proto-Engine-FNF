@@ -23,8 +23,8 @@ jobs:
         haxelib install lime-samples --quiet
         haxelib install lime --quiet
         haxelib install openfl --quiet
-        haxelib install haxeui-core --quiet
-        haxelib install haxeui-flixel --quiet
+        haxelib install haxeui-core 1.6.0 --quiet
+        haxelib install haxeui-flixel 1.6.0 --quiet
         haxelib install newgrounds --quiet
         haxelib git haxe-github https://github.com/GuineaPigUuhh/haxe-github.git --quiet
         haxelib git hxCodec https://github.com/Fyrid19/hxCodec.git --quiet
