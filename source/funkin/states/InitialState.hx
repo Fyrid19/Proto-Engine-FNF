@@ -75,30 +75,35 @@ class InitialState extends MusicBeatState {
         super.create();
     }
 
-	// referenced from psych engine, which in turn is from "Izzy Engine" and made by sqirra-rng
+	// base code by sqirra-rng
 	#if CRASH_HANDLER
 	function onCrash(e:UncaughtErrorEvent):Void {
-		var errorData:Array<String> = [''];
+		var errMsg:String = '';
+		var errData:String = '';
+
 		var callStack:Array<StackItem> = CallStack.exceptionStack(true);
 		var dateNow:String = Date.now().toString();
-		var dateFormat:String = dateNow.replace(" ", "_").replace(":", "'");
 
-		errorData[0] = e.error;
-		errorData[1] = '';
-		errorData[2] = dateNow;
+		errMsg = e.error;
+		errData = '';
 
-		for (stackItem in callStack)
-		{
-			switch (stackItem)
-			{
+		// ughhh.. i wanna sleep
+		for (stackItem in callStack) {
+			switch (stackItem) {
 				case FilePos(s, file, line, column):
-					errorData[1] += file + " (line " + line + ")\n";
-				default:
-					Sys.println(stackItem);
+					errData += file + " (line " + line + ")\n";
+				case Module(m):
+					errData += 'Module ' + m + '\n';
+				case CFunction:
+					errData += 'C Function\n';
+				case Method(name, method):
+					errData += 'Class method: ' + name '.' + method + '\n';
+				case LocalFunction(v):
+					errData += 'Local function #' + v + '\n';
 			}
 		}
 
-		new Process("./crash/ProtoCrash.exe", errorData[0], errorData[1], errorData[2]);
+		new Process("./crash/ProtoCrash.exe", errMsg, errData, dateNow);
 		Sys.exit(1);
 	}
 	#end
