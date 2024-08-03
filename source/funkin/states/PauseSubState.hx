@@ -1,6 +1,5 @@
 package funkin.states;
 
-import backend.Controls.Control;
 import flixel.input.keyboard.FlxKey;
 import flixel.sound.FlxSound;
 
@@ -166,12 +165,6 @@ class PauseSubState extends MusicBeatSubstate
 					else
 						FlxG.switchState(new FreeplayState());
 			}
-		}
-
-		if (FlxG.keys.justPressed.J)
-		{
-			// for reference later!
-			// PlayerSettings.player1.controls.replaceBinding(Control.LEFT, Keys, FlxKey.J, null);
 		}
 	}
 

@@ -23,10 +23,11 @@ jobs:
         haxelib install lime-samples --quiet
         haxelib install lime --quiet
         haxelib install openfl --quiet
-        haxelib install haxeui-core --quiet
-        haxelib install haxeui-flixel --quiet
+        haxelib install haxeui-core 1.6.0 --quiet
+        haxelib install haxeui-flixel 1.6.0 --quiet
         haxelib install newgrounds --quiet
-        haxelib git hxCodec https://github.com/polybiusproxy/hxCodec --quiet
+        haxelib git haxe-github https://github.com/GuineaPigUuhh/haxe-github.git --quiet
+        haxelib git hxCodec https://github.com/Fyrid19/hxCodec.git --quiet
         haxelib git polymod https://github.com/larsiusprime/polymod --quiet
         haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc --quiet
         haxelib git linc_luajit https://github.com/superpowers04/linc_luajit --quiet

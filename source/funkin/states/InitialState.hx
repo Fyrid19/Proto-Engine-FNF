@@ -1,11 +1,13 @@
 package funkin.states;
 
 import openfl.Lib;
+import lime.system.System;
 
 #if CRASH_HANDLER
 import openfl.events.UncaughtErrorEvent;
 import haxe.CallStack;
 import haxe.io.Path;
+import sys.io.Process;
 #end
 
 /**
@@ -13,15 +15,17 @@ import haxe.io.Path;
 **/
 class InitialState extends MusicBeatState {
     override function create() {
-        #if MODS
-		ModUtil.init();
+        #if MOD_SUPPORT
+		trace('the mod be supporting');
 		#end
 
+		FlxG.save.bind('prototype', EngineMain.savePath); // just a precaution
         FunkinData.initialize();
 		Highscore.load();
 
 		#if CRASH_HANDLER
-		crashInit();
+		trace('the crashes be handlin');
+		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
 		#end
 
         FlxG.game.focusLostFramerate = 60;
@@ -36,7 +40,7 @@ class InitialState extends MusicBeatState {
 		if (FunkinData.save.data.mute != null)
 			FlxG.sound.muted = FunkinData.save.data.mute;
 
-        // FlxG.autoPause = FunkinData.save.data.unfocusPause;
+        FlxG.autoPause = FunkinData.save.data.unfocusPause;
 
         #if discord_rpc
 		Discord.initialize();
@@ -60,38 +64,46 @@ class InitialState extends MusicBeatState {
 			// trace('focus gained');
 		});
 
+		#if VIDEO_PLAYBACK
+		trace('videos allowed');
+		#end
+
+		// trace(EngineMain.repository.name);
+		// trace(EngineMain.repository.description);
+		// trace(EngineMain.getRepoCommits());
+
         super.create();
     }
 
-	function crashInit() {
-		#if CRASH_HANDLER
-		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
-		#end
-	}
-
-	// referenced from psych engine, which in turn is from "Izzy Engine" and made by sqirra-rng
+	// base code by sqirra-rng
 	#if CRASH_HANDLER
 	function onCrash(e:UncaughtErrorEvent):Void {
-		var msg:String = "";
+		var errMsg:String = '';
+		var errData:String = '';
 		var callStack:Array<StackItem> = CallStack.exceptionStack(true);
+		var dateNow:String = Date.now().toString();
 
-		msg += 'Game crash!\n' + e.error + '\n';
+		errMsg = e.error;
+		errData = '';
 
-		for (stackItem in callStack)
-		{
-			switch (stackItem)
-			{
+		// ughhh.. i wanna sleep
+		for (stackItem in callStack) {
+			switch (stackItem) {
 				case FilePos(s, file, line, column):
-					msg += file + " at line " + line + "\n";
-				default:
-					Sys.println(stackItem);
+					errData += file + " (line " + line + ")\n";
+				case Module(m):
+					errData += 'Module ' + m + '\n';
+				case CFunction:
+					errData += 'C Function\n';
+				case Method(name, method):
+					errData += 'Class method: ' + name + '.' + method + '\n';
+				case LocalFunction(v):
+					errData += 'Local function #' + v + '\n';
 			}
 		}
 
-		msg += '\nPlease report this error to the GitHub page! \nhttps://github.com/Fyrid19/Proto-Engine-FNF';
-
-		Application.current.window.alert(msg, "Game Crash");
-		Sys.exit(1);
+		new Process("./crash/ProtoCrash.exe", [errMsg, errData, dateNow]);
+		Sys.exit(0);
 	}
 	#end
 }

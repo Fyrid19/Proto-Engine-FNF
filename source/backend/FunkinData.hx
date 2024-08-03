@@ -2,6 +2,9 @@ package backend;
 
 import flixel.util.FlxSave;
 
+import funkin.modding.util.ModUtil;
+import funkin.modding.Mod;
+
 class FunkinData {
     public static var initialized:Bool = false;
 
@@ -14,17 +17,50 @@ class FunkinData {
         'cameraZoom' => true,
         'unfocusPause' => true,
         'globalAntialiasing' => true,
-        'maxFramerate' => 60
+        'maxFramerate' => 60,
+        'childFriendly' => false
     ];
+
+    public static var loadedMods:Array<Mod> = [];
 
     public static function initialize() {
         save = new FlxSave();
-        save.bind('prototype', 'fyridev');
+        save.bind('prototype', EngineMain.savePath);
         data = dataDefault;
+
+        loadActiveMods();
+
+        loadKeybinds();
         loadData();
 
         if (data != null)
             initialized = true;
+    }
+
+    public static function loadActiveMods() {
+        if (save.data.loadedMods == null)
+            save.data.loadedMods = [];
+        loadedMods = save.data.loadedMods;
+        ModUtil.loadMods();
+    }
+
+    public static function loadKeybinds() {
+        var csave = new FlxSave();
+        csave.bind('controls', EngineMain.savePath);
+        
+        if (csave.data.keybinds == null) {
+            csave.data.keybinds = Controls.keyBinds;
+            trace('No keybinds found, setting to default');
+        } else {
+            Controls.keyBinds = csave.data.keybinds;
+        }
+
+        if (csave.data.padbinds == null) {
+            csave.data.padbinds = Controls.controllerBinds;
+            trace('No controller binds found, setting to default');
+        } else {
+            Controls.controllerBinds = csave.data.padbinds;
+        }
     }
 
     public static function loadData(?log:Bool) {

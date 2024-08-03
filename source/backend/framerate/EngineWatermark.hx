@@ -5,15 +5,24 @@ import openfl.text.TextField;
 import openfl.text.TextFormat;
 
 class EngineWatermark extends Sprite {
-    var _text:TextField;
+    var watermarkTxt:TextField;
+    var commitTxt:TextField;
     public function new() {
         super();
 
-        _text = new TextField();
-        _text.autoSize = LEFT;
-        _text.multiline = false;
-        _text.defaultTextFormat = new TextFormat(FullFPS.fpsFont, 14, 0xFFFFFF);
-        _text.text = 'Prototype Engine ' + Main.engineVersion;
-        addChild(_text);
+        watermarkTxt = new TextField();
+        commitTxt = new TextField();
+
+        for(text in [watermarkTxt, commitTxt]) {
+			text.text = "";
+			text.autoSize = LEFT;
+			text.multiline = false;
+            text.defaultTextFormat = new TextFormat(FullFPS.fpsFont, 14, 0xFFFFFF);
+			addChild(text);
+		}
+
+        watermarkTxt.text = 'Prototype Engine ' + Main.engineVersion;
+        commitTxt.text = 'Commit ' + EngineMain.getRepoCommits();
+        commitTxt.y = watermarkTxt.y + watermarkTxt.height;
     }
 }

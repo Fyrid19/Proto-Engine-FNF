@@ -1,5 +1,7 @@
 package backend;
 
+import backend.Controls.ControlMap;
+
 class MusicBeatSubstate extends FlxSubState
 {
 	public function new()
@@ -9,10 +11,10 @@ class MusicBeatSubstate extends FlxSubState
 
 	private var curStep:Int = 0;
 	private var curBeat:Int = 0;
-	private var controls(get, never):Controls;
+	private var controls(get, never):ControlMap;
 
-	inline function get_controls():Controls
-		return PlayerSettings.player1.controls;
+	inline function get_controls():ControlMap
+		return Controls.controlMap;
 
 	override function update(elapsed:Float)
 	{

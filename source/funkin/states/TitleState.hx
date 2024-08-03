@@ -1,20 +1,21 @@
 package funkin.states;
 
-import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileDiamond;
-import flixel.addons.transition.FlxTransitionableState;
 import flixel.addons.transition.TransitionData;
+import flixel.addons.transition.FlxTransitionableState;
+import flixel.addons.transition.FlxTransitionSprite;
 import flixel.graphics.FlxGraphic;
-import flixel.input.gamepad.FlxGamepad;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
+
 import openfl.Assets;
 import openfl.display.Sprite;
-import openfl.events.AsyncErrorEvent;
-import openfl.events.MouseEvent;
-import openfl.events.NetStatusEvent;
 import openfl.media.Video;
 import openfl.net.NetStream;
 import polymod.Polymod;
+
+#if VIDEO_PLAYBACK
+import hxcodec.flixel.FlxVideoSprite;
+#end
 
 #if desktop
 import sys.FileSystem;
@@ -40,9 +41,13 @@ class TitleState extends MusicBeatState
 	var alphaShader:BuildingShaders;
 	var thingie:FlxSprite;
 
-	var video:Video;
-	var netStream:NetStream;
-	private var overlay:Sprite;
+	var blackFG:FlxSprite;
+
+	#if VIDEO_PLAYBACK
+	var playingKickstarterVideo:Bool;
+	var camVideo:FlxCamera;
+	var kickstarter:FlxVideoSprite;
+	#end
 
 	override public function create():Void
 	{
@@ -62,26 +67,7 @@ class TitleState extends MusicBeatState
 
 		super.create();
 
-		FlxG.save.bind('funkin', 'ninjamuffin99');
-		PreferencesMenu.initPrefs();
-		PlayerSettings.init();
-		Highscore.load();
-
-		if (FlxG.save.data.weekUnlocked != null)
-		{
-			// FIX LATER!!!
-			// WEEK UNLOCK PROGRESSION!!
-			// StoryMenuState.weekUnlocked = FlxG.save.data.weekUnlocked;
-
-			if (StoryMenuState.weekUnlocked.length < 4)
-				StoryMenuState.weekUnlocked.insert(0, true);
-
-			// QUICK PATCH OOPS!
-			if (!StoryMenuState.weekUnlocked[0])
-				StoryMenuState.weekUnlocked[0] = true;
-		}
-
-		new FlxTimer().start(1, function(tmr:FlxTimer)
+		new FlxTimer().start(1, function(t)
 		{
 			startIntro();
 			trace('intro started');
@@ -97,50 +83,13 @@ class TitleState extends MusicBeatState
 		#end
 	}
 
-	private function client_onMetaData(metaData:Dynamic)
-	{
-		video.attachNetStream(netStream);
-
-		video.width = video.videoWidth;
-		video.height = video.videoHeight;
-		// video.
-	}
-
-	private function netStream_onAsyncError(event:AsyncErrorEvent):Void
-	{
-		trace("Error loading video");
-	}
-
-	private function netConnection_onNetStatus(event:NetStatusEvent):Void
-	{
-		if (event.info.code == 'NetStream.Play.Complete')
-		{
-			// netStream.dispose();
-			// FlxG.stage.removeChild(video);
-
-			startIntro();
-		}
-
-		trace(event.toString());
-	}
-
-	private function overlay_onMouseDown(event:MouseEvent):Void
-	{
-		netStream.soundTransform.volume = 0.2;
-		netStream.soundTransform.pan = -1;
-		// netStream.play(Paths.file('music/kickstarterTrailer.mp4'));
-
-		FlxG.stage.removeChild(overlay);
-	}
-
 	var logoBl:FlxSprite;
 
 	var gfDance:FlxSprite;
 	var danceLeft:Bool = false;
 	var titleText:FlxSprite;
 
-	function startIntro()
-	{
+	function startIntro() {
 		if (!initialized)
 		{
 			var diamond:FlxGraphic = FlxGraphic.fromClass(GraphicTransTileDiamond);
@@ -153,7 +102,7 @@ class TitleState extends MusicBeatState
 				{asset: diamond, width: 32, height: 32}, new FlxRect(-200, -200, FlxG.width * 1.4, FlxG.height * 1.4));
 		}
 
-		if (FlxG.sound.music == null || !FlxG.sound.music.playing)
+		if (FlxG.sound.music == null || !FlxG.sound.music.playing || FlxG.sound.music.volume == 0)
 		{
 			FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
 			FlxG.sound.music.fadeIn(4, 0, 0.7);
@@ -239,6 +188,10 @@ class TitleState extends MusicBeatState
 		ngSpr.screenCenter(X);
 		ngSpr.antialiasing = true;
 
+		blackFG = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		blackFG.alpha = 0;
+		add(blackFG);
+
 		FlxTween.tween(credTextShit, {y: credTextShit.y + 20}, 2.9, {ease: FlxEase.quadInOut, type: PINGPONG});
 
 		FlxG.mouse.visible = false;
@@ -250,6 +203,14 @@ class TitleState extends MusicBeatState
 
 		startedIntro = true;
 		// credGroup.add(credTextShit);
+
+		#if VIDEO_PLAYBACK
+		camVideo = new FlxCamera();
+		add(camVideo);
+
+		kickstarter = new FlxVideoSprite(0, 0);
+		add(kickstarter);
+		#end
 	}
 
 	function getIntroTextShit():Array<Array<String>>
@@ -291,10 +252,7 @@ class TitleState extends MusicBeatState
 			Conductor.songPosition = FlxG.sound.music.time;
 		// FlxG.watch.addQuick('amp', FlxG.sound.music.amplitude);
 
-		if (FlxG.keys.justPressed.F)
-			FlxG.fullscreen = !FlxG.fullscreen;
-
-		var pressedEnter:Bool = FlxG.keys.justPressed.ENTER;
+		var pressedEnter:Bool = controls.ACCEPT;
 
 		#if mobile
 		for (touch in FlxG.touches.list)
@@ -304,24 +262,10 @@ class TitleState extends MusicBeatState
 		}
 		#end
 
-		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
-
-		if (gamepad != null)
-		{
-			if (gamepad.justPressed.START)
-				pressedEnter = true;
-
-			#if switch
-			if (gamepad.justPressed.B)
-				pressedEnter = true;
-			#end
-		}
-
-		if (pressedEnter && !transitioning && skippedIntro)
+		if (pressedEnter && !transitioning && skippedIntro #if VIDEO_PLAYBACK && !playingKickstarterVideo #end)
 		{
 			if (FlxG.sound.music != null)
 				FlxG.sound.music.onComplete = null;
-			// netStream.play(Paths.file('music/kickstarterTrailer.mp4'));
 
 			titleText.animation.play('press');
 
@@ -331,27 +275,25 @@ class TitleState extends MusicBeatState
 			transitioning = true;
 			// FlxG.sound.music.stop();
 
-			FlxG.switchState(new MainMenuState());
-			// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
+			new FlxTimer().start(1, function(t) {
+				FlxG.switchState(new MainMenuState());
+			});
 		}
+
+		#if VIDEO_PLAYBACK
+		if (pressedEnter && playingKickstarterVideo) {
+			if (kickstarter != null) {
+				// FlxTween.tween(kickstarter.bitmap, {volume: 0}, 1);
+				FlxTween.tween(kickstarter, {alpha: 0}, 1, {onComplete: function(t:FlxTween) {
+					kickstarter.stop();
+					remove(kickstarter);
+				}});
+			}
+		}
+		#end
 
 		if (pressedEnter && !skippedIntro && initialized)
 			skipIntro();
-		/* 
-			#if web
-			if (!initialized && controls.ACCEPT)
-			{
-				// netStream.dispose();
-				// FlxG.stage.removeChild(video);
-
-				startIntro();
-				skipIntro();
-			}
-			#end
-		 */
-
-		// if (FlxG.keys.justPressed.SPACE)
-		// swagShader.hasOutline = !swagShader.hasOutline;
 
 		if (controls.UI_LEFT)
 			swagShader.update(-elapsed * 0.1);
@@ -424,11 +366,11 @@ class TitleState extends MusicBeatState
 					switch (i + 1)
 					{
 						case 1:
-							createCoolText(['FyriDev']);
+							createCoolText(['Currently solo-developed by']);
 						//	createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
 						//  credTextShit.visible = true;
 						case 3:
-							addMoreText('presents');
+							addMoreText('FyriDev');
 						//  credTextShit.text += '\npresent...';
 						//  credTextShit.addText();
 						case 4:
@@ -489,6 +431,44 @@ class TitleState extends MusicBeatState
 			FlxG.camera.flash(FlxColor.WHITE, 4);
 			remove(credGroup);
 			skippedIntro = true;
+
+			#if VIDEO_PLAYBACK
+			new FlxTimer().start(10, function(t) {
+				transitionToKickstarter();
+				trace('kickstarter video');
+			});
+			#end
 		}
 	}
+
+	#if VIDEO_PLAYBACK
+	function transitionToKickstarter() {
+		FlxG.sound.music.fadeOut(1);
+		FlxTween.tween(blackFG, {alpha: 1}, 1, {onComplete: function(t) showKickstarterVideo()});
+	}
+
+	function showKickstarterVideo() {
+		if (kickstarter != null) {
+			playingKickstarterVideo = true;
+
+			kickstarter.bitmap.volume = 1;
+			// kickstarter.cameras = [camVideo];
+
+			kickstarter.bitmap.onStopped.add(() -> reset());
+			kickstarter.bitmap.onEndReached.add(() -> reset());
+
+			kickstarter.play(Paths.video('kickstarterTrailer'));
+			trace('video playing');
+		} else {
+			trace('shit null bruh');
+		}
+	}
+
+	inline function reset() {
+		playingKickstarterVideo = false;
+		initialized = false;
+		// blackFG.alpha = 0;
+		FlxG.resetState();
+	}
+	#end
 }

@@ -1,6 +1,5 @@
 package funkin;
 
-import flixel.util.FlxArrayUtil;
 import flixel.FlxGame;
 
 // mainly used for debug keybinds
@@ -19,5 +18,13 @@ class FNFGame extends FlxGame {
             FlxG.resetGame();
             trace('reset');
         }
+
+        if (FlxG.keys.pressed.CONTROL && FlxG.keys.justPressed.F) {
+			FlxG.fullscreen = !FlxG.fullscreen;
+            trace('fullscreen ' + FlxG.fullscreen);
+        }
+
+        if (FlxG.keys.justPressed.E)
+            FunkinUtil.forceCrash('testing');
     }
 }

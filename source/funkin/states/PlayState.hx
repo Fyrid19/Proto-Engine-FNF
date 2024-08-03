@@ -13,7 +13,9 @@ import flixel.sound.FlxSound;
 import flixel.ui.FlxBar;
 import flixel.util.FlxSort;
 
-import hxcodec.flixel.FlxVideo;
+#if VIDEO_PLAYBACK
+import hxcodec.flixel.FlxVideoSprite;
+#end
 
 import funkin.charting.ChartingState;
 
@@ -740,7 +742,7 @@ class PlayState extends MusicBeatState
 
 		strumLine = new FlxSprite(0, 50).makeGraphic(FlxG.width, 10);
 
-		if (PreferencesMenu.getPref('downscroll'))
+		if (FunkinData.data.get('downScroll'))
 			strumLine.y = FlxG.height - 150; // 150 just random ass number lol
 
 		strumLine.scrollFactor.set();
@@ -790,7 +792,7 @@ class PlayState extends MusicBeatState
 		healthBarBG.scrollFactor.set();
 		add(healthBarBG);
 
-		if (PreferencesMenu.getPref('downscroll'))
+		if (FunkinData.data.get('downScroll'))
 			healthBarBG.y = FlxG.height * 0.1;
 
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
@@ -905,13 +907,14 @@ class PlayState extends MusicBeatState
 		blackShit.scrollFactor.set();
 		add(blackShit);
 
-		playVideo('music/ughCutscene.mp4', function() 
-		{
+		#if VIDEO_PLAYBACK
+		playVideo(Paths.video('ughCutscene'), function() {
 			remove(blackShit);
 			FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom}, (Conductor.crochet / 1000) * 5, {ease: FlxEase.quadInOut});
 			startCountdown();
 			cameraMovement();
 		});
+		#end
 
 		FlxG.camera.zoom = defaultCamZoom * 1.2;
 
@@ -990,13 +993,14 @@ class PlayState extends MusicBeatState
 		blackShit.scrollFactor.set();
 		add(blackShit);
 
-		playVideo('music/gunsCutscene.mp4', function() 
-		{
+		#if VIDEO_PLAYBACK
+		playVideo(Paths.video('gunsCutscene'), function() {
 			remove(blackShit);
 			FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom}, (Conductor.crochet / 1000) * 5, {ease: FlxEase.quadInOut});
 			startCountdown();
 			cameraMovement();
 		});
+		#end
 
 		/* camFollow.setPosition(camPos.x, camPos.y);
 
@@ -1062,13 +1066,14 @@ class PlayState extends MusicBeatState
 		blackShit.scrollFactor.set();
 		add(blackShit);
 
-		playVideo('music/stressCutscene.mp4', function() 
-		{
+		#if VIDEO_PLAYBACK
+		playVideo(Paths.video('stressCutscene'), function() {
 			remove(blackShit);
 			FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom}, (Conductor.crochet / 1000) * 5, {ease: FlxEase.quadInOut});
 			startCountdown();
 			cameraMovement();
 		});
+		#end
 
 		/* camHUD.visible = false;
 
@@ -1149,7 +1154,7 @@ class PlayState extends MusicBeatState
 			add(bfCatchGf);
 			bfCatchGf.visible = false;
 
-			if (PreferencesMenu.getPref('censor-naughty'))
+			if (FunkinData.data.get('censor-naughty'))
 				tankCutscene.startSyncAudio = FlxG.sound.play(Paths.sound('stressCutscene'));
 			else
 			{
@@ -1306,14 +1311,16 @@ class PlayState extends MusicBeatState
 		});*/
 	}
 
+	#if VIDEO_PLAYBACK
 	function playVideo(videoPath:String, ?onComplete:Void->Void) {
-		var video:FlxVideo = new FlxVideo();
-		video.onEndReached.add(function() {
+		var video:FlxVideoSprite = new FlxVideoSprite();
+		video.bitmap.onEndReached.add(function() {
 			onComplete();
-			video.dispose();
+			remove(video);
 		});
-		video.play('assets/' + videoPath);
+		video.play(videoPath);
 	}
+	#end
 
 	function initDiscord():Void
 	{
@@ -2084,8 +2091,8 @@ class PlayState extends MusicBeatState
 		{
 			notes.forEachAlive(function(daNote:Note)
 			{
-				if ((PreferencesMenu.getPref('downscroll') && daNote.y < -daNote.height)
-					|| (!PreferencesMenu.getPref('downscroll') && daNote.y > FlxG.height))
+				if ((FunkinData.data.get('downScroll') && daNote.y < -daNote.height)
+					|| (!FunkinData.data.get('downScroll') && daNote.y > FlxG.height))
 				{
 					daNote.active = false;
 					daNote.visible = false;
@@ -2098,7 +2105,7 @@ class PlayState extends MusicBeatState
 
 				var strumLineMid = strumLine.y + Note.swagWidth / 2;
 
-				if (PreferencesMenu.getPref('downscroll'))
+				if (FunkinData.data.get('downScroll'))
 				{
 					daNote.y = (strumLine.y + (Conductor.songPosition - daNote.strumTime) * (0.45 * FlxMath.roundDecimal(SONG.speed, 2)));
 
@@ -2181,13 +2188,13 @@ class PlayState extends MusicBeatState
 				// removing this so whether the note misses or not is entirely up to Note class
 				// var noteMiss:Bool = daNote.y < -daNote.height;
 
-				// if (PreferencesMenu.getPref('downscroll'))
+				// if (FunkinData.data.get('downScroll'))
 					// noteMiss = daNote.y > FlxG.height;
 
 				if (daNote.isSustainNote && daNote.wasGoodHit)
 				{
-					if ((!PreferencesMenu.getPref('downscroll') && daNote.y < -daNote.height)
-						|| (PreferencesMenu.getPref('downscroll') && daNote.y > FlxG.height))
+					if ((!FunkinData.data.get('downScroll') && daNote.y < -daNote.height)
+						|| (FunkinData.data.get('downScroll') && daNote.y > FlxG.height))
 					{
 						daNote.active = false;
 						daNote.visible = false;
@@ -2946,7 +2953,7 @@ class PlayState extends MusicBeatState
 
 		// HARDCODING FOR MILF ZOOMS!
 
-		if (PreferencesMenu.getPref('camera-zoom'))
+		if (FunkinData.data.get('cameraZoom'))
 		{
 			if (curSong.toLowerCase() == 'milf' && curBeat >= 168 && curBeat < 200 && camZooming && FlxG.camera.zoom < 1.35)
 			{
