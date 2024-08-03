@@ -80,7 +80,6 @@ class InitialState extends MusicBeatState {
 	function onCrash(e:UncaughtErrorEvent):Void {
 		var errMsg:String = '';
 		var errData:String = '';
-
 		var callStack:Array<StackItem> = CallStack.exceptionStack(true);
 		var dateNow:String = Date.now().toString();
 
@@ -104,7 +103,7 @@ class InitialState extends MusicBeatState {
 		}
 
 		new Process("./crash/ProtoCrash.exe", [errMsg, errData, dateNow]);
-		Sys.exit(1);
+		Sys.exit(0);
 	}
 	#end
 }

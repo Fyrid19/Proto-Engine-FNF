@@ -40,7 +40,13 @@
 	<!--Switch-specific-->
 	<window if="switch" orientation="landscape" fullscreen="true" width="0" height="0" resizable="true" />
 
-	<!-- _____________________________ Path Settings ____________________________ -->
+	<!-- ________________________ Proto Engine Settings ________________________ -->
+
+	<define name="MOD_SUPPORT" unless="web"/>
+	<define name="VIDEO_PLAYBACK"/>
+	<define name="CRASH_HANDLER" if="desktop"/>
+
+	<!-- ____________________________ Path Settings ____________________________ -->
 
 	<set name="BUILD_DIR" value="export/debug" if="debug" />
 	<set name="BUILD_DIR" value="export/release" unless="debug" />
@@ -66,7 +72,7 @@
 	
 	<assets path='mods' embed='false'/>
 
-	<assets path='crash/export/release/windows/bin' rename='crash' embed='false' if='CRASH_HANDLER' />
+	<assets path='crash/export/release/windows/bin' rename='crash' if='CRASH_HANDLER' />
 
 	<!-- <template path="example_mods" rename="mods" /> -->
 
@@ -81,12 +87,6 @@
 		NOT USING A DIRECT THING TO THE ASSET!!!
 	-->
 	<assets path="assets/fonts" embed='true'/>
-
-	<!-- ________________________ Proto Engine Settings ________________________ -->
-
-	<define name="MOD_SUPPORT" unless="web"/>
-	<define name="VIDEO_PLAYBACK"/>
-	<define name="CRASH_HANDLER" if="desktop"/>
 
 	<!-- _______________________________ Libraries ______________________________ -->
 
