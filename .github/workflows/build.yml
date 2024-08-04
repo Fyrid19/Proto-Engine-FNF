@@ -34,7 +34,6 @@ jobs:
         haxelib git flxanimate https://github.com/ShadowMario/flxanimate --quiet
     - name: Build crash handler
       run:
-        git submodule update --init --recursive
         cd crash
         haxelib run lime build windows
     - name: Build project
