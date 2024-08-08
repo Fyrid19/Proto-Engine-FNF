@@ -32,8 +32,11 @@ jobs:
         haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc --quiet
         haxelib git linc_luajit https://github.com/superpowers04/linc_luajit --quiet
         haxelib git flxanimate https://github.com/ShadowMario/flxanimate --quiet
+    - name: Update submodules
+      run: |
+        git submodule update --init --recursive
     - name: Build crash handler
-      run:
+      run: |
         cd crash
         haxelib run lime build windows
     - name: Build project
