@@ -7,6 +7,8 @@ class EngineMain {
     public static final repoOwner:String = 'Fyrid19';
     public static final repoName:String = 'Proto-Engine-FNF';
     public static final repository = Repository.get(repoOwner, repoName);
+    
+    public static final engineVer:String = 'INDEV';
 
     public static var savePath(get, never):String;
 
@@ -25,7 +27,7 @@ class EngineMain {
         }
     }
 
-    inline public static function getCurCommit() {
+    inline public static function getLatestCommit() {
         var api = new GithubAPI();
         api.request('repos/$repoOwner/$repoName/commits');
         return api.json[0];

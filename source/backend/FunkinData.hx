@@ -11,14 +11,24 @@ class FunkinData {
     public static var save:FlxSave; // probably not the best way of going about this but eh
     public static var data:Map<String, Dynamic> = null;
     public static var dataDefault:Map<String, Dynamic> = [
+        // Gameplay
         'downScroll' => false,
         'ghostTapping' => false,
         'flashingLights' => true,
         'cameraZoom' => true,
+
+        // Misc
         'unfocusPause' => true,
+        'childFriendly' => false,
+        'discordRPC' => true,
+        'showFramerate' => true,
+        'showMemory' => true,
+        'showWatermark' => true,
+
+        // Graphics
+        'shadersEnabled' => true,
         'globalAntialiasing' => true,
         'maxFramerate' => 60,
-        'childFriendly' => false
     ];
 
     public static var loadedMods:Array<Mod> = [];

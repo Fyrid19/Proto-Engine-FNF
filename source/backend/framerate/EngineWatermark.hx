@@ -21,7 +21,7 @@ class EngineWatermark extends Sprite {
 			addChild(text);
 		}
 
-        watermarkTxt.text = 'Prototype Engine ' + Main.engineVersion;
+        watermarkTxt.text = 'Prototype Engine ' + EngineMain.engineVer;
         commitTxt.text = 'Commit ' + EngineMain.getRepoCommits();
         commitTxt.y = watermarkTxt.y + watermarkTxt.height;
     }

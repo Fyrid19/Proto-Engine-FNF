@@ -15,25 +15,31 @@ import sys.io.Process;
 **/
 class InitialState extends MusicBeatState {
     override function create() {
-        #if MOD_SUPPORT
-		trace('the mod be supporting');
-		#end
-
 		FlxG.save.bind('prototype', EngineMain.savePath); // just a precaution
         FunkinData.initialize();
 		Highscore.load();
+
+		#if MOD_SUPPORT
+		trace('the mod be supporting');
+		#end
 
 		#if CRASH_HANDLER
 		trace('the crashes be handlin');
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
 		#end
 
+		#if DISCORD_RPC
+		trace('im discording out');
+		DiscordRPC.init();
+		#end
+
+		#if VIDEO_PLAYBACK
+		trace('videos allowed');
+		#end
+
         FlxG.game.focusLostFramerate = 60;
 
 		FlxG.sound.muteKeys = [ZERO];
-
-        FlxG.drawFramerate = FunkinData.data.get('maxFramerate');
-		FlxG.updateFramerate = FunkinData.data.get('maxFramerate');
 
         if (FunkinData.save.data.volume != null)
 			FlxG.sound.volume = FunkinData.save.data.volume;
@@ -42,38 +48,37 @@ class InitialState extends MusicBeatState {
 
         FlxG.autoPause = FunkinData.save.data.unfocusPause;
 
-        #if discord_rpc
-		Discord.initialize();
-
-		Application.current.onExit.add(function(exitCode)
-		{
-			Discord.shutdown();
-		});
-		#end
+		resetFramerate();
 
 		if (FunkinData.initialized)
         	FlxG.switchState(new funkin.states.TitleState());
 
 		FlxG.signals.focusLost.add(function() {
 			Main.lostFocus.visible = true;
+			FlxG.drawFramerate = 30; // lower framerate for better performace
 			// trace('focus lost');
 		});
 
 		FlxG.signals.focusGained.add(function() {
 			Main.lostFocus.visible = false;
+			resetFramerate();
 			// trace('focus gained');
 		});
 
-		#if VIDEO_PLAYBACK
-		trace('videos allowed');
-		#end
-
-		// trace(EngineMain.repository.name);
-		// trace(EngineMain.repository.description);
-		// trace(EngineMain.getRepoCommits());
+		var latestCommit = EngineMain.getLatestCommit();
+		trace('- Github Info -');
+		trace('Repo Name: ' + EngineMain.repository.name);
+		trace('Repo Desc: ' + EngineMain.repository.description);
+		trace('Latest commit: ' + latestCommit.commit.message);
+		trace(EngineMain.getRepoCommits() + ' Commits');
 
         super.create();
     }
+
+	function resetFramerate() {
+		FlxG.drawFramerate = FunkinData.save.data.maxFramerate;
+		FlxG.updateFramerate = FunkinData.save.data.maxFramerate;
+	}
 
 	// base code by sqirra-rng
 	#if CRASH_HANDLER
