@@ -41,7 +41,7 @@ jobs:
         haxelib run lime build windows
     - name: Build project
       run: |
-        cd ..
+        cd D:/a/Proto-Engine-FNF/Proto-Engine-FNF
         haxelib run lime build windows
     - name: Uploading artifact
       uses: actions/upload-artifact@v2
