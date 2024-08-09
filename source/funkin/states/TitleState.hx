@@ -65,8 +65,7 @@ class TitleState extends MusicBeatState
 
 		super.create();
 
-		new FlxTimer().start(1, function(t)
-		{
+		new FlxTimer().start(1, function(t) {
 			startIntro();
 			trace('intro started');
 		});

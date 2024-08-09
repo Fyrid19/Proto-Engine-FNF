@@ -23,13 +23,12 @@ class MainMenuState extends MusicBeatState { // i hate how main menu is coded so
     var yFactor:Float;
 
     override function create() {
-		if (!FlxG.sound.music.playing)
-		{
+		if (!FlxG.sound.music.playing) {
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));
 		}
-        
-        #if discord_rpc
-		DiscordClient.changePresence("In the Menus", null);
+
+        #if DISCORD_RPC
+		DiscordRPC.changePresence({details: 'In the menus'});
 		#end
 
         var bgGraphicPath:String = 'menuBG';

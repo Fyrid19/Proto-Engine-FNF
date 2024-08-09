@@ -37,9 +37,8 @@ class FreeplayState extends MusicBeatState
 
 	override function create()
 	{
-		#if discord_rpc
-		// Updating Discord Rich Presence
-		DiscordClient.changePresence("In the Menus", null);
+		#if DISCORD_RPC
+		DiscordRPC.changePresence({details: 'In Freeplay Menu'});
 		#end
 
 		var isDebug:Bool = false;
