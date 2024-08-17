@@ -49,13 +49,7 @@ class TitleState extends MusicBeatState
 	var kickstarter:FlxVideoSprite;
 	#end
 
-	override public function create():Void
-	{
-		#if polymod
-		Polymod.init({modRoot: "mods", dirs: ['introMod'], framework: OPENFL});
-		// FlxG.bitmap.clearCache();
-		#end
-
+	override public function create():Void {
 		startedIntro = false;
 
 		swagShader = new ColorSwap();
@@ -63,24 +57,18 @@ class TitleState extends MusicBeatState
 
 		curWacky = FlxG.random.getObject(getIntroTextShit());
 
+		#if DISCORD_RPC
+		DiscordRPC.changePresence({details: 'In the menus'});
+		#end
+
 		// DEBUG BULLSHIT
 
 		super.create();
 
-		new FlxTimer().start(1, function(t)
-		{
+		new FlxTimer().start(1, function(t) {
 			startIntro();
 			trace('intro started');
 		});
-
-		#if discord_rpc
-		DiscordClient.initialize();
-
-		Application.current.onExit.add(function(exitCode)
-		{
-			DiscordClient.shutdown();
-		});
-		#end
 	}
 
 	var logoBl:FlxSprite;

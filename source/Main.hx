@@ -22,8 +22,6 @@ class Main extends Sprite
 
 	public static var globalFont:String = Paths.font("vcr.ttf"); // Font to use for the entire game.
 
-	public static var engineVersion:String = 'INDEV'; // Engine version, will pull from application version later on.
-
 	// You can pretty much ignore everything from here on - your code should go in your states.
 
 	public static function main():Void

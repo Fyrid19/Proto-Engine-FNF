@@ -17,17 +17,18 @@ class FunkinData {
         'flashingLights' => true,
         'cameraZoom' => true,
 
-        // Misc.
-        'childFriendly' => false,
+        // Misc
         'unfocusPause' => true,
-        'hideFPSText' => false,
-        'hideMemoryText' => false,
-        'hideWatermark' => false,
+        'childFriendly' => false,
+        'discordRPC' => true,
+        'showFramerate' => true,
+        'showMemory' => true,
+        'showWatermark' => true,
 
         // Graphics
+        'shadersEnabled' => true,
         'globalAntialiasing' => true,
         'maxFramerate' => 60,
-        'shadersEnabled' => true,
     ];
 
     public static var loadedMods:Array<Mod> = [];

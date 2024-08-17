@@ -1,6 +1,6 @@
 // importing utils and more so i dont have to put the shit in every file!!
-#if discord_rpc
-import utils.Discord;
+#if DISCORD_RPC
+import utils.DiscordRPC;
 #end
 
 import utils.Paths;
@@ -45,3 +45,4 @@ import flixel.tweens.FlxTween;
 import flixel.graphics.frames.FlxAtlasFrames;
 
 using StringTools;
+using Lambda;
