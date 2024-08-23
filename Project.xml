@@ -109,7 +109,11 @@
 	<haxelib name="haxeui-core" />
 	<haxelib name="haxeui-flixel" />
 
-	<haxelib name="hxCodec" if="desktop || mobile" />
+	<!-- <haxelib name="hxCodec" if="desktop || mobile" /> -->
+
+	<section if="cpp">
+		<haxelib name="hxvlc" if="desktop || mobile" />
+	</section>
 
 	<haxelib name="haxe-github" />
 	

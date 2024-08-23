@@ -14,7 +14,7 @@ import openfl.net.NetStream;
 import polymod.Polymod;
 
 #if VIDEO_PLAYBACK
-import hxcodec.flixel.FlxVideoSprite;
+import hxvlc.flixel.FlxVideoSprite;
 #end
 
 #if desktop
@@ -197,6 +197,22 @@ class TitleState extends MusicBeatState
 		add(camVideo);
 
 		kickstarter = new FlxVideoSprite(0, 0);
+		kickstarter.antialiasing = true;
+		kickstarter.bitmap.onFormatSetup.add(function():Void 
+		{
+			if (kickstarter.bitmap != null && kickstarter.bitmap.bitmapData != null) 
+			{
+				var width:Float = kickstarter.bitmap.bitmapData.width;
+				var height:Float = kickstarter.bitmap.bitmapData.height;
+				final scale:Float = Math.min(FlxG.width / width, FlxG.height / height);
+	
+				kickstarter.setGraphicSize(width * scale, height * scale);
+				kickstarter.updateHitbox();
+				kickstarter.screenCenter();
+			}
+		});
+		kickstarter.bitmap.onStopped.add(reset);
+		kickstarter.bitmap.onEndReached.add(reset);
 		add(kickstarter);
 		#end
 	}
@@ -273,8 +289,7 @@ class TitleState extends MusicBeatState
 			if (kickstarter != null) {
 				// FlxTween.tween(kickstarter.bitmap, {volume: 0}, 1);
 				FlxTween.tween(kickstarter, {alpha: 0}, 1, {onComplete: function(t:FlxTween) {
-					kickstarter.stop();
-					remove(kickstarter);
+					reset();
 				}});
 			}
 		}
@@ -439,22 +454,22 @@ class TitleState extends MusicBeatState
 		if (kickstarter != null) {
 			playingKickstarterVideo = true;
 
-			kickstarter.bitmap.volume = 1;
+			kickstarter.bitmap.volume = Std.int(FlxG.sound.volume);
 			// kickstarter.cameras = [camVideo];
 
-			kickstarter.bitmap.onStopped.add(() -> reset());
-			kickstarter.bitmap.onEndReached.add(() -> reset());
-
-			kickstarter.play(Paths.video('kickstarterTrailer'));
-			trace('video playing');
+			if (kickstarter.load(Paths.video('kickstarterTrailer'))) {
+				kickstarter.play();
+				trace('video playing');
+			}
 		} else {
 			trace('shit null bruh');
 		}
 	}
 
-	inline function reset() {
+	private function reset() {
 		playingKickstarterVideo = false;
 		initialized = false;
+		kickstarter.destroy();
 		// blackFG.alpha = 0;
 		FlxG.resetState();
 	}

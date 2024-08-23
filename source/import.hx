@@ -1,4 +1,5 @@
 // importing utils and more so i dont have to put the shit in every file!!
+#if !macro
 #if DISCORD_RPC
 import utils.DiscordRPC;
 #end
@@ -46,3 +47,4 @@ import flixel.graphics.frames.FlxAtlasFrames;
 
 using StringTools;
 using Lambda;
+#end

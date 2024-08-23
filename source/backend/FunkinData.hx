@@ -21,6 +21,7 @@ class FunkinData {
         'unfocusPause' => true,
         'childFriendly' => false,
         'discordRPC' => true,
+        'sustainAlpha' => 0.6,
         'showFramerate' => true,
         'showMemory' => true,
         'showWatermark' => true,

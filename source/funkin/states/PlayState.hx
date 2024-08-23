@@ -14,7 +14,7 @@ import flixel.ui.FlxBar;
 import flixel.util.FlxSort;
 
 #if VIDEO_PLAYBACK
-import hxcodec.flixel.FlxVideoSprite;
+import hxvlc.flixel.FlxVideoSprite;
 #end
 
 import funkin.charting.ChartingState;
@@ -1314,12 +1314,28 @@ class PlayState extends MusicBeatState
 
 	#if VIDEO_PLAYBACK
 	function playVideo(videoPath:String, ?onComplete:Void->Void) {
-		var video:FlxVideoSprite = new FlxVideoSprite();
-		video.bitmap.onEndReached.add(function() {
-			onComplete();
-			remove(video);
+		var video:FlxVideoSprite = new FlxVideoSprite(0, 0);
+		video.antialiasing = true;
+		video.bitmap.onFormatSetup.add(function():Void 
+		{
+			if (video.bitmap != null && video.bitmap.bitmapData != null) 
+			{
+				var width:Float = video.bitmap.bitmapData.width;
+				var height:Float = video.bitmap.bitmapData.height;
+				final scale:Float = Math.min(FlxG.width / width, FlxG.height / height);
+	
+				video.setGraphicSize(width * scale, height * scale);
+				video.updateHitbox();
+				video.screenCenter();
+			}
 		});
-		video.play(videoPath);
+		video.bitmap.onEndReached.add(video.destroy);
+		add(video);
+
+		if (video.load(Paths.video(videoPath)))
+			FlxTimer.wait(0.001, () -> video.play());
+		else
+			trace('Video not loaded!');
 	}
 	#end
 
