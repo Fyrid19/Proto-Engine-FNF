@@ -4,7 +4,6 @@
 import utils.DiscordRPC;
 #end
 
-import utils.Paths;
 import utils.FunkinUtil;
 import utils.Highscore;
 
@@ -21,6 +20,7 @@ import backend.MusicBeatState;
 import backend.MusicBeatSubstate;
 import backend.FunkinData;
 import backend.EngineMain;
+import backend.assets.Paths;
 
 import backend.SwagCamera;
 
