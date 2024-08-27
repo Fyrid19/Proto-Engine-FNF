@@ -1,5 +1,6 @@
 package backend.assets;
 
+import flixel.system.FlxAssets;
 import flixel.graphics.FlxGraphic;
 
 import openfl.display.BitmapData;
@@ -63,11 +64,12 @@ class Paths {
 			}
 		}
 		tempCacheList = [];
-		#if !html5 OpenFlAssets.cache.clear("songs"); #end
+		#if !html5 openfl.Assets.cache.clear("songs"); #end
     }
 
     public static function getPath(key:String, ?library:String) {
         var path:String = '$library:assets/$library/$key';
+        path = OpenFlAssets.exists(path) ? path : 'assets/$library/$key'; // if theres no actual library check for parent folder
         return OpenFlAssets.exists(path) ? path : 'assets/$key';
     }
 
@@ -124,24 +126,32 @@ class Paths {
         graphic.persist = true;
         graphic.destroyOnNoUse = false;
         graphicCache.set(path, graphic);
-        if (!tempCacheList.contains(path)) tempCacheList.push(path);
+        tempCacheList.push(path);
         trace('Graphic cached: ' + path);
         return graphic;
     }
 
     public static function getSound(key:String, ?library:Null<String>):Sound { // getPath on steroids
         var path:String = getPath(key, library);
+
         if (!soundCache.exists(path)) {
-            soundCache.set(path, Sound.fromFile(path));
-            trace('Sound added to cache ($path)');
+            if (OpenFlAssets.exists(path)) {
+                trace('Sound added to cache ($path)');
+                soundCache.set(path, OpenFlAssets.getSound(path));
+            } else {
+                trace('Sound not found: ' + path);
+				return FlxAssets.getSound('flixel/sounds/beep');
+            }
         }
-        if (!tempCacheList.contains(path)) tempCacheList.push(path);
+        
+        tempCacheList.push(path);
         return soundCache.get(path);
     }
 
     inline public static function songPath(key:String, song:String, ?diff:Null<String>) {
-        var path:String = 'songs/$song/$diff/$key';
-        path = OpenFlAssets.exists(path) ? path : 'songs/$song/$key';
+        var songLowercase:String = song.toLowerCase();
+        var path:String = 'songs/$songLowercase/$diff/$key';
+        path = OpenFlAssets.exists(path) ? path : 'songs/$songLowercase/$key';
         return path;
     }
 
@@ -166,9 +176,10 @@ class Paths {
     }
 
     inline public static function chart(song:String, diff:String = 'normal', legacy:Bool) {
-        var path:String = 'songs/$song/$diff/';
-        path = OpenFlAssets.exists(path) ? path : 'songs/$song/';
-        return legacy ? '$path/chart/$diff.json' : '$path/$song.chrt';
+        var songLowercase:String = song.toLowerCase();
+        var path:String = 'songs/$songLowercase/$diff/';
+        path = OpenFlAssets.exists(path) ? path : 'songs/$songLowercase/';
+        return legacy ? '$path/chart/$diff.json' : '$path/$songLowercase.chrt';
     }
 
     inline public static function video(key:String, ?ext:String = 'mp4', ?library:String)
