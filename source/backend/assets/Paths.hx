@@ -17,9 +17,9 @@ class Paths {
     public static function setCurrentLevel(v:String) currentLevel = v.toLowerCase();
 
     static var exclusionList:Array<String> = ['freakyMenu.$SOUND_EXT'];
-    static var tempCacheList:Array<String>;
-    static var graphicCache:Map<String, FlxGraphic>;
-    static var soundCache:Map<String, Sound>;
+    static var tempCacheList:Array<String> = [];
+    static var graphicCache:Map<String, FlxGraphic> = [];
+    static var soundCache:Map<String, Sound> = [];
 
     public static function clearCache() {
         FlxG.bitmap.clearCache();
@@ -86,8 +86,12 @@ class Paths {
 
     inline public static function image(key:String, ?library:String):FlxGraphic {
         var path:String = getPath('images/$key.png', library);
-        if (graphicCache.get(path) != null) return graphicCache.get(path);
-        else return cacheGraphic(key, library);
+        if (graphicCache.exists(path)) {
+            trace('Graphic exists in cache ($path)');
+            return graphicCache.get(path);
+        } else {
+            return cacheGraphic(key, library);
+        }
     }
 
     inline public static function sound(key:String, ?library:String)
@@ -173,17 +177,44 @@ class Paths {
 
     // im gonna make these all into one function later
     inline public static function getSparrowAtlas(?key:String, ?library:String) {
+        var ext:String = 'xml';
+        var path:String = file('images/$key.$ext', library);
+        path = OpenFlAssets.exists(path) ? path : '$key.$ext';
         var graphic:FlxGraphic = image(key, library);
-        return FlxAtlasFrames.fromSparrow(graphic, xml(key, library));
+
+        if (OpenFlAssets.exists(path)) {
+            return FlxAtlasFrames.fromSparrow(graphic, path);
+        } else {
+            trace('File not found: ' + path);
+            return null;
+        }
     }
 
     inline public static function getPackerAtlas(?key:String, ?library:String) {
+        var ext:String = 'txt';
+        var path:String = file('images/$key.$ext', library);
+        path = OpenFlAssets.exists(path) ? path : '$key.$ext';
         var graphic:FlxGraphic = image(key, library);
-        return FlxAtlasFrames.fromSpriteSheetPacker(graphic, txt(key, library));
+
+        if (OpenFlAssets.exists(path)) {
+            return FlxAtlasFrames.fromSpriteSheetPacker(graphic, path);
+        } else {
+            trace('File not found: ' + path);
+            return null;
+        }
     }
 
-    inline public static function getTextureAtlas(?key:String, ?library:String) {
+    inline public static function getAsepriteAtlas(?key:String, ?library:String) {
+        var ext:String = 'json';
+        var path:String = file('images/$key.$ext', library);
+        path = OpenFlAssets.exists(path) ? path : '$key.$ext';
         var graphic:FlxGraphic = image(key, library);
-        return FlxAtlasFrames.fromTexturePackerJson(graphic, json(key, library));
+
+        if (OpenFlAssets.exists(path)) {
+            return FlxAtlasFrames.fromAseprite(graphic, path);
+        } else {
+            trace('File not found: ' + path);
+            return null;
+        }
     }
 }

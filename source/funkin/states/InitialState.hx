@@ -50,9 +50,6 @@ class InitialState extends MusicBeatState {
 
 		resetFramerate();
 
-		if (FunkinData.initialized)
-        	FlxG.switchState(new funkin.states.TitleState());
-
 		FlxG.signals.focusLost.add(function() {
 			Main.lostFocus.visible = true;
 			FlxG.drawFramerate = 30; // lower framerate for better performace
@@ -71,6 +68,9 @@ class InitialState extends MusicBeatState {
 		trace('Repo Desc: ' + EngineMain.repository.description);
 		trace('Latest commit: ' + latestCommit.commit.message);
 		trace(EngineMain.getRepoCommits() + ' Commits');
+		
+		if (FunkinData.initialized)
+        	FlxG.switchState(new funkin.states.WarningState());
 
         super.create();
     }
