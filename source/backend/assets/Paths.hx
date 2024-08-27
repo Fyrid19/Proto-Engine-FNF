@@ -66,8 +66,10 @@ class Paths {
 		#if !html5 OpenFlAssets.cache.clear("songs"); #end
     }
 
-    public static function getPath(key:String, ?library:String = null)
-        return library != null ? '$library:assets/$library/$key' : 'assets/$key';
+    public static function getPath(key:String, ?library:String) {
+        var path:String = '$library:assets/$library/$key';
+        return OpenFlAssets.exists(path) ? path : 'assets/$key';
+    }
 
     inline public static function file(key:String, ?library:String)
         return getPath(key, library);
@@ -128,8 +130,11 @@ class Paths {
     }
 
     public static function getSound(key:String, ?library:Null<String>):Sound { // getPath on steroids
-        var path:String = library != null ? 'assets/$key' : '$library:assets/$library/$key';
-        if (!soundCache.exists(path)) soundCache.set(path, Sound.fromFile(path));
+        var path:String = getPath(key, library);
+        if (!soundCache.exists(path)) {
+            soundCache.set(path, Sound.fromFile(path));
+            trace('Sound added to cache ($path)');
+        }
         if (!tempCacheList.contains(path)) tempCacheList.push(path);
         return soundCache.get(path);
     }
