@@ -57,6 +57,9 @@ class TitleState extends MusicBeatState
 
 		curWacky = FlxG.random.getObject(getIntroTextShit());
 
+		Paths.clearUnused();
+		Paths.clearStored();
+
 		#if DISCORD_RPC
 		DiscordRPC.changePresence({details: 'In the menus'});
 		#end
