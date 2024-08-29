@@ -41,8 +41,8 @@ class InitialState extends MusicBeatState {
 
 		FlxG.sound.muteKeys = [ZERO];
 
-        if (FunkinData.save.data.volume != null)
-			FlxG.sound.volume = FunkinData.save.data.volume;
+        // if (FunkinData.save.data.volume != null)
+		// 	FlxG.sound.volume = FunkinData.save.data.volume;
 		if (FunkinData.save.data.mute != null)
 			FlxG.sound.muted = FunkinData.save.data.mute;
 

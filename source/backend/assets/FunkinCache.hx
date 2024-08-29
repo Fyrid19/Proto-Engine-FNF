@@ -1,68 +1,54 @@
 package backend.assets;
 
+import openfl.utils.Assets as OpenFlAssets;
+import openfl.display.BitmapData;
 import flixel.graphics.FlxGraphic;
 import flash.media.Sound;
+import lime.utils.Assets;
 
-enum abstract AssetType(String) to String from String {
-    var IMAGE = 'image';
-    var SOUND = 'sound';
+enum abstract AssetType(String) from String to String {
+    var IMAGE:String = 'image';
+    var SOUND:String = 'sound';
 }
 
 class FunkinCache {
-    public var graphic:Map<String, FlxGraphic>;
-    public var sound:Map<String, Sound>;
+    public var graphicCache:Map<String, FlxGraphic> = [];
+    public var soundCache:Map<String, Sound> = [];
 
     public function new() {
-        graphic = new Map<String, FlxGraphic>();
-        sound = new Map<String, Sound>();
+        graphicCache = new Map<String, FlxGraphic>();
+        soundCache = new Map<String, Sound>();
     }
 
-    public function clear(?prefix:Null<String>) {
-        if (prefix == null) {
-            graphic = new Map<String, FlxGraphic>();
-            sound = new Map<String, Sound>();
-        } else {
-            var keys = graphic.keys();
-            for (key in keys) {
-                if (StringTools.startsWith(key, prefix)) {
-                    remove(key, IMAGE);
-                }
-            }
-            
-            var keys = sound.keys();
-            for (key in keys) {
-                if (StringTools.startsWith(key, prefix)) {
-                    remove(key, SOUND);
-                }
-            }
+    public function cacheGraphic(key:String, ?library:String) {
+        var path:String = Paths.getPath('images/$key.png', library);
+        var bitmap:BitmapData;
+
+        if (graphicCache.exists(path)) {
+            trace('Graphic already cached, returning null');
+            return null;
         }
+
+        try (bitmap = BitmapData.fromFile(path))
+        catch (e) {
+            trace('Image cannot be loaded: ' + path);
+            return null;
+        }
+
+        if (!OpenFlAssets.exists(path)) {
+            trace('File doesn\'t exist: ' + path);
+            return null;
+        }
+
+        var graphic:FlxGraphic = FlxGraphic.fromBitmapData(bitmap, false, key);
+        graphic.persist = true;
+        graphic.destroyOnNoUse = false;
+        graphicCache.set(path, graphic);
+        trace('Graphic cached: ' + path);
+        return graphic;
     }
 
-    public function set(id:String, type:AssetType, asset:Dynamic) {
-        switch (type) {
-            case IMAGE: graphic.set(id, asset);
-            case SOUND: sound.set(id, asset);
-        }
-    }
-
-    public function get(id:String, type:AssetType):Dynamic {
-        return switch (type) {
-            case IMAGE: graphic.get(id);
-            case SOUND: sound.get(id);
-        }
-    }
-
-    public function remove(id:String, type:AssetType) {
-        switch (type) {
-            case IMAGE: graphic.remove(id);
-            case SOUND: sound.remove(id);
-        }
-    }
-
-    public function exists(id:String, type:AssetType) {
-        return switch (type) {
-            case IMAGE: graphic.exists(id);
-            case SOUND: sound.exists(id);
-        }
+    public function cacheSound() {
+        
     }
 }

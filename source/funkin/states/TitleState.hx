@@ -57,8 +57,7 @@ class TitleState extends MusicBeatState
 
 		curWacky = FlxG.random.getObject(getIntroTextShit());
 
-		Paths.clearUnused();
-		Paths.clearStored();
+		Paths.clearCaches();
 
 		#if DISCORD_RPC
 		DiscordRPC.changePresence({details: 'In the menus'});
@@ -179,10 +178,6 @@ class TitleState extends MusicBeatState
 		ngSpr.screenCenter(X);
 		ngSpr.antialiasing = true;
 
-		blackFG = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
-		blackFG.alpha = 0;
-		add(blackFG);
-
 		FlxTween.tween(credTextShit, {y: credTextShit.y + 20}, 2.9, {ease: FlxEase.quadInOut, type: PINGPONG});
 
 		FlxG.mouse.visible = false;
@@ -196,6 +191,10 @@ class TitleState extends MusicBeatState
 		// credGroup.add(credTextShit);
 
 		#if VIDEO_PLAYBACK
+		blackFG = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		blackFG.alpha = 0;
+		add(blackFG);
+
 		camVideo = new FlxCamera();
 		add(camVideo);
 
@@ -372,7 +371,7 @@ class TitleState extends MusicBeatState
 					switch (i + 1)
 					{
 						case 1:
-							createCoolText(['Currently solo-developed by']);
+							createCoolText(['Presented by']);
 						//	createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
 						//  credTextShit.visible = true;
 						case 3:
@@ -416,7 +415,6 @@ class TitleState extends MusicBeatState
 						// credTextShit.text += '\nNight';
 						case 15:
 							addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
-
 						case 16:
 							skipIntro();
 					}

@@ -11,65 +11,30 @@ import openfl.utils.Assets as OpenFlAssets;
 import lime.utils.Assets;
 import flash.media.Sound;
 
+// caching system is like a mix of funkin and flashcache so credits to them i guess
 class Paths {
     inline public static var SOUND_EXT = #if web "mp3" #else "ogg" #end; // Sound file type
 
-    public static var currentLevel:String = '';
+    public static var currentLevel:String = null;
     public static function setCurrentLevel(v:String) currentLevel = v.toLowerCase();
 
-    static var exclusionList:Array<String> = ['freakyMenu.$SOUND_EXT'];
-    static var tempCacheList:Array<String> = [];
     static var graphicCache:Map<String, FlxGraphic> = [];
+    static var backupGraphicCache:Map<String, FlxGraphic> = [];
     static var soundCache:Map<String, Sound> = [];
+    static var backupSoundCache:Map<String, Sound> = [];
 
-    public static function clearCache() {
-        FlxG.bitmap.clearCache();
-        graphicCache.clear();
-        soundCache.clear();
-        trace('Cache cleared');
-    }
-
-    public static function clearUnused() {
-        FlxG.bitmap.clearUnused();
-
-        for (key in graphicCache.keys()) {
-            var exclude:Bool = false;
-            for (i in 0...exclusionList.length) {
-                if (key.endsWith(exclusionList[i])) {
-                    exclude = true;
-                }
-            }
-
-            if (!tempCacheList.contains(key) && !exclude) {
-                graphicCache.remove(key);
-            }
-        }
-
-        trace('Unused cache cleared');
-    }
-
-    // based off psych thing
-    public static function clearStored() {
-        for (key => asset in soundCache) {
-            var exclude:Bool = false;
-            for (i in 0...exclusionList.length) {
-                if (key.endsWith(exclusionList[i])) {
-                    exclude = true;
-                }
-            }
-
-			if (!tempCacheList.contains(key) && !exclude && asset != null) {
-				Assets.cache.clear(key);
-				soundCache.remove(key);
-			}
-		}
-		tempCacheList = [];
-		#if !html5 openfl.Assets.cache.clear("songs"); #end
+    public static function clearCaches() {
+        backupGraphicCache = graphicCache;
+        graphicCache = [];
+        backupSoundCache = soundCache;
+        soundCache = [];
+        trace('Caches cleared');
     }
 
     public static function getPath(key:String, ?library:String) {
-        var path:String = '$library:assets/$library/$key';
-        path = OpenFlAssets.exists(path) ? path : 'assets/$library/$key'; // if theres no actual library check for parent folder
+        var level:String = currentLevel != null ? currentLevel : library;
+        var path:String = '$level:assets/$level/$key';
+        path = OpenFlAssets.exists(path) ? path : 'assets/$level/$key'; // if theres no actual library check for parent folder
         return OpenFlAssets.exists(path) ? path : 'assets/$key';
     }
 
@@ -91,10 +56,10 @@ class Paths {
     inline public static function image(key:String, ?library:String):FlxGraphic {
         var path:String = getPath('images/$key.png', library);
         if (graphicCache.exists(path)) {
-            trace('Graphic exists in cache ($path)');
+            // trace('Graphic exists in cache ($path)');
             return graphicCache.get(path);
         } else {
-            return cacheGraphic(key, library);
+            return cacheGraphic(path);
         }
     }
 
@@ -107,45 +72,57 @@ class Paths {
     inline public static function music(key:String, ?library:String)
         return getSound('music/$key.$SOUND_EXT', library);
 
-    public static function cacheGraphic(key:String, ?library:String) {
-        var path:String = getPath('images/$key.png', library);
+    public static function cacheGraphic(key:String):FlxGraphic {
         var bitmap:BitmapData;
 
-        if (graphicCache.exists(path)) {
-            trace('Graphic already cached, returning null');
+        if (graphicCache.exists(key)) {
+            trace('Graphic already cached');
             return null;
         }
 
-        try (bitmap = BitmapData.fromFile(path))
+        if (backupGraphicCache.exists(key)) {
+            var graphic = backupGraphicCache.get(key);
+            backupGraphicCache.remove(key);
+            graphicCache.set(key, graphic);
+            return graphic;
+        }
+
+        try (bitmap = BitmapData.fromFile(key))
         catch (e) {
-            trace('Image cannot be loaded: ' + path);
+            trace('Graphic not found: ' + key);
             return null;
         }
 
         var graphic:FlxGraphic = FlxGraphic.fromBitmapData(bitmap, false, key);
         graphic.persist = true;
-        graphic.destroyOnNoUse = false;
-        graphicCache.set(path, graphic);
-        tempCacheList.push(path);
-        trace('Graphic cached: ' + path);
+        graphicCache.set(key, graphic);
+        trace('Graphic cached: ' + key);
         return graphic;
     }
 
     public static function getSound(key:String, ?library:Null<String>):Sound { // getPath on steroids
         var path:String = getPath(key, library);
+        var sound:Sound = OpenFlAssets.getSound(path);
 
-        if (!soundCache.exists(path)) {
+        if (backupSoundCache.exists(path)) {
+            var sound:Sound = backupSoundCache.get(path);
+            backupSoundCache.remove(path);
+            soundCache.set(path, sound);
+            return sound;
+        }
+
+        if (soundCache.exists(path)) {
+            return soundCache.get(path);
+        } else {
             if (OpenFlAssets.exists(path)) {
-                trace('Sound added to cache ($path)');
-                soundCache.set(path, OpenFlAssets.getSound(path));
+                trace('Sound cached: ' + path);
+                soundCache.set(path, sound);
+                return sound;
             } else {
                 trace('Sound not found: ' + path);
 				return FlxAssets.getSound('flixel/sounds/beep');
             }
         }
-        
-        tempCacheList.push(path);
-        return soundCache.get(path);
     }
 
     inline public static function songPath(key:String, song:String, ?diff:Null<String>) {

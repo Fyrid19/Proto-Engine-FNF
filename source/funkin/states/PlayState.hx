@@ -895,7 +895,9 @@ class PlayState extends MusicBeatState
 				default:
 					startCountdown();
 			}
-		} 
+		}
+
+		Paths.clearCaches();
 
 		super.create();
 	}

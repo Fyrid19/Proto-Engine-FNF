@@ -8,7 +8,7 @@ class FNFGame extends FlxGame {
 		super.update();
 
         // temporary solution
-        FunkinData.save.data.volume = FlxG.sound.volume;
+        // FunkinData.save.data.volume = FlxG.sound.volume;
 
         debugKeys();
     }
