@@ -15,20 +15,8 @@ class SustainTrail extends FlxStrip implements NoteBasic {
     public var parentNote:NoteNew; // The note the sustain trail belongs to
 
     public var sustainLength(default, set):Float = 0; // The length of the sustain
-
-    // FlxStrip triangle shit
-    private static final noteUV:Array<Float> = [
-        0,0, //top left
-        1,0, //top right
-        0,0.5, //half left
-        1,0.5, //half right    
-        0,1, //bottom left
-        1,1, //bottom right 
-    ];
-    private static final noteIndices:Array<Int> = [
-        0,1,2,1,3,2, 2,3,4,3,4,5
-        //makes 4 triangles
-    ];
+    
+    // loadGraphic(Paths.image(noteSkin.extraPaths[0]), true, noteSkin.extraData[2], noteSkin.extraData[3]);
 
     public function new(strumLine:StrumLine, noteData:Int, sustainLength:Float) {
         super();
@@ -38,13 +26,6 @@ class SustainTrail extends FlxStrip implements NoteBasic {
         this.sustainLength = sustainLength;
 
 		alpha = FunkinData.data.get('sustainAlpha');
-
-        for (uv in noteUV) {
-            uvtData.push(uv);
-            vertices.push(0);
-        }
-        for (ind in noteIndices)
-            indices.push(ind);
     }
 
     function set_sustainLength(s:Float):Float {

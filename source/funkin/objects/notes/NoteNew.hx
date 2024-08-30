@@ -23,7 +23,7 @@ class NoteNew extends FlxSprite implements NoteBasic {
 
     public static var swagWidth:Float = 160 * 0.7; // Used for positioning the note
 
-    public function new(strumTime:Float, noteData:Int, ?hasSustain:Bool = false, ?noteType:Int = 0, strumLine:StrumLine) {
+    public function new(strumTime:Float, noteData:Direction, ?hasSustain:Bool = false, ?noteType:Int = 0, strumLine:StrumLine) {
         super();
 
 		x += 50;
@@ -43,69 +43,26 @@ class NoteNew extends FlxSprite implements NoteBasic {
             noteSkin.extraPaths[0] = 'weeb/pixelUI/arrowEnds';
             noteSkin.extraData = [17, 17, 7, 6, PlayState.daPixelZoom]; // width, height, sustain width, sustain height, zoom
             noteSkin.atlasIncluded = false;
+            noteSkin.antialiasing = false;
         }
+        
+        antialiasing = noteSkin.antialiasing;
 
+        var color:String = noteData.getColor();
         if (noteSkin.atlasIncluded) {
             frames = Paths.getSparrowAtlas(noteSkin.path);
-
-            animation.addByPrefix('greenScroll', 'green instance');
-            animation.addByPrefix('redScroll', 'red instance');
-            animation.addByPrefix('blueScroll', 'blue instance');
-            animation.addByPrefix('purpleScroll', 'purple instance');
-
-            animation.addByPrefix('purpleholdend', 'pruple end hold');
-            animation.addByPrefix('greenholdend', 'green hold end');
-            animation.addByPrefix('redholdend', 'red hold end');
-            animation.addByPrefix('blueholdend', 'blue hold end');
-
-            animation.addByPrefix('purplehold', 'purple hold piece');
-            animation.addByPrefix('greenhold', 'green hold piece');
-            animation.addByPrefix('redhold', 'red hold piece');
-            animation.addByPrefix('bluehold', 'blue hold piece');
-
+            animation.addByPrefix('scroll', '$color instance');
             setGraphicSize(Std.int(width * 0.7));
             updateHitbox();
-            antialiasing = true;
         } else {
             loadGraphic(Paths.image(noteSkin.path), true, noteSkin.extraData[0], noteSkin.extraData[1]);
-
-            animation.add('greenScroll', [6]);
-            animation.add('redScroll', [7]);
-            animation.add('blueScroll', [5]);
-            animation.add('purpleScroll', [4]);
-
-            if (hasSustain) {
-                loadGraphic(Paths.image(noteSkin.extraPaths[0]), true, noteSkin.extraData[2], noteSkin.extraData[3]);
-
-                animation.add('purpleholdend', [4]);
-                animation.add('greenholdend', [6]);
-                animation.add('redholdend', [7]);
-                animation.add('blueholdend', [5]);
-
-                animation.add('purplehold', [0]);
-                animation.add('greenhold', [2]);
-                animation.add('redhold', [3]);
-                animation.add('bluehold', [1]);
-            }
-
+            animation.add('scroll', [4 + noteData]);
             setGraphicSize(Std.int(width * noteSkin.extraData[4]));
             updateHitbox();
         }
 
-        switch (noteData) {
-			case 0:
-				x += swagWidth * 0;
-				animation.play('purpleScroll');
-			case 1:
-				x += swagWidth * 1;
-				animation.play('blueScroll');
-			case 2:
-				x += swagWidth * 2;
-				animation.play('greenScroll');
-			case 3:
-				x += swagWidth * 3;
-				animation.play('redScroll');
-		}
+        x += swagWidth * noteData;
+        animation.play('scroll');
     }
 
     override function update(elapsed:Float) {

@@ -9,6 +9,7 @@ import funkin.objects.notes.NoteBasic;
     public var extraPaths:Array<String>;
     public var atlasIncluded:Bool;
     public var extraData:Array<Dynamic>;
+    public var antialiasing:Bool;
 }
 
 class NoteSkinUtil {
@@ -19,6 +20,7 @@ class NoteSkinUtil {
         noteSkin.extraPaths = params.extraPaths;
         noteSkin.atlasIncluded = params.atlasIncluded;
         noteSkin.extraData = params.extraData;
+        noteSkin.antialiasing = params.antialiasing;
         noteSkin.parse();
     }
 }
@@ -30,6 +32,7 @@ class NoteSkin {
     public var extraPaths:Array<String> = [''];
     public var atlasIncluded:Bool = false; // if true it'll load like the pixel notes
     public var extraData:Array<Dynamic> = []; // used for non-atlas skins (if it has atlas then its just extra)
+    public var antialiasing:Bool = true;
     public function parse(?skinFile:String) {
         trace('parse noteskin file (should be json)');
     }

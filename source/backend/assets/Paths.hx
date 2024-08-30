@@ -28,6 +28,7 @@ class Paths {
         graphicCache = [];
         backupSoundCache = soundCache;
         soundCache = [];
+        OpenFlAssets.cache.clear('assets/songs');
         trace('Caches cleared');
     }
 
@@ -41,14 +42,17 @@ class Paths {
     inline public static function file(key:String, ?library:String)
         return getPath(key, library);
 
+    inline public static function dataFile(key:String, ?library:String)
+        return getPath('data/$key', library);
+
     inline public static function txt(key:String, ?library:String)
-        return getPath('data/$key.txt', library);
+        return dataFile('$key.txt', library);
 
     inline public static function xml(key:String, ?library:String)
-        return getPath('data/$key.xml', library);
+        return dataFile('$key.xml', library);
 
     inline public static function json(key:String, ?library:String)
-        return getPath('data/$key.json', library);
+        return dataFile('$key.json', library);
 
     inline public static function font(key:String, ?library:String)
         return getPath('fonts/$key', library);
@@ -167,6 +171,9 @@ class Paths {
 
     inline public static function vert(key:String, ?library:String)
         return getPath('shaders/$key.vert', library);
+
+    inline public static function noteSkin(key:String, skin:String, ?library:String)
+        return dataFile('skins/$skin/$key.json', library);
 
     // im gonna make these all into one function later
     inline public static function getSparrowAtlas(?key:String, ?library:String) {
