@@ -92,6 +92,7 @@
 	<!-- _______________________________ Libraries ______________________________ -->
 
 	<haxelib name="flixel" />
+	<haxelib name="flixel-tools" />
 	<haxedev set='webgl' />
 
 	<!--In case you want to use the addons package-->

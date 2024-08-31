@@ -9,32 +9,10 @@ jobs:
     - uses: krdlab/setup-haxe@v1
       with:
         haxe-version: 4.2.5
-    - name: Set up Haxelib dependencies # gotta find out how to make it launch batch file
-      run: |
-        haxelib install flixel-addons --quiet
-        haxelib install flixel-demos --quiet
-        haxelib install flixel-templates --quiet
-        haxelib install flixel-tools --quiet
-        haxelib install flixel-ui --quiet
-        haxelib install flixel --quiet
-        haxelib install hxcpp --quiet
-        haxelib install flxanimate --quiet
-        haxelib install hscript --quiet
-        haxelib install lime-samples --quiet
-        haxelib install lime --quiet
-        haxelib install openfl --quiet
-        haxelib install haxeui-core 1.6.0 --quiet
-        haxelib install haxeui-flixel 1.6.0 --quiet
-        haxelib install newgrounds --quiet
-        haxelib git haxe-github https://github.com/GuineaPigUuhh/haxe-github --quiet
-        haxelib git hxCodec https://github.com/Fyrid19/hxCodec.git --quiet
-        haxelib git polymod https://github.com/larsiusprime/polymod --quiet
-        haxelib git hxdiscord_rpc https://github.com/MAJigsaw77/hxdiscord_rpc --quiet
-        haxelib git linc_luajit https://github.com/superpowers04/linc_luajit --quiet
-        haxelib git flxanimate https://github.com/ShadowMario/flxanimate --quiet
+    - name: Set up Haxelib dependencies 
+      run: haxe -cp cmd -D analyzer-optimize --run Main
     - name: Update submodules
-      run: |
-        git submodule update --init --recursive
+      run: git submodule update --init --recursive
     - name: Build crash handler
       run: |
         cd crash
