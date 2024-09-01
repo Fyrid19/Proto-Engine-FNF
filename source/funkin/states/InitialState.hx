@@ -68,6 +68,8 @@ class InitialState extends MusicBeatState {
 		trace('Repo Desc: ' + EngineMain.repository.description);
 		trace('Latest commit: ' + latestCommit.commit.message);
 		trace(EngineMain.getRepoCommits() + ' Commits');
+
+		Paths.init();
 		
 		if (FunkinData.initialized)
         	FlxG.switchState(new funkin.states.WarningState());

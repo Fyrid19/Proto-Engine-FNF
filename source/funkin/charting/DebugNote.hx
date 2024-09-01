@@ -25,14 +25,10 @@ class DebugNote extends FlxSpriteGroup {
 
     function returnNoteFrame(data:Int):String {
         return switch (data) {
-            case 0:
-                'purple instance';
-            case 1:
-                'blue instance';
-            case 2:
-                'green instance';
-            case 3:
-                'red instance';
+            case 0: 'purple instance';
+            case 1: 'blue instance';
+            case 2: 'green instance';
+            case 3: 'red instance';
         }
     }
 }

@@ -208,7 +208,7 @@ class TitleState extends MusicBeatState
 				var height:Float = kickstarter.bitmap.bitmapData.height;
 				final scale:Float = Math.min(FlxG.width / width, FlxG.height / height);
 	
-				kickstarter.setGraphicSize(width * scale, height * scale);
+				kickstarter.setGraphicSize(Std.int(width * scale), Std.int(height * scale));
 				kickstarter.updateHitbox();
 				kickstarter.screenCenter();
 			}

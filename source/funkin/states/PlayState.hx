@@ -1326,7 +1326,7 @@ class PlayState extends MusicBeatState
 				var height:Float = video.bitmap.bitmapData.height;
 				final scale:Float = Math.min(FlxG.width / width, FlxG.height / height);
 	
-				video.setGraphicSize(width * scale, height * scale);
+				video.setGraphicSize(Std.int(width * scale), Std.int(height * scale));
 				video.updateHitbox();
 				video.screenCenter();
 			}
@@ -1335,7 +1335,7 @@ class PlayState extends MusicBeatState
 		add(video);
 
 		if (video.load(Paths.video(videoPath)))
-			FlxTimer.wait(0.001, () -> video.play());
+			new FlxTimer().start(0.001, (t) -> video.play());
 		else
 			trace('Video not loaded!');
 	}

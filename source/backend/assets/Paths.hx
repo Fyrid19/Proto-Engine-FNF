@@ -18,18 +18,20 @@ class Paths {
     public static var currentLevel:String = null;
     public static function setCurrentLevel(v:String) currentLevel = v.toLowerCase();
 
+    public static var assetCache:FunkinCache;
+
     static var graphicCache:Map<String, FlxGraphic> = [];
     static var backupGraphicCache:Map<String, FlxGraphic> = [];
     static var soundCache:Map<String, Sound> = [];
     static var backupSoundCache:Map<String, Sound> = [];
 
+    public static function init() {
+        assetCache = new FunkinCache();
+    }
+
     public static function clearCaches() {
-        backupGraphicCache = graphicCache;
-        graphicCache = [];
-        backupSoundCache = soundCache;
-        soundCache = [];
-        OpenFlAssets.cache.clear('assets/songs');
-        trace('Caches cleared');
+        // OpenFlAssets.cache.clear('assets/songs');
+        assetCache.clearCaches();
     }
 
     public static function getPath(key:String, ?library:String) {
@@ -59,12 +61,7 @@ class Paths {
 
     inline public static function image(key:String, ?library:String):FlxGraphic {
         var path:String = getPath('images/$key.png', library);
-        if (graphicCache.exists(path)) {
-            // trace('Graphic exists in cache ($path)');
-            return graphicCache.get(path);
-        } else {
-            return cacheGraphic(path);
-        }
+        return assetCache.getGraphic(path);
     }
 
     inline public static function sound(key:String, ?library:String)
@@ -76,57 +73,9 @@ class Paths {
     inline public static function music(key:String, ?library:String)
         return getSound('music/$key.$SOUND_EXT', library);
 
-    public static function cacheGraphic(key:String):FlxGraphic {
-        var bitmap:BitmapData;
-
-        if (graphicCache.exists(key)) {
-            trace('Graphic already cached');
-            return null;
-        }
-
-        if (backupGraphicCache.exists(key)) {
-            var graphic = backupGraphicCache.get(key);
-            backupGraphicCache.remove(key);
-            graphicCache.set(key, graphic);
-            return graphic;
-        }
-
-        try (bitmap = BitmapData.fromFile(key))
-        catch (e) {
-            trace('Graphic not found: ' + key);
-            return null;
-        }
-
-        var graphic:FlxGraphic = FlxGraphic.fromBitmapData(bitmap, false, key);
-        graphic.persist = true;
-        graphicCache.set(key, graphic);
-        trace('Graphic cached: ' + key);
-        return graphic;
-    }
-
     public static function getSound(key:String, ?library:Null<String>):Sound { // getPath on steroids
         var path:String = getPath(key, library);
-        var sound:Sound = OpenFlAssets.getSound(path);
-
-        if (backupSoundCache.exists(path)) {
-            var sound:Sound = backupSoundCache.get(path);
-            backupSoundCache.remove(path);
-            soundCache.set(path, sound);
-            return sound;
-        }
-
-        if (soundCache.exists(path)) {
-            return soundCache.get(path);
-        } else {
-            if (OpenFlAssets.exists(path)) {
-                trace('Sound cached: ' + path);
-                soundCache.set(path, sound);
-                return sound;
-            } else {
-                trace('Sound not found: ' + path);
-				return FlxAssets.getSound('flixel/sounds/beep');
-            }
-        }
+        return assetCache.getSound(path);
     }
 
     inline public static function songPath(key:String, song:String, ?diff:Null<String>) {
@@ -163,8 +112,8 @@ class Paths {
         return legacy ? '$path/chart/$diff.json' : '$path/$songLowercase.chrt';
     }
 
-    inline public static function video(key:String, ?ext:String = 'mp4', ?library:String)
-        return getPath('videos/$key.$ext', library);
+    inline public static function video(key:String, ?ext:String = 'mp4')
+        return getPath('videos/$key.$ext');
 
     inline public static function frag(key:String, ?library:String)
         return getPath('shaders/$key.frag', library);
@@ -172,8 +121,8 @@ class Paths {
     inline public static function vert(key:String, ?library:String)
         return getPath('shaders/$key.vert', library);
 
-    inline public static function noteSkin(key:String, skin:String, ?library:String)
-        return dataFile('skins/$skin/$key.json', library);
+    inline public static function noteSkin(key:String, ?library:String)
+        return dataFile('skins/$key.json', library);
 
     // im gonna make these all into one function later
     inline public static function getSparrowAtlas(?key:String, ?library:String) {

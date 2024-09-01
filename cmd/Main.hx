@@ -29,9 +29,9 @@ class Main {
                 version = lib.version;
             }
 
-            if (git != null) args = [install, lib.name, git];
-            else if (version != null) args = [install, lib.name, version];
-            else args = [install, lib.name];
+            if (git != null) args = [install, lib.name, git]; // haxelib git [name] [link]
+            else if (version != null) args = [install, lib.name, version]; // haxelib install [name] [version]
+            else args = [install, lib.name]; // haxelib install [name]
 
             // Sys.println(args);
             Sys.command('haxelib', args);
