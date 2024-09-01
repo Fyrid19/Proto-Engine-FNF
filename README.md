@@ -1,4 +1,4 @@
-# Friday Night Funkin' : Prototype Engine
+# Friday Night Funkin': Prototype Engine
 Prototype Engine is an FNF engine that aims to provide a smooth and flexible modding scene for everyone.
 
 
@@ -12,15 +12,15 @@ Prototype Engine is an FNF engine that aims to provide a smooth and flexible mod
 - [ ] Freeplay Editor
 - [ ] Week Editor
 - [ ] Stage Editor
+- [ ] Note Skin Editor
 
 ### Modding
-- [ ] Note Skin Implementation
-- [ ] Scripting
+- [ ] Note Skins
 - [ ] Hscript
 - [ ] Lua
 - [ ] Zip File Support
 - [ ] Custom Dialogue
 
 ### Extra/Misc.
-- [ ] Options Menu
 - [ ] Weekend 1 Port (Low Priority)
+- [ ] Erect Songs (Unlikely)
