@@ -4,8 +4,7 @@ package funkin.objects.notes;
 import polymod.format.ParseRules.TargetSignatureElement;
 #end
 
-class Note extends FlxSprite
-{
+class Note extends FlxSprite {
 	public var strumTime:Float = 0;
 
 	public var mustPress:Bool = false;
@@ -34,8 +33,7 @@ class Note extends FlxSprite
 
 	public static var arrowColors:Array<Float> = [1, 1, 1, 1];
 
-	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false)
-	{
+	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false) {
 		super();
 
 		if (prevNote == null)
@@ -53,8 +51,7 @@ class Note extends FlxSprite
 
 		var daStage:String = PlayState.curStage;
 
-		switch (daStage)
-		{
+		switch (daStage) {
 			case 'school' | 'schoolEvil':
 				loadGraphic(Paths.image('weeb/pixelUI/arrows-pixels'), true, 17, 17);
 
@@ -63,8 +60,7 @@ class Note extends FlxSprite
 				animation.add('blueScroll', [5]);
 				animation.add('purpleScroll', [4]);
 
-				if (isSustainNote)
-				{
+				if (isSustainNote) {
 					loadGraphic(Paths.image('weeb/pixelUI/arrowEnds'), true, 7, 6);
 
 					animation.add('purpleholdend', [4]);
@@ -115,8 +111,7 @@ class Note extends FlxSprite
 		shader = colorSwap.shader;
 		updateColors();
 
-		switch (noteData)
-		{
+		switch (noteData) {
 			case 0:
 				x += swagWidth * 0;
 				animation.play('purpleScroll');
@@ -133,8 +128,7 @@ class Note extends FlxSprite
 
 		// trace(prevNote);
 
-		if (isSustainNote && prevNote != null)
-		{
+		if (isSustainNote && prevNote != null) {
 			noteScore * 0.2;
 			alpha = 0.6;
 
@@ -143,16 +137,11 @@ class Note extends FlxSprite
 
 			x += width / 2;
 
-			switch (noteData)
-			{
-				case 2:
-					animation.play('greenholdend');
-				case 3:
-					animation.play('redholdend');
-				case 1:
-					animation.play('blueholdend');
-				case 0:
-					animation.play('purpleholdend');
+			switch (noteData) {
+				case 0: animation.play('purpleholdend');
+				case 1: animation.play('blueholdend');
+				case 2: animation.play('greenholdend');
+				case 3: animation.play('redholdend');
 			}
 
 			updateHitbox();
@@ -162,18 +151,12 @@ class Note extends FlxSprite
 			if (PlayState.curStage.startsWith('school'))
 				x += 30;
 
-			if (prevNote.isSustainNote)
-			{
-				switch (prevNote.noteData)
-				{
-					case 0:
-						prevNote.animation.play('purplehold');
-					case 1:
-						prevNote.animation.play('bluehold');
-					case 2:
-						prevNote.animation.play('greenhold');
-					case 3:
-						prevNote.animation.play('redhold');
+			if (prevNote.isSustainNote) {
+				switch (prevNote.noteData) {
+					case 0: prevNote.animation.play('purplehold');
+					case 1: prevNote.animation.play('bluehold');
+					case 2: prevNote.animation.play('greenhold');
+					case 3: prevNote.animation.play('redhold');
 				}
 
 				prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.5 * PlayState.SONG.speed;
@@ -184,9 +167,7 @@ class Note extends FlxSprite
 	}
 
 	public function updateColors():Void
-	{
 		colorSwap.update(arrowColors[noteData]);
-	}
 
 	override function update(elapsed:Float)
 	{

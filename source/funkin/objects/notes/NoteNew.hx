@@ -37,7 +37,7 @@ class NoteNew extends FlxSprite implements NoteBasic {
         noteSkin.parse();
 
         var curStage:String = PlayState.curStage;
-        if (curStage == 'school' || curStage == 'schoolEvil') {
+        if (curStage.startsWith('school')) {
             noteSkin.jsonPath = Paths.noteSkin('pixel'); // so i can softcode later
             noteSkin.path = 'weeb/pixelUI/arrows-pixels';
             noteSkin.extraPaths[0] = 'weeb/pixelUI/arrowEnds';

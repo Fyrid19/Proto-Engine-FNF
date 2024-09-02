@@ -154,6 +154,8 @@ class PlayState extends MusicBeatState
 
 		Conductor.mapBPMChanges(SONG);
 		Conductor.changeBPM(SONG.bpm);
+		
+		Paths.clearCaches();
 
 		foregroundSprites = new FlxTypedGroup<BGSprite>();
 
@@ -896,8 +898,6 @@ class PlayState extends MusicBeatState
 					startCountdown();
 			}
 		}
-
-		Paths.clearCaches();
 
 		super.create();
 	}

@@ -1,6 +1,7 @@
 package backend.assets;
 
 import flixel.system.FlxAssets;
+import flixel.graphics.frames.FlxFramesCollection;
 import flixel.graphics.FlxGraphic;
 import flash.media.Sound;
 
@@ -31,7 +32,7 @@ class Paths {
 
     public static function clearCaches() {
         OpenFlAssets.cache.clear('assets/songs');
-        FlxG.bitmap.clearCache();
+        FlxG.bitmap.dumpCache(); // i am desperate to clean memory
         assetCache.clearCaches();
         System.gc();
     }
@@ -130,10 +131,10 @@ class Paths {
         return dataFile('skins/$key.json', library);
 
     // im gonna make these all into one function later
-    inline public static function getSparrowAtlas(?key:String, ?library:String) {
+    inline public static function getSparrowAtlas(key:String, ?library:String) {
         var ext:String = 'xml';
         var path:String = file('images/$key.$ext', library);
-        path = OpenFlAssets.exists(path) ? path : '$key.$ext';
+        path = OpenFlAssets.exists(path) ? path : file('$key.$ext', library);
         var graphic:FlxGraphic = image(key, library);
 
         if (OpenFlAssets.exists(path)) {
@@ -144,10 +145,10 @@ class Paths {
         }
     }
 
-    inline public static function getPackerAtlas(?key:String, ?library:String) {
+    inline public static function getPackerAtlas(key:String, ?library:String) {
         var ext:String = 'txt';
         var path:String = file('images/$key.$ext', library);
-        path = OpenFlAssets.exists(path) ? path : '$key.$ext';
+        path = OpenFlAssets.exists(path) ? path : file('$key.$ext', library);
         var graphic:FlxGraphic = image(key, library);
 
         if (OpenFlAssets.exists(path)) {
@@ -158,10 +159,10 @@ class Paths {
         }
     }
 
-    inline public static function getAsepriteAtlas(?key:String, ?library:String) {
+    inline public static function getAsepriteAtlas(key:String, ?library:String) {
         var ext:String = 'json';
         var path:String = file('images/$key.$ext', library);
-        path = OpenFlAssets.exists(path) ? path : '$key.$ext';
+        path = OpenFlAssets.exists(path) ? path : file('$key.$ext', library);
         var graphic:FlxGraphic = image(key, library);
 
         if (OpenFlAssets.exists(path)) {
@@ -170,5 +171,34 @@ class Paths {
             trace('File not found: ' + path);
             return null;
         }
+    }
+
+    // multiple spritesheet support (credits to NeeEoo for base code)
+    // this assumes all your spritesheet file types are the same
+    inline public static function getMultiSpritesheetFrames(keys:Array<String>, ?type:String = 'xml', ?library:String) {
+        var framesToReturn:FlxAtlasFrames;
+        for (i in 0...keys.length) {
+            switch (type) {
+                case 'xml' | 'sparrow':
+                    var xmlFrames = getSparrowAtlas(keys[i], library);
+                    for (frame in xmlFrames.frames)
+                        framesToReturn.pushFrame(frame);
+                    framesToReturn.frames = framesToReturn.frames;
+                case 'txt' | 'packer':
+                    var txtFrames = getPackerAtlas(keys[i], library);
+                    for (frame in txtFrames.frames)
+                        framesToReturn.pushFrame(frame);
+                    framesToReturn.frames = framesToReturn.frames;
+                case 'json' | 'aseprite': // json spritesheets are usually aseprite sheets so
+                    var jsonFrames = getAsepriteAtlas(keys[i], library);
+                    for (frame in jsonFrames.frames)
+                        framesToReturn.pushFrame(frame);
+                    framesToReturn.frames = framesToReturn.frames;
+                default:
+                    trace('File type not supported: ' + type);
+                    return null;
+            }
+        }
+        return framesToReturn;
     }
 }
