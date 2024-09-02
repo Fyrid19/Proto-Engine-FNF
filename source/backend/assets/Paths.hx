@@ -2,14 +2,14 @@ package backend.assets;
 
 import flixel.system.FlxAssets;
 import flixel.graphics.FlxGraphic;
+import flash.media.Sound;
 
 import openfl.display.BitmapData;
 import openfl.utils.AssetType;
 import openfl.utils.AssetCache;
 import openfl.utils.Assets as OpenFlAssets;
-
+import openfl.system.System;
 import lime.utils.Assets;
-import flash.media.Sound;
 
 // caching system is like a mix of funkin and flashcache so credits to them i guess
 class Paths {
@@ -30,8 +30,10 @@ class Paths {
     }
 
     public static function clearCaches() {
-        // OpenFlAssets.cache.clear('assets/songs');
+        OpenFlAssets.cache.clear('assets/songs');
+        FlxG.bitmap.clearCache();
         assetCache.clearCaches();
+        System.gc();
     }
 
     public static function getPath(key:String, ?library:String) {

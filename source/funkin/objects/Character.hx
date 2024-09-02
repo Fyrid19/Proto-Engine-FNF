@@ -523,7 +523,10 @@ class Character extends FlxSprite
 
 		TankmenBG.animationNotes = animationNotes;
 
+		#if debug
 		trace(animationNotes);
+		#end
+		
 		animationNotes.sort(sortAnims);
 	}
 
@@ -586,7 +589,9 @@ class Character extends FlxSprite
 				{
 					if (Conductor.songPosition > animationNotes[0][0])
 					{
+						#if debug
 						trace('played shoot anim' + animationNotes[0][1]);
+						#end
 
 						var shootAnim:Int = 1;
 

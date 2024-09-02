@@ -34,7 +34,10 @@ class FreeplayState extends MusicBeatState
 	];
 
 	private var grpSongs:FlxTypedGroup<Alphabet>;
-	private var curPlaying:Bool = false;
+	private var songPlaying:Bool = false;
+
+	var songTimer:FlxTimer = new FlxTimer();
+	var lerpAlpha:Float = 1;
 
 	private var iconArray:Array<HealthIcon> = [];
 	var bg:FlxSprite;
@@ -196,6 +199,23 @@ class FreeplayState extends MusicBeatState
 			}
 		}
 
+		for (item in grpSongs.members) {
+			if (item.targetY != 0)
+				item.alpha = FlxMath.lerp(item.alpha, lerpAlpha, 0.4);
+			else 
+				item.alpha = 1;
+		}
+
+		for (i in 0...iconArray.length) {
+			iconArray[i].alpha = grpSongs.members[i].alpha;
+		}
+
+		if (songPlaying) {
+			lerpAlpha = 0.6;
+		} else {
+			lerpAlpha = 1;
+		}
+
 		lerpScore = FlxMath.lerp(lerpScore, intendedScore, 0.4);
 		bg.color = FlxColor.interpolate(bg.color, coolColors[songs[curSelected].week % coolColors.length], FunkinUtil.camLerpShit(0.045));
 
@@ -256,9 +276,10 @@ class FreeplayState extends MusicBeatState
 		positionHighscore();
 	}
 
-	function changeSelection(change:Int = 0)
-	{
+	function changeSelection(change:Int = 0) {
 		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+
+		songPlaying = false;
 
 		curSelected += change;
 
@@ -275,45 +296,30 @@ class FreeplayState extends MusicBeatState
 		#if PRELOAD_ALL
 		// FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
 
-		var instPath:String = Paths.instPath(songs[curSelected].songName);
-		if (!OpenFlAssets.exists(instPath)) {
-			trace('File doesn\'t exist: $instPath');
-		} else {
-			var soundRequest = FlxPartialSound.partialLoadFromFile(instPath, 0.05, 0.3);
-			soundRequest.future.onComplete(function(sound:Sound) {
-				FlxG.sound.playMusic(sound);
-				FlxG.sound.music.fadeIn();
-			});
-		}
+		songTimer.start(1, function(t) {
+			songPlaying = true;
+			var instPath:String = Paths.instPath(songs[curSelected].songName);
+			if (!OpenFlAssets.exists(instPath)) {
+				trace('File doesn\'t exist: $instPath');
+			} else {
+				var soundRequest = FlxPartialSound.partialLoadFromFile(instPath, 0.05, 0.3);
+				soundRequest.future.onComplete(function(sound:Sound) {
+					FlxG.sound.playMusic(sound);
+					FlxG.sound.music.fadeIn();
+				});
+			}
+		});
 		#end
 
 		var bullShit:Int = 0;
 
-		for (i in 0...iconArray.length)
-		{
-			iconArray[i].alpha = 0.6;
-		}
-
-		iconArray[curSelected].alpha = 1;
-
-		for (item in grpSongs.members)
-		{
+		for (item in grpSongs.members) {
 			item.targetY = bullShit - curSelected;
 			bullShit++;
-
-			item.alpha = 0.6;
-			// item.setGraphicSize(Std.int(item.width * 0.8));
-
-			if (item.targetY == 0)
-			{
-				item.alpha = 1;
-				// item.setGraphicSize(Std.int(item.width));
-			}
 		}
 	}
 
-	function positionHighscore()
-	{
+	function positionHighscore() {
 		scoreText.x = FlxG.width - scoreText.width - 6;
 		scoreBG.scale.x = FlxG.width - scoreText.x + 6;
 		scoreBG.x = FlxG.width - scoreBG.scale.x / 2;
@@ -323,8 +329,7 @@ class FreeplayState extends MusicBeatState
 	}
 }
 
-class SongMetadata
-{
+class SongMetadata {
 	public var songName:String = "";
 	public var week:Int = 0;
 	public var songCharacter:String = "";
