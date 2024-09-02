@@ -110,6 +110,9 @@
 	<haxelib name="haxeui-core" />
 	<haxelib name="haxeui-flixel" />
 
+	<!--FlxPartialSound-->
+	<haxelib name="flxpartialsound" />
+
 	<!-- <haxelib name="hxCodec" if="desktop || mobile" /> -->
 
 	<section if="cpp">

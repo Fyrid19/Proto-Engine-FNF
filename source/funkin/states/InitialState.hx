@@ -37,12 +37,10 @@ class InitialState extends MusicBeatState {
 		trace('videos allowed');
 		#end
 
-        FlxG.game.focusLostFramerate = 60;
-
 		FlxG.sound.muteKeys = [ZERO];
 
-        // if (FunkinData.save.data.volume != null)
-		// 	FlxG.sound.volume = FunkinData.save.data.volume;
+        if (FunkinData.save.data.volume != null)
+			FlxG.sound.volume = FunkinData.save.data.volume;
 		if (FunkinData.save.data.mute != null)
 			FlxG.sound.muted = FunkinData.save.data.mute;
 
@@ -50,6 +48,11 @@ class InitialState extends MusicBeatState {
 
 		resetFramerate();
 
+		Application.current.onExit.add(function(e) {
+            FunkinData.save.data.volume = FlxG.sound.volume;
+        });
+
+        FlxG.game.focusLostFramerate = 30;
 		FlxG.signals.focusLost.add(function() {
 			Main.lostFocus.visible = true;
 			FlxG.drawFramerate = 30; // lower framerate for better performace

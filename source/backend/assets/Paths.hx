@@ -90,19 +90,19 @@ class Paths {
         return getSound(path);
     }
 
-    inline public static function voices(song:String, vocalSuffix:String = '', ?diff:Null<String>) {
+    inline public static function voices(song:String, ?vocalSuffix:String = '', ?diff:Null<String>) {
         var path:String = songPath('Voices$vocalSuffix.$SOUND_EXT', song, diff);
         return getSound(path);
     }
 
     inline public static function instPath(song:String, ?diff:Null<String>) {
-        var path:String = songPath('Inst-$diff.$SOUND_EXT', song, diff);
-        return path;
+        var path:String = songPath('Inst.$SOUND_EXT', song, diff);
+        return getPath(path);
     }
 
-    inline public static function voicesPath(song:String, vocalSuffix:String = '', ?diff:Null<String>) {
+    inline public static function voicesPath(song:String, ?vocalSuffix:String = '', ?diff:Null<String>) {
         var path:String = songPath('Voices$vocalSuffix.$SOUND_EXT', song, diff);
-        return path;
+        return getPath(path);
     }
 
     inline public static function chart(song:String, diff:String = 'normal', legacy:Bool) {
@@ -111,6 +111,9 @@ class Paths {
         path = OpenFlAssets.exists(path) ? path : 'songs/$songLowercase/';
         return legacy ? '$path/chart/$diff.json' : '$path/$songLowercase.chrt';
     }
+
+    inline public static function stage(key:String, ?library:String)
+        return getPath('stages/$key', library);
 
     inline public static function video(key:String, ?ext:String = 'mp4')
         return getPath('videos/$key.$ext');

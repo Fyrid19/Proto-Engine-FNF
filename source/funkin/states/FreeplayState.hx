@@ -4,6 +4,11 @@ import flash.text.TextField;
 import flixel.addons.display.FlxGridOverlay;
 import lime.utils.Assets;
 
+import funkin.util.flixel.sound.FlxPartialSound;
+import openfl.media.Sound;
+
+import openfl.utils.Assets as OpenFlAssets;
+
 class FreeplayState extends MusicBeatState
 {
 	var songs:Array<SongMetadata> = [];
@@ -268,7 +273,18 @@ class FreeplayState extends MusicBeatState
 		// lerpScore = 0;
 
 		#if PRELOAD_ALL
-		FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
+		// FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
+
+		var instPath:String = Paths.instPath(songs[curSelected].songName);
+		if (!OpenFlAssets.exists(instPath)) {
+			trace('File doesn\'t exist: $instPath');
+		} else {
+			var soundRequest = FlxPartialSound.partialLoadFromFile(instPath, 0.05, 0.3);
+			soundRequest.future.onComplete(function(sound:Sound) {
+				FlxG.sound.playMusic(sound);
+				FlxG.sound.music.fadeIn();
+			});
+		}
 		#end
 
 		var bullShit:Int = 0;

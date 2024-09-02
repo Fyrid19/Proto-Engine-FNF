@@ -64,6 +64,11 @@
             "name": "hxdiscord_rpc",
             "version": "",
             "git": "https://github.com/MAJigsaw77/hxdiscord_rpc"
+        },
+        {
+            "name": "flxpartialsound",
+            "version": "",
+            "git": "https://github.com/FunkinCrew/FlxPartialSound"
         }
     ]
 }
