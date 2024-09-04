@@ -154,7 +154,7 @@ class PlayState extends MusicBeatState
 
 		Conductor.mapBPMChanges(SONG);
 		Conductor.changeBPM(SONG.bpm);
-		
+
 		Paths.clearCaches();
 
 		foregroundSprites = new FlxTypedGroup<BGSprite>();
@@ -1331,13 +1331,16 @@ class PlayState extends MusicBeatState
 				video.screenCenter();
 			}
 		});
+		video.bitmap.onEndReached.add(onComplete);
 		video.bitmap.onEndReached.add(video.destroy);
 		add(video);
 
-		if (video.load(Paths.video(videoPath)))
+		if (video.load(Paths.video(videoPath))) {
 			new FlxTimer().start(0.001, (t) -> video.play());
-		else
+		} else {
 			trace('Video not loaded!');
+			onComplete();
+		}
 	}
 	#end
 

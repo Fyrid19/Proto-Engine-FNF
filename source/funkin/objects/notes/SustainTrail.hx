@@ -10,7 +10,7 @@ class SustainTrail extends FlxStrip implements NoteBasic {
     public var noteType:String = ''; // The name of the note type (Nothing for default)
     public var noteTypeID:Int = 0; // The ID of the note type (0 is default)
     public var noteSkin:NoteSkin; // Self explanatory, note type skin overrides this
-    public var noteData:Direction = 0; // 0 = Left, 1 = Down, 2 = Up, 3 = Right, can add more in NoteData
+    public var noteDirection:Direction = 0; // 0 = Left, 1 = Down, 2 = Up, 3 = Right, can add more in NoteData
     public var strumLine:StrumLine; // The strum line the note is assigned to
     public var parentNote:NoteNew; // The note the sustain trail belongs to
 
@@ -18,11 +18,11 @@ class SustainTrail extends FlxStrip implements NoteBasic {
     
     // loadGraphic(Paths.image(noteSkin.extraPaths[0]), true, noteSkin.extraData[2], noteSkin.extraData[3]);
 
-    public function new(strumLine:StrumLine, noteData:Int, sustainLength:Float) {
+    public function new(strumLine:StrumLine, noteDirection:Int, sustainLength:Float) {
         super();
 
         this.strumLine = strumLine;
-        this.noteData = noteData;
+        this.noteDirection = noteDirection;
         this.sustainLength = sustainLength;
 
 		alpha = FunkinData.data.get('sustainAlpha');

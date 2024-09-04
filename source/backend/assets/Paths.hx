@@ -12,7 +12,8 @@ import openfl.utils.Assets as OpenFlAssets;
 import openfl.system.System;
 import lime.utils.Assets;
 
-// caching system is like a mix of funkin and flashcache so credits to them i guess
+// caching system is like a mix of funkin and flashcache/psych so credits to them i guess
+@:access(openfl.display.BitmapData)
 class Paths {
     inline public static var SOUND_EXT = #if web "mp3" #else "ogg" #end; // Sound file type
 
@@ -30,8 +31,16 @@ class Paths {
         assetCache = new FunkinCache();
     }
 
+    @:access(flixel.system.frontEnds.BitmapFrontEnd._cache)
     public static function clearCaches() {
         OpenFlAssets.cache.clear('assets/songs');
+        for (key in FlxG.bitmap._cache.keys()) {
+			if (!assetCache.graphicCache.exists(key)) {
+                if (FlxG.bitmap.get(key).bitmap.__texture != null)
+                    FlxG.bitmap.get(key).bitmap.__texture.dispose();
+				FlxG.bitmap.remove(FlxG.bitmap.get(key));
+            }
+		}
         FlxG.bitmap.dumpCache(); // i am desperate to clean memory
         assetCache.clearCaches();
         System.gc();
@@ -130,7 +139,27 @@ class Paths {
     inline public static function noteSkin(key:String, ?library:String)
         return dataFile('skins/$key.json', library);
 
-    // im gonna make these all into one function later
+    inline public static function getAtlas(key:String, ?ext:String = 'xml', ?library:String) {
+        var path:String = file('images/$key', library);
+        path = OpenFlAssets.exists('$path.$ext') ? path : file('$key');
+        var graphic:FlxGraphic = image(key, library);
+        if (OpenFlAssets.exists('$path.$ext')) {
+            if (ext == 'xml') {
+                return FlxAtlasFrames.fromSparrow(graphic, '$path.$ext');
+            } else if (ext == 'txt') {
+                return FlxAtlasFrames.fromSpriteSheetPacker(graphic, '$path.$ext');
+            } else if (ext == 'json') {
+                return FlxAtlasFrames.fromAseprite(graphic, '$path.$ext');
+            } else {
+                trace('${ext.toUpperCase()} files are not supported');
+                return null;
+            }
+        } else {
+            trace('File not found: $path.$ext');
+            return null;
+        }
+    }
+
     inline public static function getSparrowAtlas(key:String, ?library:String) {
         var ext:String = 'xml';
         var path:String = file('images/$key.$ext', library);
@@ -176,7 +205,7 @@ class Paths {
     // multiple spritesheet support (credits to NeeEoo for base code)
     // this assumes all your spritesheet file types are the same
     inline public static function getMultiSpritesheetFrames(keys:Array<String>, ?type:String = 'xml', ?library:String) {
-        var framesToReturn:FlxAtlasFrames;
+        var framesToReturn:FlxFramesCollection = new FlxFramesCollection(null);
         for (i in 0...keys.length) {
             switch (type) {
                 case 'xml' | 'sparrow':

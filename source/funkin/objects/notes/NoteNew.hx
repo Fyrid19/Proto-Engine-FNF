@@ -6,7 +6,7 @@ class NoteNew extends FlxSprite implements NoteBasic {
     public var noteType:String = ''; // The name of the note type (Nothing for default)
     public var noteTypeID:Int = 0; // The ID of the note type (0 is default)
     public var noteSkin:NoteSkin; // Self explanatory, note type skin overrides this
-    public var noteData:Direction = 0; // 0 = Left, 1 = Down, 2 = Up, 3 = Right, can add more in NoteData
+    public var noteDirection:Direction = 0; // 0 = Left, 1 = Down, 2 = Up, 3 = Right, can add more in NoteData
     public var strumLine:StrumLine; // The strum line the note is assigned to
 
     public var hasSustain:Bool; // If the note has a sustain trail or not
@@ -23,7 +23,7 @@ class NoteNew extends FlxSprite implements NoteBasic {
 
     public static var swagWidth:Float = 160 * 0.7; // Used for positioning the note
 
-    public function new(strumTime:Float, noteData:Direction, ?hasSustain:Bool = false, ?noteType:Int = 0, strumLine:StrumLine) {
+    public function new(strumTime:Float, noteDirection:Direction, ?hasSustain:Bool = false, ?noteType:Int = 0, strumLine:StrumLine) {
         super();
 
 		x += 50;
@@ -32,7 +32,7 @@ class NoteNew extends FlxSprite implements NoteBasic {
 
 		this.hasSustain = hasSustain;
 		this.strumTime = strumTime;
-		this.noteData = noteData;
+		this.noteDirection = noteDirection;
         this.strumLine = strumLine;
         noteSkin.parse();
 
@@ -48,7 +48,7 @@ class NoteNew extends FlxSprite implements NoteBasic {
         
         antialiasing = noteSkin.antialiasing;
 
-        var color:String = noteData.getColor();
+        var color:String = noteDirection.getColor();
         if (noteSkin.atlasIncluded) {
             frames = Paths.getSparrowAtlas(noteSkin.path);
             animation.addByPrefix('scroll', '$color instance');
@@ -56,12 +56,12 @@ class NoteNew extends FlxSprite implements NoteBasic {
             updateHitbox();
         } else {
             loadGraphic(Paths.image(noteSkin.path), true, noteSkin.extraData[0], noteSkin.extraData[1]);
-            animation.add('scroll', [4 + noteData]);
+            animation.add('scroll', [4 + noteDirection]);
             setGraphicSize(Std.int(width * noteSkin.extraData[4]));
             updateHitbox();
         }
 
-        x += swagWidth * noteData;
+        x += swagWidth * noteDirection;
         animation.play('scroll');
     }
 

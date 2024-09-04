@@ -78,7 +78,7 @@ class Note extends FlxSprite {
 				updateHitbox();
 
 			default:
-				frames = Paths.getSparrowAtlas('NOTE_assets');
+				frames = Paths.getAtlas('NOTE_assets');
 
 				animation.addByPrefix('greenScroll', 'green instance');
 				animation.addByPrefix('redScroll', 'red instance');
