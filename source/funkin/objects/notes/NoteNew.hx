@@ -34,8 +34,8 @@ class NoteNew extends FlxSprite implements NoteBasic {
 		this.strumTime = strumTime;
 		this.noteDirection = noteDirection;
         this.strumLine = strumLine;
-        noteSkin.parse();
 
+        noteSkin.parse();
         var curStage:String = PlayState.curStage;
         if (curStage.startsWith('school')) {
             noteSkin.jsonPath = Paths.noteSkin('pixel'); // so i can softcode later

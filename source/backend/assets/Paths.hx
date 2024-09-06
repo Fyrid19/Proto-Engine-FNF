@@ -8,49 +8,20 @@ import flash.media.Sound;
 import openfl.display.BitmapData;
 import openfl.utils.AssetType;
 import openfl.utils.AssetCache;
-import openfl.utils.Assets as OpenFlAssets;
+import openfl.utils.Assets;
 import openfl.system.System;
-import lime.utils.Assets;
 
-// caching system is like a mix of funkin and flashcache/psych so credits to them i guess
-@:access(openfl.display.BitmapData)
 class Paths {
     inline public static var SOUND_EXT = #if web "mp3" #else "ogg" #end; // Sound file type
 
     public static var currentLevel:String = null;
     public static function setCurrentLevel(v:String) currentLevel = v.toLowerCase();
 
-    public static var assetCache:FunkinCache;
-
-    static var graphicCache:Map<String, FlxGraphic> = [];
-    static var backupGraphicCache:Map<String, FlxGraphic> = [];
-    static var soundCache:Map<String, Sound> = [];
-    static var backupSoundCache:Map<String, Sound> = [];
-
-    public static function init() {
-        assetCache = new FunkinCache();
-    }
-
-    @:access(flixel.system.frontEnds.BitmapFrontEnd._cache)
-    public static function clearCaches() {
-        OpenFlAssets.cache.clear('assets/songs');
-        for (key in FlxG.bitmap._cache.keys()) {
-			if (!assetCache.graphicCache.exists(key)) {
-                if (FlxG.bitmap.get(key).bitmap.__texture != null)
-                    FlxG.bitmap.get(key).bitmap.__texture.dispose();
-				FlxG.bitmap.remove(FlxG.bitmap.get(key));
-            }
-		}
-        FlxG.bitmap.dumpCache(); // i am desperate to clean memory
-        assetCache.clearCaches();
-        System.gc();
-    }
-
     public static function getPath(key:String, ?library:String) {
         var level:String = currentLevel != null ? currentLevel : library;
         var path:String = '$level:assets/$level/$key';
-        path = OpenFlAssets.exists(path) ? path : 'assets/$level/$key'; // if theres no actual library check for parent folder
-        return OpenFlAssets.exists(path) ? path : 'assets/$key';
+        path = Assets.exists(path) ? path : 'assets/$level/$key'; // if theres no actual library check for parent folder
+        return Assets.exists(path) ? path : 'assets/$key';
     }
 
     inline public static function file(key:String, ?library:String)
@@ -73,7 +44,7 @@ class Paths {
 
     inline public static function image(key:String, ?library:String):FlxGraphic {
         var path:String = getPath('images/$key.png', library);
-        return assetCache.getGraphic(path);
+        return FunkinAssets.getCacheGraphic(path);
     }
 
     inline public static function sound(key:String, ?library:String)
@@ -87,13 +58,13 @@ class Paths {
 
     public static function getSound(key:String, ?library:Null<String>):Sound { // getPath on steroids
         var path:String = getPath(key, library);
-        return assetCache.getSound(path);
+        return FunkinAssets.getCacheSound(path);
     }
 
     inline public static function songPath(key:String, song:String, ?diff:Null<String>) {
         var songLowercase:String = song.toLowerCase();
         var path:String = 'songs/$songLowercase/$diff/$key';
-        path = OpenFlAssets.exists(path) ? path : 'songs/$songLowercase/$key';
+        path = Assets.exists(path) ? path : 'songs/$songLowercase/$key';
         return path;
     }
 
@@ -120,7 +91,7 @@ class Paths {
     inline public static function chart(song:String, diff:String = 'normal', legacy:Bool) {
         var songLowercase:String = song.toLowerCase();
         var path:String = 'songs/$songLowercase/$diff/';
-        path = OpenFlAssets.exists(path) ? path : 'songs/$songLowercase/';
+        path = Assets.exists(path) ? path : 'songs/$songLowercase/';
         return legacy ? '$path/chart/$diff.json' : '$path/$songLowercase.chrt';
     }
 
@@ -141,9 +112,9 @@ class Paths {
 
     inline public static function getAtlas(key:String, ?ext:String = 'xml', ?library:String) {
         var path:String = file('images/$key', library);
-        path = OpenFlAssets.exists('$path.$ext') ? path : file('$key');
+        path = Assets.exists('$path.$ext') ? path : file('$key');
         var graphic:FlxGraphic = image(key, library);
-        if (OpenFlAssets.exists('$path.$ext')) {
+        if (Assets.exists('$path.$ext')) {
             if (ext == 'xml') {
                 return FlxAtlasFrames.fromSparrow(graphic, '$path.$ext');
             } else if (ext == 'txt') {
@@ -163,10 +134,10 @@ class Paths {
     inline public static function getSparrowAtlas(key:String, ?library:String) {
         var ext:String = 'xml';
         var path:String = file('images/$key.$ext', library);
-        path = OpenFlAssets.exists(path) ? path : file('$key.$ext', library);
+        path = Assets.exists(path) ? path : file('$key.$ext', library);
         var graphic:FlxGraphic = image(key, library);
 
-        if (OpenFlAssets.exists(path)) {
+        if (Assets.exists(path)) {
             return FlxAtlasFrames.fromSparrow(graphic, path);
         } else {
             trace('File not found: ' + path);
@@ -177,10 +148,10 @@ class Paths {
     inline public static function getPackerAtlas(key:String, ?library:String) {
         var ext:String = 'txt';
         var path:String = file('images/$key.$ext', library);
-        path = OpenFlAssets.exists(path) ? path : file('$key.$ext', library);
+        path = Assets.exists(path) ? path : file('$key.$ext', library);
         var graphic:FlxGraphic = image(key, library);
 
-        if (OpenFlAssets.exists(path)) {
+        if (Assets.exists(path)) {
             return FlxAtlasFrames.fromSpriteSheetPacker(graphic, path);
         } else {
             trace('File not found: ' + path);
@@ -191,10 +162,10 @@ class Paths {
     inline public static function getAsepriteAtlas(key:String, ?library:String) {
         var ext:String = 'json';
         var path:String = file('images/$key.$ext', library);
-        path = OpenFlAssets.exists(path) ? path : file('$key.$ext', library);
+        path = Assets.exists(path) ? path : file('$key.$ext', library);
         var graphic:FlxGraphic = image(key, library);
 
-        if (OpenFlAssets.exists(path)) {
+        if (Assets.exists(path)) {
             return FlxAtlasFrames.fromAseprite(graphic, path);
         } else {
             trace('File not found: ' + path);

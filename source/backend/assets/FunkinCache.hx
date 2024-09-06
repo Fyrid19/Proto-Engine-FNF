@@ -1,10 +1,9 @@
 package backend.assets;
 
-import openfl.utils.Assets as OpenFlAssets;
+import openfl.utils.Assets as Assets;
+import openfl.media.Sound;
 import openfl.display.BitmapData;
 import flixel.graphics.FlxGraphic;
-import flash.media.Sound;
-import lime.utils.Assets;
 
 import openfl.utils.ByteArray;
 
@@ -29,8 +28,13 @@ class FunkinCache {
         trace('Caches cleared');
     }
 
-    public function cacheGraphic(key:String) {
+    public function cacheGraphic(key:String, ?asset:FlxGraphic) {
         var bitmap:BitmapData;
+
+        if (asset != null) {
+            graphicCache.set(key, asset);
+            return;
+        }
 
         if (graphicCache.exists(key)) {
             trace('Graphic already cached');
@@ -56,8 +60,13 @@ class FunkinCache {
         trace('Graphic cached: ' + key);
     }
 
-    public function cacheSound(key:String) {
-        var sound:Sound = OpenFlAssets.getSound(key);
+    public function cacheSound(key:String, ?asset:Sound) {
+        var sound:Sound = Assets.getSound(key);
+
+        if (asset != null) {
+            soundCache.set(key, asset);
+            return;
+        }
 
         if (backupSoundCache.exists(key)) {
             var sound:Sound = backupSoundCache.get(key);
@@ -67,7 +76,7 @@ class FunkinCache {
         }
 
         if (!soundCache.exists(key)) {
-            if (OpenFlAssets.exists(key)) {
+            if (Assets.exists(key)) {
                 trace('Sound cached: ' + key);
                 soundCache.set(key, sound);
                 return;
@@ -78,45 +87,9 @@ class FunkinCache {
         }
     }
 
-    // experimental
-    public function cacheGraphicByte(key:String) {
-        var bitmap:BitmapData;
-        var bytes:ByteArray = new ByteArray();
-
-        if (graphicCache.exists(key)) {
-            trace('Graphic already cached');
-            return;
-        }
-
-        if (backupGraphicCache.exists(key)) {
-            var graphic = backupGraphicCache.get(key);
-            backupGraphicCache.remove(key);
-            graphicCache.set(key, graphic);
-            return;
-        }
-
-        try (bytes = ByteArray.fromFile(key))
-        catch (e) {
-            trace('Graphic not loaded: ' + key);
-            return;
-        }
-
-        // bytes.deflate();
-        try (bitmap = BitmapData.fromBytes(bytes))
-        catch (e) {
-            trace('ByteArray cannot be read');
-            return;
-        }
-
-        var graphic:FlxGraphic = FlxGraphic.fromBitmapData(bitmap, false, key);
-        graphic.persist = true;
-        graphicCache.set(key, graphic);
-        trace('Graphic cached: ' + key);
-    }
-
     public function getGraphic(key:String) {
         if (!graphicCache.exists(key))
-            cacheGraphicByte(key);
+            cacheGraphic(key);
         return graphicCache.get(key);
     }
 

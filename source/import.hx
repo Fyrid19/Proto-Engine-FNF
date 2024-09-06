@@ -21,6 +21,7 @@ import backend.MusicBeatSubstate;
 import backend.FunkinData;
 import backend.EngineMain;
 import backend.assets.Paths;
+import backend.assets.FunkinAssets;
 
 import backend.SwagCamera;
 

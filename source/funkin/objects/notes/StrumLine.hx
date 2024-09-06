@@ -24,6 +24,10 @@ class StrumLine extends FlxSpriteGroup {
         strumNotes = new FlxTypedGroup<StrumNote>();
         add(strumNotes);
 
+        for (i in 0...3) {
+            var strumNote:StrumNote;
+        }
+
         notes = new FlxTypedGroup<NoteBasic>();
         add(notes);
     }
@@ -58,4 +62,8 @@ class StrumLine extends FlxSpriteGroup {
 
 	function sortNotesByTime(order:Int = FlxSort.ASCENDING, Obj1:Note, Obj2:Note)
 		return FlxSort.byValues(order, Obj1.strumTime, Obj2.strumTime);
+
+    public function playAnim(dir:Direction) {
+        
+    }
 }
