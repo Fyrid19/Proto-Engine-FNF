@@ -10,7 +10,7 @@ class NoteNew extends FlxSprite implements NoteBasic {
     public var strumLine:StrumLine; // The strum line the note is assigned to
 
     public var hasSustain:Bool; // If the note has a sustain trail or not
-    public var sustinLength:Float = 0; // Length of the note sustain
+    public var sustainLength:Float = 0; // Length of the note sustain
 
     public var scoreMulti:Float = 1; // Note score multiplier
     

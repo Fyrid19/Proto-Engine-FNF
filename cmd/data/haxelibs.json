@@ -51,6 +51,11 @@
             "git": ""
         },
         {
+            "name": "hxsdl",
+            "version": "",
+            "git": ""
+        },
+        {
             "name": "sscript",
             "version": "",
             "git": "https://github.com/AltronMaxX/SScript"
@@ -69,6 +74,11 @@
             "name": "flxpartialsound",
             "version": "",
             "git": "https://github.com/FunkinCrew/FlxPartialSound"
+        },
+        {
+            "name": "stroked-textfield",
+            "version": "",
+            "git": "https://github.com/Fyrid19/StrokedTextField"
         }
     ]
 }

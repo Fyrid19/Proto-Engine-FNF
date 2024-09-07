@@ -10,30 +10,20 @@ class StrumLine extends FlxSpriteGroup {
     public var playerStrum:Bool;
     public var downScroll:Bool;
     
-    public var strumNotes:FlxTypedGroup<StrumNote>;
-    public var notes:FlxTypedGroup<NoteBasic>;
     public var unspawnNotes:Array<NoteBasic>;
 
     public function new(scrollSpeed:Float = 1.0, playerStrum:Bool = false, ?downScroll:Bool) {
+        super();
+        
         this.scrollSpeed = scrollSpeed;
         this.playerStrum = playerStrum;
         this.downScroll = downScroll != null ? downScroll : FunkinData.data.get('downScroll');
         
         unspawnNotes = new Array<NoteBasic>();
 
-        strumNotes = new FlxTypedGroup<StrumNote>();
-        add(strumNotes);
-
         for (i in 0...3) {
             var strumNote:StrumNote;
         }
-
-        notes = new FlxTypedGroup<NoteBasic>();
-        add(notes);
-    }
-
-    public function sortNotes() {
-        notes.sort(sortNotesByTime, downScroll ? FlxSort.ASCENDING : FlxSort.DESCENDING);
     }
 
     public function addNotes(notes:Array<Note>) {
@@ -43,7 +33,7 @@ class StrumLine extends FlxSpriteGroup {
             var playerNote:Bool = note.playerNote;
             var hasSustain:Bool = note.hasSustain;
             var sustainLength:Float = note.sustainLength;
-            var noteType:Int = note.noteType;
+            var noteType:Int = note.noteTypeID;
 
             // player note? in MY cpu strum?
             // im the old strum, i want normal notes!
@@ -59,9 +49,6 @@ class StrumLine extends FlxSpriteGroup {
             unspawnNotes.push(newNote);
         }
     }
-
-	function sortNotesByTime(order:Int = FlxSort.ASCENDING, Obj1:Note, Obj2:Note)
-		return FlxSort.byValues(order, Obj1.strumTime, Obj2.strumTime);
 
     public function playAnim(dir:Direction) {
         

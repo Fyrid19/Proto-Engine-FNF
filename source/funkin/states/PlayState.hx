@@ -155,7 +155,7 @@ class PlayState extends MusicBeatState
 		Conductor.mapBPMChanges(SONG);
 		Conductor.changeBPM(SONG.bpm);
 
-		Paths.clearCaches();
+		FunkinAssets.clearCaches();
 
 		foregroundSprites = new FlxTypedGroup<BGSprite>();
 

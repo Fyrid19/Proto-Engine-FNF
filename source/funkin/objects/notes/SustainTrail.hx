@@ -42,7 +42,7 @@ class SustainTrail extends FlxStrip implements NoteBasic {
 
     function refresh() {
         var scroll:Float = strumLine.scrollSpeed;
-        height = susHeight(sustainLength, scroll != null ? scroll : 1.0);
+        height = susHeight(sustainLength, scroll != 0 ? scroll : 1.0);
     }
 
     function updateClipping() {

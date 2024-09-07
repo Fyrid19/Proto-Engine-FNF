@@ -87,7 +87,7 @@
 		THEN UHHH I USED THE NAME OF THE FONT WITH SETFORMAT() ON THE TEXT!!!
 		NOT USING A DIRECT THING TO THE ASSET!!!
 	-->
-	<assets path="assets/fonts" embed='true'/>
+	<assets path="assets/fonts" embed='false' />
 
 	<!-- _______________________________ Libraries ______________________________ -->
 
@@ -112,6 +112,12 @@
 
 	<!--FlxPartialSound-->
 	<haxelib name="flxpartialsound" />
+
+	<!--HXSDL-->
+	<haxelib name="hxsdl" />
+
+	<!--Outlined OpenFL Text Fields-->
+	<haxelib name="stroked-textfield" />
 
 	<!-- <haxelib name="hxCodec" if="desktop || mobile" /> -->
 

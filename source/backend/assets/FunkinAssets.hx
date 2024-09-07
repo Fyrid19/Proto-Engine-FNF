@@ -3,16 +3,21 @@ package backend.assets;
 import openfl.utils.Assets;
 import flixel.graphics.FlxGraphic;
 import openfl.display.BitmapData;
+import openfl.system.System;
 
 /**
  * Funkin asset library, used for caching, returning files, and more.
  */
 @:access(openfl.display.BitmapData)
 class FunkinAssets {
-    public static var cache:FunkinCache;
+    private static var _cache:FunkinCache;
 
-    public function new() {
-        cache = new FunkinCache();
+    /**
+     * Initializes the asset cache
+     */
+    public static function init() {
+        _cache = new FunkinCache();
+        trace('FunkinAssets initialized');
     }
 
     /**
@@ -20,34 +25,34 @@ class FunkinAssets {
      */
     @:access(flixel.system.frontEnds.BitmapFrontEnd._cache)
     public static function clearCaches() {
-        OpenFlAssets.cache.clear('assets/songs');
+        Assets.cache.clear('assets/songs');
         for (key in FlxG.bitmap._cache.keys()) {
-			if (!assetCache.graphicCache.exists(key)) {
+			if (!_cache.graphicCache.exists(key)) {
                 if (FlxG.bitmap.get(key).bitmap.__texture != null)
                     FlxG.bitmap.get(key).bitmap.__texture.dispose();
 				FlxG.bitmap.remove(FlxG.bitmap.get(key));
             }
 		}
         FlxG.bitmap.dumpCache(); // i am desperate to clean memory
-        assetCache.clearCaches();
+        _cache.clearCaches();
         System.gc();
     }
 
     /**
-     * Returns a graphic from the current cache, if no graphic is found it caches a new one.
+     * Returns a graphic from the current _cache, if no graphic is found it caches a new one.
      * @param Key       The key of the graphic to return
      * @return          The cached graphic
      */
     public static function getCacheGraphic(Key:String)
-        return cache.getGraphic(Key);
+        return _cache.getGraphic(Key);
 
     /**
-     * Returns a sound from the current cache, if no sound is found it caches a new one.
+     * Returns a sound from the current _cache, if no sound is found it caches a new one.
      * @param Key       The key of the sound to return
      * @return          The cached sound
      */
     public static function getCacheSound(Key:String)
-        return cache.getSound(Key);
+        return _cache.getSound(Key);
 
     /**
      * Returns a blank graphic.
@@ -58,7 +63,7 @@ class FunkinAssets {
      * @param Color     Color of the graphic
      * @return          The blank graphic that got created
      */
-    public static function makeGraphic(Width:Float = 10, Height:Float = 10, Color:FlxColor = FlxColor.WHITE) {
+    public static function makeGraphic(Width:Int = 10, Height:Int = 10, Color:FlxColor = FlxColor.WHITE) {
         var graphicKey:String = Width + 'x' + Height + ':' + Color;
         var bitmap:BitmapData = new BitmapData(1, 1, false);
         bitmap.lock();
@@ -67,8 +72,8 @@ class FunkinAssets {
         bitmap.height = Height;
         bitmap.unlock();
 
-        var graphic:FlxGraphic = cache.getGraphic(graphicKey);
-        graphic != null ? return graphic : continue;
+        var graphic:FlxGraphic = _cache.getGraphic(graphicKey);
+        if (graphic != null) return graphic;
 
         var graphic:FlxGraphic;
         try (graphic = FlxGraphic.fromBitmapData(bitmap))
@@ -76,7 +81,7 @@ class FunkinAssets {
             trace('Graphic failed to load');
             return null;
         }
-        cache.cacheGraphic(graphicKey, graphic);
+        _cache.cacheGraphic(graphicKey, graphic);
         return graphic;
     }
 
