@@ -17,6 +17,8 @@ class Paths {
     public static var currentLevel:String = null;
     public static function setCurrentLevel(v:String) currentLevel = v.toLowerCase();
 
+    public static var defaultFont:String = font('vcr.ttf');
+
     public static function getPath(key:String, ?library:String) {
         var level:String = currentLevel != null ? currentLevel : library;
         var path:String = '$level:assets/$level/$key';
