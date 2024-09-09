@@ -87,7 +87,7 @@ class InitialState extends MusicBeatState {
 	}
 
 	// base code by sqirra-rng
-	// #if CRASH_HANDLER
+	#if CRASH_HANDLER
 	function onCrash(e:UncaughtErrorEvent):Void {
 		var errMsg:String = '';
 		var errData:String = '';
@@ -141,5 +141,5 @@ class InitialState extends MusicBeatState {
 		Lib.application.window.alert(errCompact, 'Prototype Engine Crash Handler');
 		Sys.exit(0);
 	}
-	// #end
+	#end
 }
