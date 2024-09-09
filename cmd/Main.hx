@@ -33,8 +33,13 @@ class Main {
             else if (version != null) args = [install, lib.name, version]; // haxelib install [name] [version]
             else args = [install, lib.name]; // haxelib install [name]
 
-            // Sys.println(args);
-            Sys.command('haxelib', args);
+            var quiet:Array<String>;
+            for (i in 0...args.length)
+                quiet.push(args[i]);
+            quiet.push('--quiet');
+
+            // Sys.println(quiet);
+            Sys.command('haxelib', quiet);
         }
     }
 }
