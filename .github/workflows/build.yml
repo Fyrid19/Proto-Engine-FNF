@@ -11,15 +11,10 @@ jobs:
         haxe-version: 4.2.5
     - name: Set up Haxelib dependencies 
       run: haxe -cp cmd -D analyzer-optimize --run Main
-    - name: Update submodules
-      run: git submodule update --init --recursive
-    - name: Build crash handler
-      run: |
-        cd crash
-        haxelib run lime build windows
+    # - name: Update submodules
+    #   run: git submodule update --init --recursive
     - name: Build project
       run: |
-        cd D:/a/Proto-Engine-FNF/Proto-Engine-FNF
         haxelib run lime build windows
     - name: Uploading artifact
       uses: actions/upload-artifact@v2

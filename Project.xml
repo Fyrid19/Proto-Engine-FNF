@@ -3,7 +3,7 @@
 	<!-- _________________________ Application Settings _________________________ -->
 
 	<app
-		title="FNF Prototype Engine" 
+		title="Friday Night Funkin': Prototype Engine" 
 		file="ProtoEngine" 
 		packageName="com.fyridev.prototype" 
 		package="com.fyridev.prototype" 
@@ -73,7 +73,7 @@
 	
 	<assets path='mods' embed='false'/>
 
-	<assets path='crash/export/release/windows/bin' rename='crash' if='CRASH_HANDLER' />
+	<!-- <assets path='crash/export/release/windows/bin' rename='crash' if='CRASH_HANDLER' /> -->
 
 	<!-- <template path="example_mods" rename="mods" /> -->
 

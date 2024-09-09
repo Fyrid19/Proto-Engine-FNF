@@ -38,8 +38,7 @@ class Main extends Sprite {
 	}
 
 	private function init(?E:Event):Void {
-		if (hasEventListener(Event.ADDED_TO_STAGE))
-		{
+		if (hasEventListener(Event.ADDED_TO_STAGE)) {
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 		}
 
@@ -65,6 +64,9 @@ class Main extends Sprite {
 			gameWidth = Math.ceil(stageWidth / zoom);
 			gameHeight = Math.ceil(stageHeight / zoom);
 		}
+		
+        haxe.ui.Toolkit.theme = 'dark';
+        haxe.ui.Toolkit.init();
 
 		game = new FNFGame(gameWidth, gameHeight, initialState, framerate, framerate, skipSplash, startFullscreen);
 		addChild(game);

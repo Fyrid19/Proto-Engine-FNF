@@ -86,7 +86,7 @@ class InitialState extends MusicBeatState {
 	}
 
 	// base code by sqirra-rng
-	#if CRASH_HANDLER
+	// #if CRASH_HANDLER
 	function onCrash(e:UncaughtErrorEvent):Void {
 		var errMsg:String = '';
 		var errData:String = '';
@@ -112,8 +112,29 @@ class InitialState extends MusicBeatState {
 			}
 		}
 
-		new Process("./crash/ProtoCrash.exe", [errMsg, errData, dateNow]);
+		var appVer:String = '1.0';
+        var crashLocation:String = "./crash/crashlog/";
+        var fileName:String = 'ProtoCrashLog_' + dateFormat + '.txt';
+        var normalFilePath:String = Path.normalize(crashLocation + fileName);
+        final errCompact:String = 'Prototype Engine Crash Handler v' + appVer + '\n'
+        + errMsg + '\n\n' 
+        + errData + '\n\n' + 'Crash at $crashDate\n' 
+        + 'Original code by sqirra-rng';
+        if (!FileSystem.exists("./crash/")) {
+            crashLocation = "./crashlog/";
+            normalFilePath = Path.normalize(crashLocation + fileName);
+        }
+
+        if (!FileSystem.exists(crashLocation))
+            FileSystem.createDirectory(crashLocation);
+
+        if (!FileSystem.exists(crashLocation + fileName)) {
+            File.saveContent(crashLocation + fileName, errCompact);
+		}
+
+		// new Process("./crash/ProtoCrash.exe", [errMsg, errData, dateNow]);
+		Lib.application.window.alert(errCompact, 'Prototype Engine Crash Handler');
 		Sys.exit(0);
 	}
-	#end
+	// #end
 }
