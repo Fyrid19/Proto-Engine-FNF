@@ -9,7 +9,7 @@ import sys.thread.Thread;
     public var state:String = "";
     public var details:String = "";
     public var largeImageKey:String = "logo";
-    public var largeImageText:String = "Protoype Engine " + EngineMain.engineVer;
+    public var largeImageText:String = "Protoype Engine Version: " + EngineMain.engineVer;
     public var smallImageKey:String = "";
     public var smallImageText:String = "";
     public var hasStartTimestamp:Bool = false;
@@ -42,6 +42,7 @@ class DiscordRPC {
 
     public static function changePresence(params:PresenceDetails) {
         var startTimestamp:Float = 0;
+        if (params.hasStartTimestamp) startTimestamp = Date.now().getTime();
         var realEndTimestamp:Float = params.endTimestamp;
         if (realEndTimestamp > 0) realEndTimestamp = startTimestamp + realEndTimestamp;
         
@@ -51,8 +52,7 @@ class DiscordRPC {
         presence.largeImageText = params.largeImageText;
         presence.smallImageKey = params.smallImageKey;
         presence.smallImageText = params.smallImageText;
-        if (params.hasStartTimestamp) 
-            presence.startTimestamp = formatTimestamp(startTimestamp);
+        presence.startTimestamp = formatTimestamp(startTimestamp);
         presence.endTimestamp = formatTimestamp(realEndTimestamp);
         updatePresence();
     }

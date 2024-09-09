@@ -9,37 +9,27 @@ import backend.framerate.FullFPS;
 import openfl.system.System;
 
 class FPSCounter extends Sprite {
-	public var fpsCountTxt:StrokedTextField;
-	public var fpsLabelTxt:StrokedTextField;
+	public var fpsCountTxt:TextField;
+	public var fpsLabelTxt:TextField;
 
 	private var times:Array<Float>;
 
     public function new() {
         super();
 
-		fpsCountTxt = new StrokedTextField(FullFPS.fpsFontBytes);
-		fpsLabelTxt = new StrokedTextField(FullFPS.fpsFontBytes);
-
-        var col:Array<UInt> = FullFPS.fpsColors;
-		var alp:Array<Float> = [1, 1];
-		var rat:Array<Int> = [255, 255];
-		var mtx:Matrix = new Matrix();
-		mtx.createGradientBox(400, 125, Math.PI / 2, 0, 0);
+		fpsCountTxt = new TextField();
+		fpsLabelTxt = new TextField();
 
 		for(text in [fpsCountTxt, fpsLabelTxt]) {
-            addChild(text);
-			text.lineStyle(4, 0x000000);
-			text.gradientFill(GradientType.LINEAR, col, alp, rat, mtx, SpreadMethod.PAD);
-			text.fontSize = 14;
-            // text.update();
+			text.text = "";
+			text.autoSize = LEFT;
+			text.multiline = false;
+			addChild(text);
 		}
 
-		fpsCountTxt.fontSize = 18;
-		fpsLabelTxt.fontSize = 14;
+		fpsCountTxt.defaultTextFormat = new TextFormat(FullFPS.fpsFont, 14, 0xFFFFFF);
+		fpsLabelTxt.defaultTextFormat = new TextFormat(FullFPS.fpsFont, 10, 0xFFFFFF);
 		fpsLabelTxt.text = "FPS";
-
-		fpsCountTxt.update();
-		fpsLabelTxt.update();
 
 		times = [];
     }
