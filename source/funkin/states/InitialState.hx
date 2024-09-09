@@ -8,6 +8,7 @@ import openfl.events.UncaughtErrorEvent;
 import haxe.CallStack;
 import haxe.io.Path;
 import sys.io.Process;
+import sys.io.File;
 import sys.FileSystem;
 #end
 
@@ -93,6 +94,7 @@ class InitialState extends MusicBeatState {
 		var errData:String = '';
 		var callStack:Array<StackItem> = CallStack.exceptionStack(true);
 		var dateNow:String = Date.now().toString();
+        var dateFormat = dateNow.replace(" ", "_").replace(":", "-");
 
 		errMsg = e.error;
 		errData = '';
@@ -117,11 +119,10 @@ class InitialState extends MusicBeatState {
         var crashLocation:String = "./crash/crashlog/";
         var fileName:String = 'ProtoCrashLog_' + dateFormat + '.txt';
         var normalFilePath:String = Path.normalize(crashLocation + fileName);
-        var dateFormat = dateNow.replace(" ", "_").replace(":", "-");
         final errCompact:String = 'Prototype Engine Crash Handler v' + appVer + '\n'
         + errMsg + '\n\n' 
         + errData + '\n\n' 
-		+ 'Crash at $crashDate\n' 
+		+ 'Crash at $dateNow\n' 
         + 'Original code by sqirra-rng';
         if (!FileSystem.exists("./crash/")) {
             crashLocation = "./crashlog/";

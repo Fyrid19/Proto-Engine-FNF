@@ -76,11 +76,6 @@
             "git": "https://github.com/MAJigsaw77/hxdiscord_rpc"
         },
         {
-            "name": "hscript-ex",
-            "version": "",
-            "git": "https://github.com/ianharrigan/hscript-ex"
-        },
-        {
             "name": "flxpartialsound",
             "version": "",
             "git": "https://github.com/FunkinCrew/FlxPartialSound"
