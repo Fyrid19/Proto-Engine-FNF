@@ -33,7 +33,7 @@ class Main {
             else if (version != null) args = [install, lib.name, version]; // haxelib install [name] [version]
             else args = [install, lib.name]; // haxelib install [name]
 
-            var quiet:Array<String>;
+            var quiet:Array<String> = [];
             for (i in 0...args.length)
                 quiet.push(args[i]);
             quiet.push('--quiet');
