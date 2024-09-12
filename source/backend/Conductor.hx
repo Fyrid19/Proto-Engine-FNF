@@ -1,6 +1,6 @@
 package backend;
 
-import funkin.objects.Song.SwagSong;
+import funkin.game.song.Song.SwagSong;
 
 /**
  * ...

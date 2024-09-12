@@ -1,7 +1,7 @@
-package funkin.states;
+package funkin.game;
 
-import funkin.objects.Section.SwagSection;
-import funkin.objects.Song.SwagSong;
+import funkin.game.song.Section.SwagSection;
+import funkin.game.song.Song.SwagSong;
 import flixel.FlxCamera;
 import flixel.addons.effects.FlxTrail;
 import flixel.addons.effects.chainable.FlxWaveEffect;
@@ -19,8 +19,9 @@ import hxvlc.flixel.FlxVideoSprite;
 
 import funkin.charting.ChartingState;
 
-import funkin.objects.notes.Note;
-import funkin.objects.notes.NoteSplash;
+import funkin.game.stage.BGSprite;
+import funkin.game.notes.Note;
+import funkin.game.notes.NoteSplash;
 
 class PlayState extends MusicBeatState
 {

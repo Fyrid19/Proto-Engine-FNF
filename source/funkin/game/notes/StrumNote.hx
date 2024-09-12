@@ -1,4 +1,4 @@
-package funkin.objects.notes;
+package funkin.game.notes;
 
 import flixel.graphics.frames.FlxFrame;
 

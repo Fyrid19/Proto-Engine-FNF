@@ -1,4 +1,4 @@
-package funkin.objects;
+package funkin.game.song;
 
 typedef SwagSection =
 {

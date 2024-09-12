@@ -71,6 +71,11 @@
             "git": "https://github.com/larsiusprime/polymod"
         },
         {
+            "name": "flxanimate",
+            "version": "",
+            "git": "https://github.com/Fyrid19/flxanimate"
+        },
+        {
             "name": "hxdiscord_rpc",
             "version": "",
             "git": "https://github.com/MAJigsaw77/hxdiscord_rpc"

@@ -1,4 +1,4 @@
-package funkin.objects.ui;
+package funkin.game.objects;
 
 class HealthIcon extends FlxSprite
 {

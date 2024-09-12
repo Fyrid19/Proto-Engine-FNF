@@ -1,6 +1,6 @@
 package funkin.states.debug;
 
-import funkin.objects.Song.SwagSong;
+import funkin.game.song.Song.SwagSong;
 
 class TestPlayState extends MusicBeatState {
     public var strumLines:FlxTypedGroup<StrumLine>;

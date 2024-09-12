@@ -1,4 +1,4 @@
-package funkin.objects;
+package funkin.game.objects;
 
 import haxe.display.Display.Package;
 

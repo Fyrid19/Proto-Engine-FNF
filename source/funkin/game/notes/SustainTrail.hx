@@ -1,10 +1,10 @@
-package funkin.objects.notes;
+package funkin.game.notes;
 
 import flixel.graphics.tile.FlxDrawTrianglesItem.DrawData;
 import flixel.FlxStrip;
 
 // somewhat based off base fnf sustain trail
-class SustainTrail extends FlxStrip implements NoteBasic {
+class SustainTrail extends FlxStrip {
     public var strumTime:Float = 0; // The time the note will appear on the strum line
 
     public var noteType:String = ''; // The name of the note type (Nothing for default)

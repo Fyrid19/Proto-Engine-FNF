@@ -1,4 +1,4 @@
-package funkin.objects.notes;
+package funkin.game.notes;
 
 // based off funkin kinda
 enum abstract Direction(Int) from Int to Int {

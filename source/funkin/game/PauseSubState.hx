@@ -1,4 +1,4 @@
-package funkin.states;
+package funkin.game;
 
 import flixel.input.keyboard.FlxKey;
 import flixel.sound.FlxSound;

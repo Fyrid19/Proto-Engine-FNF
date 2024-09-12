@@ -1,6 +1,6 @@
-package funkin.objects.notes;
+package funkin.game.notes;
 
-class NoteNew extends FlxSprite implements NoteBasic {
+class NoteNew extends FlxSprite {
     public var strumTime:Float = 0; // The time the note will appear on the strum line
 
     public var noteType:String = ''; // The name of the note type (Nothing for default)
@@ -35,34 +35,9 @@ class NoteNew extends FlxSprite implements NoteBasic {
 		this.noteDirection = noteDirection;
         this.strumLine = strumLine;
 
-        noteSkin.parse();
-        var curStage:String = PlayState.curStage;
-        if (curStage.startsWith('school')) {
-            noteSkin.jsonPath = Paths.noteSkin('pixel'); // so i can softcode later
-            noteSkin.path = 'weeb/pixelUI/arrows-pixels';
-            noteSkin.extraPaths[0] = 'weeb/pixelUI/arrowEnds';
-            noteSkin.extraData = [17, 17, 7, 6, PlayState.daPixelZoom]; // width, height, sustain width, sustain height, zoom
-            noteSkin.atlasIncluded = false;
-            noteSkin.antialiasing = false;
-        }
-        
-        antialiasing = noteSkin.antialiasing;
-
-        var color:String = noteDirection.getColor();
-        if (noteSkin.atlasIncluded) {
-            frames = Paths.getSparrowAtlas(noteSkin.path);
-            animation.addByPrefix('scroll', '$color instance');
-            setGraphicSize(Std.int(width * 0.7));
-            updateHitbox();
-        } else {
-            loadGraphic(Paths.image(noteSkin.path), true, noteSkin.extraData[0], noteSkin.extraData[1]);
-            animation.add('scroll', [4 + noteDirection]);
-            setGraphicSize(Std.int(width * noteSkin.extraData[4]));
-            updateHitbox();
-        }
+        // insert stupid hscript BULLSHIT.
 
         x += swagWidth * noteDirection;
-        animation.play('scroll');
     }
 
     override function update(elapsed:Float) {

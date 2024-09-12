@@ -1,7 +1,7 @@
 package funkin.charting;
 
-import funkin.objects.Section.SwagSection;
-import funkin.objects.Song.SwagSong;
+import funkin.game.song.Section.SwagSection;
+import funkin.game.song.Song.SwagSong;
 
 import flixel.addons.display.FlxGridOverlay;
 import flixel.addons.ui.FlxInputText;
@@ -30,8 +30,8 @@ import openfl.media.Sound;
 import openfl.net.FileReference;
 import openfl.utils.ByteArray;
 
-import funkin.objects.notes.Note;
-import funkin.objects.notes.NoteSplash;
+import funkin.game.notes.Note;
+import funkin.game.notes.NoteSplash;
 
 class ChartingState extends MusicBeatState
 {

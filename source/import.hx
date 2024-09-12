@@ -7,11 +7,13 @@ import utils.DiscordRPC;
 import utils.FunkinUtil;
 import utils.Highscore;
 
-import funkin.states.PlayState;
+import funkin.game.PlayState;
 import funkin.states.LoadingState;
 import funkin.states.*;
 import funkin.objects.*;
 import funkin.objects.ui.*;
+import funkin.game.objects.*;
+import funkin.game.song.*;
 
 import shaders.*;
 

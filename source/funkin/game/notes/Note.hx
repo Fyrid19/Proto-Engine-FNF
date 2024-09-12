@@ -1,8 +1,4 @@
-package funkin.objects.notes;
-
-#if polymod
-import polymod.format.ParseRules.TargetSignatureElement;
-#end
+package funkin.game.notes;
 
 class Note extends FlxSprite {
 	public var strumTime:Float = 0;

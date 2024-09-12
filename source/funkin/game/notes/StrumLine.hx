@@ -1,8 +1,7 @@
-package funkin.objects.notes;
+package funkin.game.notes;
 
-import funkin.objects.notes.NoteBasic;
-import funkin.objects.notes.NoteNew as Note;
-import funkin.objects.notes.SustainTrail;
+import funkin.game.notes.NoteNew as Note;
+import funkin.game.notes.SustainTrail;
 import flixel.util.FlxSort;
 
 class StrumLine extends FlxSpriteGroup {

@@ -1,4 +1,4 @@
-package funkin.objects;
+package funkin.game.objects;
 
 class BackgroundGirls extends FlxSprite
 {

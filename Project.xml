@@ -106,6 +106,9 @@
 	<haxelib name="polymod"/>
 	<haxelib name="hxcpp-debug-server" if="desktop debug"/>
 
+	<!--FlxAnimate-->
+	<haxelib name="flxanimate" />
+
 	<!--HaxeUI-->
 	<haxelib name="haxeui-core" />
 	<haxelib name="haxeui-flixel" />

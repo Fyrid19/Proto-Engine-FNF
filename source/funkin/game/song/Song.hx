@@ -1,6 +1,6 @@
-package funkin.objects;
+package funkin.game.song;
 
-import funkin.objects.Section.SwagSection;
+import funkin.game.song.Section.SwagSection;
 
 import haxe.Json;
 import lime.utils.Assets;
