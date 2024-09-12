@@ -164,6 +164,8 @@
 	<!-- No deprecation warnings -->
 	<haxedef name="no-deprecation-warnings"/>
 
+	<haxedef name="hscriptPos" value="true" />
+
 	<!-- _________________________________ Custom _______________________________ -->
 
 	<!--Place custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->

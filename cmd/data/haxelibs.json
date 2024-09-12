@@ -56,11 +56,6 @@
             "git": ""
         },
         {
-            "name": "polymod",
-            "version": "",
-            "git": ""
-        },
-        {
             "name": "hxvlc",
             "version": "",
             "git": "https://github.com/MAJigsaw77/hxvlc"
@@ -69,6 +64,11 @@
             "name": "sscript",
             "version": "",
             "git": "https://github.com/AltronMaxX/SScript"
+        },
+        {
+            "name": "polymod",
+            "version": "",
+            "git": "https://github.com/larsiusprime/polymod"
         },
         {
             "name": "flxanimate",
