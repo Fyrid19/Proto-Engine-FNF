@@ -55,12 +55,16 @@
             "version": "",
             "git": ""
         },
-        
+
         {
-            "name": "jsonpath"
+            "name": "jsonpath",
+            "version": "",
+            "git": "https://github.com/EliteMasterEric/jsonpath"
         },
         {
-            "name": "jsonpatch"
+            "name": "jsonpatch",
+            "version": "",
+            "git": "https://github.com/EliteMasterEric/jsonpatch"
         },
 
         {
