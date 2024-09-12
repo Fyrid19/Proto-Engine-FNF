@@ -55,18 +55,11 @@
             "version": "",
             "git": ""
         },
-
         {
-            "name": "jsonpath",
+            "name": "polymod",
             "version": "",
-            "git": "https://github.com/EliteMasterEric/jsonpath"
+            "git": ""
         },
-        {
-            "name": "jsonpatch",
-            "version": "",
-            "git": "https://github.com/EliteMasterEric/jsonpatch"
-        },
-
         {
             "name": "hxvlc",
             "version": "",
@@ -76,11 +69,6 @@
             "name": "sscript",
             "version": "",
             "git": "https://github.com/AltronMaxX/SScript"
-        },
-        {
-            "name": "polymod",
-            "version": "",
-            "git": "https://github.com/larsiusprime/polymod"
         },
         {
             "name": "flxanimate",
