@@ -55,6 +55,14 @@
             "version": "",
             "git": ""
         },
+        
+        {
+            "name": "jsonpath"
+        },
+        {
+            "name": "jsonpatch"
+        },
+
         {
             "name": "hxvlc",
             "version": "",
