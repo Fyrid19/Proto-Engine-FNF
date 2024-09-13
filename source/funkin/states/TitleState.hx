@@ -11,7 +11,7 @@ import openfl.Assets;
 import openfl.display.Sprite;
 import openfl.media.Video;
 import openfl.net.NetStream;
-import polymod.Polymod;
+// import polymod.Polymod;
 
 #if VIDEO_PLAYBACK
 import hxvlc.flixel.FlxVideoSprite;
