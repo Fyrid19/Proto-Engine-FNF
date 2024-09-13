@@ -2,8 +2,8 @@ package funkin.modding;
 
 import funkin.modding.util.ModUtil;
 
-import polymod.Polymod;
-import polymod.util.zip.ZipParser;
+// import polymod.Polymod;
+// import polymod.util.zip.ZipParser;
 
 import flixel.util.FlxSave;
 
