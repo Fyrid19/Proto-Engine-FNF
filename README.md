@@ -1,10 +1,3 @@
-# !! DISCONTINUED !! (well, not really)
-After a bit of thought, I've decided that trying to edit legacy FNF's source code to form it into my own thing is, well, a bad idea.
-
-To sum it up, Prototype Engine is getting a complete rewrite. I honestly think this decision is for the better, but I'm not gonna keep talking like this is some highly anticipated project.
-
-See you in the rewrite.
-
 # Friday Night Funkin': Prototype Engine
 Prototype Engine is an FNF engine that aims to provide a smooth and flexible modding scene for everyone.
 
