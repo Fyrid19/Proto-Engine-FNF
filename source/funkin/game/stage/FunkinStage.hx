@@ -10,4 +10,8 @@ class FunkinStage {
         bgSprites = new FlxTypedGroup<BGSprite>();
         fgSprites = new FlxTypedGroup<BGSprite>();
     }
+
+    public function loadStageFile(fileName:String) {
+        // load the file
+    }
 }

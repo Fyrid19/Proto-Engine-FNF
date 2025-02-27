@@ -10,7 +10,7 @@ class WarningState extends MusicBeatState {
     override function create() {
         super.create();
 
-        background = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+        background = new FlxSprite().loadGraphic(Paths.image('menuInvert'));
         background.screenCenter();
         add(background);
 

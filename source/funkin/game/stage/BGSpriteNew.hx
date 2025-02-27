@@ -1,14 +1,19 @@
 package funkin.game.stage;
 
 class BGSprite extends FlxSprite {
-    public var assetPath:String;
+    public var key:String;
     public var animated:Bool;
     
-    public function new(Asset:String, X:Float, Y:Float, ?Animated:Bool, ?ScrollX:Float, ?ScrollY:Float) {
-        super(X, Y);
+    public function new(key:String, x:Float, y:Float, ?animations:Array<String>, ?scrollX:Float, ?scrollY:Float) {
+        super(x, y);
+
+        this.animated = animated;
+        this.key = key;
         
-        if (!Asset.startsWith('assets/')) {
+        if (animations != null) {
             
+        } else {
+            loadGraphic(Paths.image(key));
         }
     }
 }

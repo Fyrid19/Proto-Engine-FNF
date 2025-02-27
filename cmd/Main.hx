@@ -1,5 +1,7 @@
 package;
 
+import sys.FileSystem;
+
 typedef HaxelibData = {
     name:String,
     version:String,
@@ -14,6 +16,12 @@ class Main {
         var args:Array<String> = ['', '', ''];
         haxelibsParsed = haxe.Json.parse(haxelibs);
         libraries = haxelibsParsed.libraries;
+
+        // installs the haxelibs locally if you dont wanna conflict with other stuff
+        if (Sys.args()[0] == 'local') {
+            if (!FileSystem.exists('.haxelib'))
+                FileSystem.createDirectory('.haxelib');
+        }
 
         for (lib in libraries) {
             var install:String = 'install';

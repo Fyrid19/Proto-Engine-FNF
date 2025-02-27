@@ -2,6 +2,9 @@
 export/
 .vscode/
 
+## Don't include locally installed libraries
+.haxelib/
+
 ## FNF Specific
 APIStuff.hx
 .DS_STORE

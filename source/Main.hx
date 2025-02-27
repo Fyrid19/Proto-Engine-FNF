@@ -51,7 +51,7 @@ class Main extends Sprite {
 	private var overlay:Sprite;
 
 	public static var fpsCounter:FullFPS;
-	public static var lostFocus:FocusLost;
+	// public static var lostFocus:FocusLost;
 
 	private function setupGame():Void {
 		var stageWidth:Int = Lib.current.stage.stageWidth;
@@ -71,9 +71,9 @@ class Main extends Sprite {
 		game = new FNFGame(gameWidth, gameHeight, initialState, framerate, framerate, skipSplash, startFullscreen);
 		addChild(game);
 
-		lostFocus = new FocusLost();
-		lostFocus.visible = false;
-		addChild(lostFocus);
+		// lostFocus = new FocusLost();
+		// lostFocus.visible = false;
+		// addChild(lostFocus);
 
 		fpsCounter = new FullFPS();
 		addChild(fpsCounter);

@@ -56,13 +56,13 @@ class InitialState extends MusicBeatState {
 
         FlxG.game.focusLostFramerate = 30;
 		FlxG.signals.focusLost.add(function() {
-			Main.lostFocus.visible = true;
+			// Main.lostFocus.visible = true;
 			FlxG.drawFramerate = 30; // lower framerate for better performace
 			// trace('focus lost');
 		});
 
 		FlxG.signals.focusGained.add(function() {
-			Main.lostFocus.visible = false;
+			// Main.lostFocus.visible = false;
 			resetFramerate();
 			// trace('focus gained');
 		});
@@ -71,8 +71,7 @@ class InitialState extends MusicBeatState {
 		trace('- Github Info -');
 		trace('Repo Name: ' + EngineMain.repository.name);
 		trace('Repo Desc: ' + EngineMain.repository.description);
-		trace('Latest commit: ' + latestCommit.commit.message);
-		trace(EngineMain.getRepoCommits() + ' Commits');
+		trace('Current Commit: ' + Globals.COMMIT_NUMBER + '(${Globals.COMMIT_HASH})');
 
 		FunkinAssets.init();
 		

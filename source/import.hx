@@ -17,6 +17,7 @@ import funkin.game.song.*;
 
 import shaders.*;
 
+import backend.Globals;
 import backend.Conductor;
 import backend.MusicBeatState;
 import backend.MusicBeatSubstate;
